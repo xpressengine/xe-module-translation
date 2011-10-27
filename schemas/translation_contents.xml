@@ -1,0 +1,9 @@
+<table name="translation_contents">
+    <column name="translation_contents_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+    <column name="translation_file_srl" type="number" size="9" notnull="notnull"/>
+    <column name="content_node" type="varchar" size="128" notnull="notnull"/>
+    <column name="lang" type="number" size="11" notnull="notnull"/>
+    <column name="member_srl" type="number" size="11" notnull="notnull"/>
+    <column name="content" type="varchar" size="512" notnull="notnull"/>
+    <column name="recommended_count" type="number" size="9" notnull="notnull" default="0"/>
+</table>

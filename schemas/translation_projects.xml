@@ -1,0 +1,7 @@
+<table name="translation_projects">
+    <column name="translation_project_id" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+    <column name="module_srl" type="varchar" size="128" notnull="notnull" />
+    <column name="member_srl" type="number" size="11" notnull="notnull" />
+    <column name="project_name" type="varchar" size="128" notnull="notnull" />
+    <column name="reg_date" type="number" size="11" notnull="notnull" />
+</table>
