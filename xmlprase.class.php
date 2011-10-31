@@ -146,9 +146,6 @@ class XMLContext {
 		$xpath = $this->_getXpath($xpath);
 		$arr = explode('_', $xpath);
 		$nodeName = array_pop($arr);
-		if(preg_match('/^(.*)\[.*\]$/i',$nodeName,$match)){
-			$nodeName = $match[1];
-		}
 		$output = sprintf('<%s',$nodeName);
 		foreach($tagInfoArr['attr'] as $aName => $avalue){
 			if($aName == "xml_lang"){
