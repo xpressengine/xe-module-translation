@@ -29,7 +29,7 @@ class XMLContext {
 
 	private function _setRootName($file){
 		$xmlStr = file_get_contents($file);
-		if(!(preg_match('/\?>\s*<([^>]*)\s*.*>/', $xmlStr, $match))){
+		if(!(preg_match('/\?>\s*<([^>\s]*)\s*.*>/', $xmlStr, $match))){
 			return false;
 		}
 		$this->_rootName = $match[1];
@@ -186,7 +186,6 @@ class XMLContext {
 	*
 	*/
 	private function _getFileType(){
-
 		return $this->_fileType;
 	}
 }
