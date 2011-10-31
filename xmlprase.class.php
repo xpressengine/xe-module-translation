@@ -102,7 +102,13 @@ class XMLContext {
 	}
 
 	/*
-	*	iteration prase the xml file to find  translation lang line info
+	*	iteration prase the xml file to storage the xml file as a array list as the following sturction:
+	*		array(
+	*				nodeIndexNumber => array(
+	*					xpath => nodeXpath(if node element has 'name' param the node path as nodeName[nameValue] form),
+	*					value => nodeValue or node's inner xml object(SimpleXMLElement type),
+	*					atrr => node atrributes (SimpleXMLElement type)
+	*				))
 	*
 	*/
 	private function _praseFile($xmlObj, $rootName){
