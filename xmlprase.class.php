@@ -178,7 +178,7 @@ class XMLContext {
 		$xpath = $this->_getXpath($parseArr['xpath']);
 		$arr = explode('_', $xpath);
 		$nodeName = array_pop($arr);
-		foreach($valueArr as $vkey => $vArr){echo "****";var_dump($vArr['content_node']);var_dump($dbNodeName);echo "****";
+		foreach($valueArr as $vkey => $vArr){
 			if($vArr['content_node'] == $dbNodeName){
 				foreach($parseArr['attr'] as $key => $value){
 					if($key == 'xml_lang'){
