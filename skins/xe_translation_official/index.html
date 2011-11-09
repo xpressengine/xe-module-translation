@@ -1,0 +1,376 @@
+<include target="_header.html" />
+
+<h2>Translation Center Index Page</h2>
+
+<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">Project List</a>
+
+<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject')}">Register Project</a>
+
+<a href="{getUrl('','mid','translation','act','loadTranslationFile','f_id',1)}">load file</a>
+
+<a href="{getUrl('','mid','translation','act','dispTranslationFileContents','f_id',1,'source_lang','zh-CN', 'target_lang','en')}">display file</a>
+
+{@ var_dump($mid)}
+<div class="container">
+	<div cond="$logged_info->is_admin == 'Y'" class="newfile">
+		<a href="b10-my_project_list.html" class="sty_btn">My Projects List</a>&nbsp;&nbsp;
+		<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile')}" class="sty_btn">Add a New File</a>
+	</div>
+
+	<table id="type_lang" class="info_table" cellpadding="0" cellspacing="0">
+		<caption>Language</caption>
+		<colgroup>
+			<col width="20%" />
+			<col />
+			<col width="23%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="col1">Language</th>
+				<th class="col2"><a href="">Percentage</a></th>
+				<th class="col3"><a href="">Recent Update </a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="col1 lang_us"><a href="a10-project_list.html">English</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_ko"><a href="a10-project_list.html">Korean</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_chs"><a href="a10-project_list.html">Simplified chinese</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_cht"><a href="a10-project_list.html">Traditional chinese</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_vn"><a href="a10-project_list.html">Vietnamese</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_jp"><a href="a10-project_list.html">Japanese</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_fr"><a href="a10-project_list.html">French</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_ru"><a href="a10-project_list.html">Russian</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_de"><a href="a10-project_list.html">German</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_es"><a href="a10-project_list.html">Spanish</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1 lang_tr"><a href="a10-project_list.html">Turkish</a></td>
+				<td class="col2 percentage">
+					<div class="track">
+						<span class="color_1">25%</span>
+						<span class="color_2">35%</span>
+						<span class="color_3">40%</span>
+					</div><!-- //graph -->
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table id="type_project" class="info_table" cellpadding="0" cellspacing="0">
+		<caption>Project</caption>
+		<colgroup>
+			<col width="20%" />
+			<col />
+			<col width="23%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="col1">Project</th>
+				<th class="col2"><a href="">Percentage</a></th>
+				<th class="col3"><a href="">Recent Update</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">XE Core</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">Board</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">BoardEX</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">CafeXE</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">Planet</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">Resources</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">Textyle</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">MessageXE</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">SocialXE</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">BackupXE</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+			<tr>
+				<td class="col1"><a href="a11-project_info_lang.html">LiveXE</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3 recent">2011.10.18 (sol)</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<dl class="color_desc">
+		<dt><span class="color_1"></span></dt><dd>Translated</dd>
+		<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+		<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+	</dl>
+
+	<h2 class="member">Contributor</h2>
+
+	<table id="type_translate" class="info_table rank_table" cellpadding="0" cellspacing="0">
+		<caption>Translate</caption>
+		<colgroup>
+			<col width="40%" />
+			<col />
+		</colgroup>
+		<tbody>
+			<tr>
+				<th class="col1">ngleader</th>
+				<td class="col2">18000건</td>
+			</tr>
+			<tr>
+				<th class="col1">zero</th>
+				<td class="col2">8000건</td>
+			</tr>
+			<tr>
+				<th class="col1">sol</tthd>
+				<td class="col2">16200건</td>
+			</tr>
+			<tr>
+				<th class="col1">mygony</th>
+				<td class="col2">17300건</td>
+			</tr>
+			<tr>
+				<th class="col1">cherryfilter</th>
+				<td class="col2">187건</td>
+			</tr>
+			<tr>
+				<th class="col1">dece24</th>
+				<td class="col2">1200건</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table id="type_audits" class="info_table rank_table" cellpadding="0" cellspacing="0">
+		<caption>Review</caption>
+		<colgroup>
+			<col width="40%" />
+			<col />
+		</colgroup>
+		<tbody>
+			<tr>
+				<th class="col1">dece24</th>
+				<td class="col2">18000건</td>
+			</tr>
+			<tr>
+				<th class="col1">cherryfilter</th>
+				<td class="col2">110건</td>
+			</tr>
+			<tr>
+				<th class="col1">mygony</th>
+				<td class="col2">160건</td>
+			</tr>
+			<tr>
+				<th class="col1">zero</th>
+				<td class="col2">180건</td>
+			</tr>
+			<tr>
+				<th class="col1">sol</th>
+				<td class="col2">1870건</td>
+			</tr>
+			<tr>
+				<th class="col1">ngleader</th>
+				<td class="col2">1400건</td>
+			</tr>
+		</tbody>
+	</table>
+</div><!-- //container -->
+
+
+

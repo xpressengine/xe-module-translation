@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ruleset version="1.5.0">
+    <customrules>
+    </customrules>
+    <fields>
+		<field name="translation_file_srl" required="true"/>
+		<field name="member_srl" required="true"/>
+		<field name="target_lang" required="true"/>
+    </fields>
+</ruleset>

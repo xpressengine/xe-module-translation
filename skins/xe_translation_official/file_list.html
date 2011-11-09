@@ -1,0 +1,77 @@
+<include target="_header.html" />
+<load target="css/style.css" />
+
+
+<h2>Translation File List Page</h2>
+
+<div class="container">
+	<h4 class="page_h2">Project "{$project_info->project_name}"</h4>
+	<div class="language_type"><select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select></div>
+
+	<table id="project_summary" class="info_table normal_table" cellpadding="0" cellspacing="0">
+		<caption class="blind">Project "XE Core"</caption>
+		<thead>
+			<tr>
+				<th class="col1" scope="col" >File</th>
+				<th class="col2" scope="col" >Percentage</th>
+				<!--<th class="col3" scope="col" >Summary</th>-->
+				<th class="col4" scope="col" >Recent Update</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="col1"><a href="a30-translate_project_all_file.html">Total {count($file_list)}</a></td>
+				<td class="percentage" >
+					<div class="track">
+						<span class="color_1">20%</span>
+						<span class="color_2">20%</span>
+						<span class="color_3">60%</span>
+					</div><!-- //graph -->
+				</td>
+				<!--<td class="col3">Translated 1090 , Need to approve 210</td>-->
+				<td class="col4">2011.10.18 (sol)</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table id="project_files" class="info_table normal_table longTxt" cellpadding="0" cellspacing="0">
+	<caption class="blind">Project "XE Core"</caption>
+	<thead>
+		<tr>
+			<th class="col1" scope="col" >File</th>
+			<th class="col2" scope="col" >Percentage</th>
+			<!--<th class="col3" scope="col" >Summary</th>-->
+			<th class="col4" scope="col" >Recent Update</th>
+			<th class="col5" scope="col" ></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$file_list => $key, $val">
+			<td class="col1"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileContent','translation_file_srl',$val->translation_file_srl,'translation_project_srl',$translation_project_srl)}">{$val->file_path}</a></td>
+			<td class="percentage">
+				<div class="track">
+					<span class="color_1">35%</span>
+					<span class="color_2">25%</span>
+					<span class="color_3">40%</span>
+				</div><!-- //graph -->
+			</td>
+			<!--<td class="col3">Translated 390, Need to approve 210</td>-->
+			<td class="col4">2011.10.18 (sol)</td>
+			<td class="col5"><a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$val->translation_file_srl)}">update<a/>&nbsp;<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">download<a/></td>
+		</tr>
+		
+	</tbody>
+	</table>
+
+	<dl class="color_desc">
+	<dt><span class="color_1"></span></dt><dd>Translated</dd>
+	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+	</dl>
+
+</div><!-- //container -->
+
+<div class="btn_area">
+	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_project_srl', $translation_project_srl)}" class="sty_btn">Add New File</a>
+</div>
+

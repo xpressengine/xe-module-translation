@@ -1,0 +1,12 @@
+<query id="getMemberProjectList" action="select">
+    <tables>
+        <table name="translation_projects" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+		<condition operation="equal" column="member_srl" var="member_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="module_srl" var="module_srl" filter="number" notnull="notnull" pipe="and"/>
+    </conditions>
+</query>

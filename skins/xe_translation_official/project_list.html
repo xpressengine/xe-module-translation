@@ -1,0 +1,11 @@
+<h2>Translation Project List Page</h2>
+
+<ul>
+	<li loop="$project_list => $key, $val">
+		<div>
+			<span style="margin-right:300px"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$val->translation_project_srl)}">{$val->project_name}</a></span>
+			<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject','translation_project_srl',$val->translation_project_srl)}">update</a>
+
+		</div>
+	</li>
+</ul>
