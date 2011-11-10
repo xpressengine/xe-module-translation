@@ -1,2 +1,0 @@
-aaasdasdsadasdasdzxczxczxczxcasdasd
-$a = 1;
