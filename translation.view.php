@@ -183,18 +183,18 @@
 
 		function write_txt($contents){
 
-		if(!file_exists("test.xml")){
+			if(!file_exists("test.xml")){
 
-			$fp = fopen("test.xml","wb");
+				$fp = fopen("test.xml","wb");
 
-			fclose($fp);}
-			$str = file_get_contents('test.xml');
-			$fp = fopen("test.xml","wb");
-			fwrite($fp,$contents);
-			
-			fclose($fp);
+				fclose($fp);}
+				$str = file_get_contents('test.xml');
+				$fp = fopen("test.xml","wb");
+				fwrite($fp,$contents);
+				
+				fclose($fp);
 
-		}
+			}
 
     }
 

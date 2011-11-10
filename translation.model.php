@@ -204,6 +204,32 @@
 			return $output->data;
 		}
 
+		function getTranslationCount($translation_file_srl,$content_node,$lang){
+			if(!$translation_file_srl || !$content_node || !$lang) return;
+
+			$obj->translation_file_srl = $translation_file_srl;
+			$obj->content_node = $content_node;
+			$obj->lang = $lang;
+
+			$output = executeQuery('translation.getTranslationCount',$obj);
+
+			if(!$output->toBool()) {return null;} 
+			return $output->data;
+		}
+
+		function getRecommendedCount($translation_file_srl,$content_node,$lang){
+			if(!$translation_file_srl || !$content_node || !$lang) return;
+
+			$obj->translation_file_srl = $translation_file_srl;
+			$obj->content_node = $content_node;
+			$obj->lang = $lang;
+
+			$output = executeQuery('translation.getRecommendedCount',$obj);
+
+			if(!$output->toBool()) {return null;} 
+			return $output->data;
+		}
+
 		function multi2dSortAsc(&$arr, $key){
 			$sort_col = array();
 			foreach ($arr as $sub) $sort_col[] = $sub[$key];

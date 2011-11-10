@@ -1,0 +1,13 @@
+<query id="getRecommendedCount" action="select">
+	<tables>
+       <table name="translation_contents" />
+   </tables>
+   <columns>
+       <column name="sum(recommended_count)" alias="translation_count"/>
+   </columns>
+   <conditions>
+		<condition operation="equal" column="translation_file_srl" var="translation_file_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="content_node" var="content_node" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="lang" var="lang" notnull="notnull" pipe="and"/>
+   </conditions>
+</query>
