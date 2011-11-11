@@ -99,7 +99,7 @@ class translationController extends translation {
 
 			// delete and insert XML contents to xe_translation_contents table
 			$this->deleteXMLContents($obj->translation_file_srl);
-			$this->insertXMLContents($obj->target_file, $obj->translation_file_srl);
+			$this->insertXMLContents($obj->target_file, $obj->translation_file_srl,$obj->translation_project_srl);
 
 			// delete and insert content node information to xe_translation_content_node table
 			$this->deleteContentNodeInfo($obj->translation_file_srl);
@@ -158,7 +158,7 @@ class translationController extends translation {
 		return $target_filename;	
 	}
 
-	function insertXMLContents($file, $translation_file_srl){
+	function insertXMLContents($file, $translation_file_srl,$translation_project_srl){
 
 		$logged_info = Context::get('logged_info');
 		
@@ -168,6 +168,7 @@ class translationController extends translation {
 		foreach($_xmlContext as $key => $val){
 			if($val['attr']['xml_lang']){
 				$obj->translation_content_srl = getNextSequence();
+				$obj->translation_project_srl = $translation_project_srl;
 				$obj->translation_file_srl = $translation_file_srl;
 				$obj->content_node = $val['xpath'];
 				$obj->lang = strval($val['attr']['xml_lang']);

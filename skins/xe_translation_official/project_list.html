@@ -1,3 +1,6 @@
+<include target="_header.html" />
+
+
 <h2>Translation Project List Page</h2>
 
 <ul>
@@ -9,3 +12,50 @@
 		</div>
 	</li>
 </ul>
+
+
+<div class="container">
+    <h2 class="page_h2">My Project List</h2>
+	<table id="project_list" class="info_table" cellpadding="0" cellspacing="0">
+		<colgroup>
+			<col width="13%" />
+			<col width="25%"/>
+			<col width="15%" />
+			<col width="15%"/>
+			<col />
+		</colgroup>
+		<thead>
+			<tr>
+				<th class="col1">Project</th>
+				<th class="col2"><a href="">Percentage</a></th>
+				<th class="col3">Number of Files</th>
+				<th class="col4"><a href="">Recent Update</a></th>
+				<th class="col5"><a href=""></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr loop="$project_list => $project_key, $project">
+				<td class="col1"><a href="a11-project_info_lang.html">{$project->project_name}</a></td>
+				<td class="col2">
+					<div class="track">
+						<span class="color_1">40%</span>
+						<span class="color_2">25%</span>
+						<span class="color_3">35%</span>
+					</div>
+				</td>
+				<td class="col3">{$project->files_count}</td>
+				<td class="col4 recent">2011.10.18 (sol)</td>
+				<td class="col5">
+					<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject','translation_project_srl',$project->translation_project_srl)}" class="sty_btn">modify</a>
+					<a href="#" target="_blank" class="sty_btn">delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="btn_area">
+        <a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject')}" class="sty_btn gray">Add New Project</a>
+    </div>	
+
+</div>
+

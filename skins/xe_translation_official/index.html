@@ -32,118 +32,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="col1 lang_us"><a href="a10-project_list.html">English</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_ko"><a href="a10-project_list.html">Korean</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_chs"><a href="a10-project_list.html">Simplified chinese</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_cht"><a href="a10-project_list.html">Traditional chinese</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_vn"><a href="a10-project_list.html">Vietnamese</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_jp"><a href="a10-project_list.html">Japanese</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_fr"><a href="a10-project_list.html">French</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_ru"><a href="a10-project_list.html">Russian</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_de"><a href="a10-project_list.html">German</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_es"><a href="a10-project_list.html">Spanish</a></td>
-				<td class="col2 percentage">
-					<div class="track">
-						<span class="color_1">25%</span>
-						<span class="color_2">35%</span>
-						<span class="color_3">40%</span>
-					</div><!-- //graph -->
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1 lang_tr"><a href="a10-project_list.html">Turkish</a></td>
+			<tr loop="$lang_supported_list => $lang_key, $lang_value">
+				<td class="col1 lang_{$lang_key}"><a href="a10-project_list.html">{$lang_value}</a></td>
 				<td class="col2 percentage">
 					<div class="track">
 						<span class="color_1">25%</span>
@@ -171,8 +61,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">XE Core</a></td>
+			<tr loop="$project_list => $project_key, $project_value">
+				<td class="col1"><a href="a11-project_info_lang.html">{$project_value->project_name}</a></td>
 				<td class="col2">
 					<div class="track">
 						<span class="color_1">40%</span>
@@ -182,116 +72,7 @@
 				</td>
 				<td class="col3 recent">2011.10.18 (sol)</td>
 			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">Board</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">BoardEX</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">CafeXE</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">Planet</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">Resources</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">Textyle</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">MessageXE</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">SocialXE</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">BackupXE</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
-			<tr>
-				<td class="col1"><a href="a11-project_info_lang.html">LiveXE</a></td>
-				<td class="col2">
-					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
-					</div>
-				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
-			</tr>
+			<tr><td id="more_projects" colspan="3"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">More Projects</a></td></tr>
 		</tbody>
 	</table>
 
