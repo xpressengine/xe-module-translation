@@ -172,6 +172,7 @@ class translationController extends translation {
 		foreach($_xmlContext as $key => $val){
 			if($val['attr']['xml_lang']){
 				$obj->translation_content_srl = getNextSequence();
+				$obj->module_srl = $this->module_info->module_srl;
 				$obj->translation_project_srl = $translation_project_srl;
 				$obj->translation_file_srl = $translation_file_srl;
 				$obj->content_node = $val['xpath'];
