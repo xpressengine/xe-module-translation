@@ -21,17 +21,18 @@ table caption.blind{display:inline;visibility:hidden;line-height:0;}
 .color_4{background:#AD5472;}
 
 /* 첫페이지 */
-.lang_us{background:url(../images/flags/us.gif) no-repeat;}
+.lang_en{background:url(../images/flags/us.gif) no-repeat;}
 .lang_ko{background:url(../images/flags/kr.gif) no-repeat;}
-.lang_chs{background:url(../images/flags/cn.gif) no-repeat;}
-.lang_cht{background:url(../images/flags/tw.gif) no-repeat}
-.lang_vn {background:url(../images/flags/vn.gif) no-repeat}
+.lang_zh-CN{background:url(../images/flags/cn.gif) no-repeat;}
+.lang_zh-TW{background:url(../images/flags/tw.gif) no-repeat}
+.lang_vi {background:url(../images/flags/vn.gif) no-repeat}
 .lang_jp{background:url(../images/flags/jp.gif) no-repeat}
 .lang_fr{background:url(../images/flags/fr.gif) no-repeat}
 .lang_ru{background:url(../images/flags/ru.gif) no-repeat}
 .lang_de{background:url(../images/flags/de.gif) no-repeat}
 .lang_es{background:url(../images/flags/es.gif) no-repeat}
 .lang_tr{background:url(../images/flags/tr.gif) no-repeat}
+.lang_mn{background:url(../images/flags/mn.gif) no-repeat}
 
 #type_lang{width:49%; float:left;}
 #type_project{width:49%; float:right}
@@ -49,6 +50,8 @@ div.newfile a{display:inline-block;margin:0;padding:6px 20px 0;height:20px;font-
 .info_table thead th.col1,
 .info_table thead th.col3,
 .info_table thead th.col4{}
+
+#type_project tbody td.col1{padding:0 0 0 10px; white-space:normal;} 
 
 .info_table .percentage{padding:0 10px;text-align:center;}
 .normal_table{width:100%;}
@@ -129,3 +132,20 @@ div.grippie {margin-left:5px;position:relative; bottom:14px;_bottom:14px;width:3
 .resizable-textarea textarea {display:block;margin-bottom:0pt;width:50%;height: 30%;}
 
 #t_form{width:100%; overflow:hidden;}
+
+#more_projects {text-align:right; padding-right:2px;}
+
+#project_list tbody .col3,
+#project_list tbody .col4,#project_list tbody .col5{text-align:center}
+#project_list a.sty_btn{display:inline-block;margin-right:5px;padding-top:2px;width:50px;height:15px; line-height:12px;}
+
+.normal_table{width:100%;}
+.normal_table .percentage{width:300px;}
+table.normal_table td.col3,
+table.normal_table td.col4{padding-left:20px;}
+table.normal_table td.col1 a{display:block;padding:4px 0;width:197px;word-wrap:break-word;}
+
+.sty_btn.gray{background:#ededed;background: -webkit-gradient(linear, 0 0, 0 100%, from(#ededed), to(#9f9e9e)); background: -moz-linear-gradient(top, #ededed, #9f9e9e);}
+.btn_area a{display:inline-block;padding-top:5px;text-align:center;width:120px;height:20px;float:right;text-decoration:none;color:#000; margin-top:10px;}
+
+#project_list {width:100%; float:right}
