@@ -153,15 +153,11 @@
 				}
 			}
 
-			//var_dump($valueArr);
-
 			$file_info = $this->getFile($translation_file_srl);
 			$oXMLContext = new XMLContext($file_info->target_file, "en");
 
 			
 			$xmlContents = $oXMLContext->getXmlFile($valueArr,$file_info->file_type);
-			//$xml = new SimpleXMLElement($xmlContents);
-			//$xmlContents = $xml->asXML();
 			
 			return $xmlContents;
 		}
@@ -228,6 +224,17 @@
 
 			if(!$output->toBool()) {return null;} 
 			return $output->data;
+		}
+
+		function isExistLangInfo($translation_file_srl,$lang){
+			if(!$translation_file_srl || !$lang) return;
+
+			$obj->translation_file_srl = $translation_file_srl;
+			$obj->lang = $lang;
+
+			$output = executeQuery('translation.getLangContentNodeInfoCount',$obj);
+			if(!$output->toBool() || intval($output->data->node_count)>0) {return true;}
+			return false;
 		}
 
 		function multi2dSortAsc(&$arr, $key){

@@ -59,6 +59,9 @@ class translationController extends translation {
 
 	}
 
+	/**
+	 * @brief insert and update file information
+	 **/
 	function procTranslationInsertFile(){
 
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
@@ -90,15 +93,14 @@ class translationController extends translation {
 		$oTranslationModel = &getModel('translation');
 		$xml_file =  $_FILES['uploaded_file'];
 
+		// if the file not exists
 		if(!$obj->translation_file_srl){
-
 			$obj->translation_file_srl = getNextSequence();
 			$target_filename = $this->insertXmlFile($this->module_info->module_srl,$obj->translation_project_srl,$obj->translation_file_srl, $obj->file_name, $xml_file['tmp_name'] );
 			if(!file_exists($target_filename)) return new Object(-1, "msg_invalid_request");
 			$obj->target_file = $target_filename;
 
-			// delete and insert XML contents to xe_translation_contents table
-			$this->deleteXMLContents($obj->translation_file_srl);
+			// insert XML contents to xe_translation_contents table
 			$this->insertXMLContents($obj->target_file, $obj->translation_file_srl,$obj->translation_project_srl);
 
 			// delete and insert content node information to xe_translation_content_node table
@@ -111,8 +113,6 @@ class translationController extends translation {
 			$msg_code = 'success_registed';
 
 		}else{
-
-			$obj->translation_file_srl = $obj->translation_file_srl;
 			$file_info = $oTranslationModel->getFile($obj->translation_file_srl);
 			// DB query, update project
 			if(!$obj->uploaded_file){
@@ -145,8 +145,10 @@ class translationController extends translation {
 
 	}
 
+	/**
+	 * @brief upload file to XE
+	 **/
 	function insertXmlFile($module_srl, $translation_project_srl, $translation_file_srl, $file_name, $target_file) {
-
 		$target_path = sprintf('files/translation_files/%s/%s/%s', $module_srl,$translation_project_srl,getNumberingPath($translation_file_srl));
 		FileHandler::makeDir($target_path);
 
@@ -158,14 +160,14 @@ class translationController extends translation {
 		return $target_filename;	
 	}
 
+	/**
+	 * @brief insert the file contents to xe_translation_contents table
+	 **/
 	function insertXMLContents($file, $translation_file_srl,$translation_project_srl){
-		// begin transaction
 		$logged_info = Context::get('logged_info');
 		
 		$oXMLContext = new XMLContext($file, "en");
 		$_xmlContext = $oXMLContext->_xmlContext;
-
-		//var_dump($_xmlContext);
 
 		foreach($_xmlContext as $key => $val){
 			if($val['attr']['xml_lang']){
@@ -179,13 +181,16 @@ class translationController extends translation {
 				$obj->recommended_count = 0;
 				$obj->is_original = 1;
 				
-				// DB quesry
+				// DB query
 				$output = executeQuery('translation.insertXMLContents', $obj);
 				if(!$output->toBool()) { return $output;}
 			}
 		}
 	}
 
+	/**
+	 * @brief delete the file contents from xe_translation_contents table
+	 **/
 	function deleteXMLContents($translation_file_srl){
 		$obj->translation_file_srl = $translation_file_srl;
 		$output = executeQuery('translation.deleteXMLContents', $obj);
@@ -195,6 +200,9 @@ class translationController extends translation {
 		}
 	}
 
+	/**
+	 * @brief insert the file contents stats information to xe_translation_content_node table, based on the target lanuage
+	 **/
 	function insertContentNodeInfo($translation_file_srl, $translation_project_srl,$target_lang=null){
 		$obj->translation_file_srl = $translation_file_srl;
 		$oTranslationModel = &getModel('translation');
@@ -202,6 +210,10 @@ class translationController extends translation {
 
 		$content_nodes_list = $oTranslationModel->getFileContentNodes($obj->translation_file_srl);
 		$obj->translation_project_srl = $translation_project_srl;
+
+		$isExistLangInfo = $oTranslationModel->isExistLangInfo($obj->translation_file_srl,$target_lang);
+
+		if($isExistLangInfo) {return;}
 		
 		// get supported language list
 		$lang_supported_list = Context::loadLangSupported();
@@ -228,6 +240,9 @@ class translationController extends translation {
 		}
 	}
 
+	/**
+	 * @brief delete the file contents stats information from xe_translation_content_node table
+	 **/
 	function deleteContentNodeInfo($translation_file_srl){
 		$obj->translation_file_srl = $translation_file_srl;
 		$output = executeQuery('translation.deleteContentNodeInfo', $obj);
@@ -237,6 +252,9 @@ class translationController extends translation {
 		}
 	}
 
+	/**
+	 * @brief insert new translations
+	 **/
 	function procTranslationInsertContent(){
 
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");

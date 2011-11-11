@@ -42,6 +42,14 @@
          * @brief display translation index page
          **/
         function dispTranslationIndex() {
+			// get supported language list
+			$lang_supported_list = Context::loadLangSupported();
+			Context::set('lang_supported_list',$lang_supported_list);
+
+			$oTranslationModel = &getModel('translation');
+			$project_list = $oTranslationModel->getProjectList($this->module_info->module_srl);
+			Context::set('project_list',$project_list);
+			
 
 			// set template_file to be index.html
             $this->setTemplateFile('index');
@@ -148,11 +156,21 @@
          **/
 		function dispTranslationFileContent(){
 			$translation_file_srl = Context::get('translation_file_srl');
+			$translation_project_srl = Context::get('translation_project_srl');
 
 			$oTranslationModel =  &getModel('translation');
+			$oTranslationController = &getController('translation');
 
 			$source_lang = Context::get('source_lang')?Context::get('source_lang'):$this->module_info->default_lang;
-			$target_lang = Context::get('target_lang')?Context::get('target_lang'):"zh-CN";
+			$target_lang = Context::get('target_lang')?Context::get('target_lang'):'ko';
+
+			$isExistLangInfo = $oTranslationModel->isExistLangInfo($translation_file_srl,$target_lang);
+			
+			// if the lang infomation is not exist in the translation_content_node table, then insert ContentNodeInfo
+			if(!$isExistLangInfo){
+				$oTranslationController->insertContentNodeInfo($translation_file_srl,$translation_project_srl,$target_lang);
+
+			}
 
 			$source_contents = $oTranslationModel->getSourceContents($source_lang,$target_lang,$translation_file_srl);
 
