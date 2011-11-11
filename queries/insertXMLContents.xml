@@ -4,6 +4,7 @@
     </tables>
     <columns>
 		<column name="translation_content_srl" var="translation_content_srl" filter="number" notnull="notnull" />
+		<column name="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
         <column name="translation_file_srl" var="translation_file_srl" filter="number" notnull="notnull" />
         <column name="content_node" var="content_node" notnull="notnull" />
         <column name="lang" var="lang" notnull="notnull" />
