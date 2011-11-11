@@ -197,7 +197,10 @@ class translationController extends translation {
 		$obj->translation_file_srl = $translation_file_srl;
 		$oTranslationModel = &getModel('translation');
 
-		$content_nodes_list = $oTranslationModel->getFileContentNodes($translation_file_srl);
+		$content_nodes_list = $oTranslationModel->getFileContentNodes($obj->translation_file_srl);
+		$file_info = $oTranslationModel->getFile($obj->translation_file_srl);
+		$obj->translation_project_srl = $file_info->translation_project_srl;
+
 		
 		// get supported language list
 		$lang_supported_list = Context::loadLangSupported();
