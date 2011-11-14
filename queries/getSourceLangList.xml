@@ -1,0 +1,29 @@
+<query id="getSourceLangList" action="select">
+    <tables>
+        <table name="translation_contents" alias="transTable"/>
+        <table name="translation_content_node" alias="contentTable">
+        	<conditions>
+                <condition operation="equal" column="contentTable.content_node" default="transTable.content_node"/>
+            </conditions>
+        </table>
+    </tables>
+    <columns>
+        <column name="transTable.*" />
+        <column name="contentTable.lang" />
+        <column name="contentTable.translation_count" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="transTable.translation_file_srl" var="fileSrl"/>
+		<condition operation="equal" column="transTable.translation_project_srl" var="prjSrl" pipe="and"/>
+		<condition operation="equal" column="transTable.lang" default="en" var="sourceLang" pipe="and"/>
+		<condition operation="equal" column="contentTable.lang" default="fr" var="targetLang" pipe="and"/>
+		<condition operation="equal" column="transTable.is_original" default="1" var="isOriginal" pipe="and"/>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="contentTable.translation_count" order="asc" />
+        <!--<index var="sort_index" default="reply.list_order" order="order_type" />-->
+        <list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>
