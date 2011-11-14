@@ -53,7 +53,8 @@
 			$project_list = $oTranslationModel->getProjectList($this->module_info->module_srl);
 			Context::set('project_list',$project_list);
 
-
+			$moduleTranslationTotalCount = $oTranslationModel->getModuleTranslationTotalCount($this->module_info->module_srl);
+			
 			// set template_file to be index.html
             $this->setTemplateFile('index');
         }
