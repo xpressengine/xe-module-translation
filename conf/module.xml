@@ -15,6 +15,7 @@
 		<action name="dispTranslationFileList" type="view" standalone="true" />
 		<action name="dispTranslationRegFile" type="view" standalone="true" />
 		<action name="dispTranslationFileContent" type="view" standalone="true" />
+		<action name="dispTransContent" type="view" standalone="true" />
 		<action name="downloadTranslationFile" type="view" standalone="true" />
 
 

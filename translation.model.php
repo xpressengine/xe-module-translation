@@ -13,6 +13,25 @@
 		function init() {
 		}
 
+		function addNewTrans($content){
+			$args->translation_content_srl = getNextSequence();
+			$args->content_node = $key;
+			$args->content = strval($content);
+
+			$oTranslationModel = &getModel('translation');
+			$default_contents = $oTranslationModel->getDefaultTargetContents($args);
+
+			if($default_contents)
+				$args->is_new_lang = 0;
+			else
+				$args->is_new_lang = 1;
+
+			$output = executeQuery('translation.insertXMLContents', $args);
+			if(!$output->toBool()) { return $output;}
+
+			$this->add('translation_content_srl', $args->translation_content_srl);
+		}
+
 		/**
 		 * @brief get member project list
 		 **/
@@ -82,6 +101,62 @@
 			else return $output->data;
 		}
 
+		function getFileInfo($fileSrl = null, $projSrl = null){
+			if(empty($fileSrl) && empty($projSrl)){
+				return array();
+			}
+			//paramets
+			if(!empty($fileSrl)){
+				$args->fileSrl = $fileSrl;
+			}
+			if(!empty($projSrl)){
+				$args->projSrl = $projSrl;
+			}
+			$output = executeQuery('translation.getFileInfo',$args);
+			return $output;
+		}
+
+		function getTargetList($contentNode = array(), $targetLang = 'zh-Ch', $fileSrl=null, $projSrl = null){
+			if(empty($contentNode)){
+				return array();
+			}
+			$args->contentNode = $contentNode;
+
+			//paramets
+			if(!empty($fileSrl)){
+				$args->translation_file_srl = $fileSrl;
+			}
+			if(!empty($projSrl)){
+				$args->translation_project_srl = $projSrl;
+			}
+
+			$args->targetLang = $targetLang;
+
+			$output = executeQuery('translation.getTargetLangList',$args);
+			return $output;
+		}
+
+		function getSourceList($sourceLang = 'ko', $targetLang = 'zh-Ch', $fileSrl=null, $projSrl = null, $listCount = 1000, $page = 1, $pageCount = 20){
+			//paramets
+			if(!empty($fileSrl)){
+				$args->translation_file_srl = $fileSrl;
+			}
+			if(!empty($projSrl)){
+				$args->translation_project_srl = $projSrl;
+			}
+			$args->sourceLang = $sourceLang;
+			$args->targetLang = $targetLang;
+			$args->isOriginal = 1;
+
+
+			//page paramets
+			$args->page = $page;
+            $args->list_count = $listCount;
+            $args->page_count = $pageCount;
+            $output = executeQuery('translation.getSourceLangList',$args);
+            return $output;
+		}
+
 		/**
 		 * @brief get content based on the source lang
 		 **/
@@ -93,23 +168,23 @@
 			$args->lang = $source_lang;
 			$args->is_original = 1;
 
-			$output = executeQuery('translation.getSourceLangFileContents',$args);
+			$output = executeQuery('translation.getSourceLangList',$args);
 			if(!$output->toBool()) {return $output;}
 
 			$source_data = $output->data;
 			$source_contents = array();
-			
+
 			if($source_data){
 				foreach($source_data as $key => $val){
 					$source_contents[$key]['source'] = $val;
 					$target_contents = $this->getTargetContents($val->content_node,$target_lang,$translation_file_srl);
-					$source_contents[$key]['target'] = $target_contents;	
+					$source_contents[$key]['target'] = $target_contents;
 					$target_count = count($target_contents);
-					$source_contents[$key]['target_count'] = $target_count;	
+					$source_contents[$key]['target_count'] = $target_count;
 				}
 			}
 			$this->multi2dSortAsc($source_contents,'target_count');
-			
+
 			return $source_contents;
 		}
 
@@ -132,12 +207,12 @@
 
 			// get supported language list
 			$lang_supported_list = Context::loadLangSupported();
-			
+
 			$valueArr = array();
 			foreach($content_nodes as $key => $val){
 				$obj->content_node = $val->content_node;
 				$obj->translation_file_srl = $val->translation_file_srl;
-				
+
 				foreach($lang_supported_list as $lang_key => $lang_val){
 					$obj->lang = $lang_key;
 					$value = $this->getRecommendValue($obj);
@@ -156,9 +231,9 @@
 			$file_info = $this->getFile($translation_file_srl);
 			$oXMLContext = new XMLContext($file_info->target_file, "en");
 
-			
+
 			$xmlContents = $oXMLContext->getXmlFile($valueArr,$file_info->file_type);
-			
+
 			return $xmlContents;
 		}
 
@@ -177,12 +252,12 @@
 			$args->translation_file_srl = $obj->translation_file_srl;
 			$args->content_node = $obj->content_node;
 			$args->lang = $obj->lang;
-				
+
 			$output = executeQuery('translation.getMaxRecommendCount',$args);
 			if(!$output->toBool()) {$args->max_recomment_count = 0;} else {$args->max_recomment_count = intval($output->data->max_recommended_count);}
 
 			$output = executeQuery('translation.getRecommendValue',$args);
-			if(!$output->toBool()) {return null;} 
+			if(!$output->toBool()) {return null;}
 
 			return $output->data;
 		}
@@ -196,7 +271,7 @@
 			$obj->is_original = 1;
 			$output = executeQuery('translation.getDefaultTargetContents',$obj);
 
-			if(!$output->toBool()) {return null;} 
+			if(!$output->toBool()) {return null;}
 			return $output->data;
 		}
 
@@ -209,7 +284,7 @@
 
 			$output = executeQuery('translation.getTranslationCount',$obj);
 
-			if(!$output->toBool()) {return null;} 
+			if(!$output->toBool()) {return null;}
 			return $output->data;
 		}
 
@@ -222,7 +297,7 @@
 
 			$output = executeQuery('translation.getRecommendedCount',$obj);
 
-			if(!$output->toBool()) {return null;} 
+			if(!$output->toBool()) {return null;}
 			return $output->data;
 		}
 

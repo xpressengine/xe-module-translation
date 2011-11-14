@@ -35,6 +35,9 @@
 				Context::set('file_info',$file_info);
 			}
 
+			//set view 's default list count/page count
+			$this->listCount = 20;
+			$this->pageCount = 10;
             $this->setTemplatePath($template_path);
 		}
 
@@ -49,7 +52,7 @@
 			$oTranslationModel = &getModel('translation');
 			$project_list = $oTranslationModel->getProjectList($this->module_info->module_srl);
 			Context::set('project_list',$project_list);
-			
+
 
 			// set template_file to be index.html
             $this->setTemplateFile('index');
@@ -75,13 +78,13 @@
          * @brief display translation (member) project list page
          **/
 		function dispTranslationProjectList() {
-			
+
 			// get member_srl
             $member_srl = Context::get('member_srl');
 
 			$oTranslationModel =  &getModel('translation');
 			$obj->module_srl = $this->module_info->module_srl;
-			
+
 			if($member_srl){
 				$obj->member_srl = $member_srl;
 				$project_list =  $oTranslationModel->getMemberProjectList($obj);
@@ -99,7 +102,7 @@
          * @brief display translation (project) file list page
          **/
 		function dispTranslationFileList() {
-			
+
 			// get member_srl
             $translation_project_srl = Context::get('translation_project_srl');
 			$obj->module_srl = $this->module_info->module_srl;
@@ -130,12 +133,12 @@
 
 			$oTranslationModel =  &getModel('translation');
 
-			
+
 			if($translation_file_srl){
 				$file_info =  $oTranslationModel->getFile($translation_file_srl);
 				$translation_project_srl = $file_info->translation_project_srl;
 			}
-			
+
 			// get project info
 			$project_info = $oTranslationModel->getProject($translation_project_srl);
 
@@ -149,6 +152,55 @@
 
 			// set template_file to be register_file.html
             $this->setTemplateFile('file_register');
+        }
+
+        function dispTransContent(){
+        	$fileSrl = Context::get('fsrl') ? Context::get('fsrl'):null;
+        	$projSrl = Context::get('psrl') ? Context::get('psrl'):null;
+        	$oTransModel = &getModel('translation');
+
+        	$sourceLang = Context::get('slang') ? Context::get('slang') : $this->module_info->default_lang;
+        	$targetLang = Context::get('tlang') ? Context::get('tlang') : 'zh-CN';
+
+			$page = Context::get('page');
+            if(!$page) Context::set('page', $page=1);
+        	$sourceList = $oTransModel->getSourceList($sourceLang, $targetLang, $fileSrl, $projSrl,
+        												$this->listCount, $page, $this->pageCount);
+        	Context::set('page_navigation', $sourceList->page_navigation);
+
+			//get the file Info
+        	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
+
+			//get other info :targetInfo
+        	$contentNode = array();
+        	foreach($sourceList->data as $key => $dataObj){
+        		$contentNode[] = $dataObj->content_node;
+        	}
+
+        	//get translation_content_srl
+			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
+
+        	//combine the target info,file info into the source
+        	foreach($sourceList->data as $key => &$obj){
+        		$obj->targetList = array();
+        		foreach($targetList->data as $key2 => $obj2){
+					if($obj->content_node == $obj2->content_node){
+						$obj->targetList[] = $obj2;
+					}
+        		}
+        		$obj->fileInfo = null;
+        		foreach($fileInfo->data as $key2 => $obj2){
+        			if($obj->translation_file_srl == $obj2->translation_file_srl){
+        				$obj->fileInfo = $obj2;
+        				break;
+        			}
+        		}
+        	}
+
+        	Context::set('sourceList', $sourceList->data);
+
+            $this->setTemplateFile('file_content');
+
         }
 
         /**
@@ -165,7 +217,7 @@
 			$target_lang = Context::get('target_lang')?Context::get('target_lang'):'ko';
 
 			$isExistLangInfo = $oTranslationModel->isExistLangInfo($translation_file_srl,$target_lang);
-			
+
 			// if the lang infomation is not exist in the translation_content_node table, then insert ContentNodeInfo
 			if(!$isExistLangInfo){
 				$oTranslationController->insertContentNodeInfo($translation_file_srl,$translation_project_srl,$target_lang);
@@ -196,7 +248,7 @@
 			$this->write_txt($test);
 			// set template_file to be register_file.html
             $this->setTemplateFile('download');
-			
+
 		}
 
 		function write_txt($contents){
@@ -209,7 +261,7 @@
 				$str = file_get_contents('test.xml');
 				$fp = fopen("test.xml","wb");
 				fwrite($fp,$contents);
-				
+
 				fclose($fp);
 
 			}
