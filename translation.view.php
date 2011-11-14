@@ -36,7 +36,7 @@
 			}
 
 			//set view 's default list count/page count
-			$this->listCount = 20;
+			$this->listCount = 5;
 			$this->pageCount = 10;
             $this->setTemplatePath($template_path);
 		}
@@ -162,11 +162,12 @@
 
         	$sourceLang = Context::get('source_lang') ? Context::get('source_lang') : $this->module_info->default_lang;
         	$targetLang = Context::get('target_lang') ? Context::get('target_lang') : 'zh-CN';
+        	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
 
 			$page = Context::get('page');
             if(!$page) Context::set('page', $page=1);
         	$sourceList = $oTransModel->getSourceList($sourceLang, $targetLang, $fileSrl, $projSrl,
-        												$this->listCount, $page, $this->pageCount);
+        												$listCount, $page, $this->pageCount);
         	Context::set('page_navigation', $sourceList->page_navigation);
         	if(empty($sourceList->data)){
         		$sourceList->data = array();
@@ -185,7 +186,6 @@
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
 
         	//combine the target info,file info into the source
-
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
         		foreach($targetList->data as $key2 => $obj2){

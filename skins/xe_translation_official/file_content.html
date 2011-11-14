@@ -3,11 +3,19 @@
 <include target="_header.html" />
 
 <h2 class="m_title">Translation File Content Page</h2>
-	<div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
-    <div class="language_type"><select id="default_lang" class="ko lang_us"><option value="us" class="us">English</option></select> To <select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select></div>
-	<div class="list_type"><a href="" class="selected">Sorting by Translation</a><a href="">Sorting by Review</a></div>
-	<div class="perPage"><select><option value="5">5</option><option value="10">10</option></select> Items Per Page</div>
+<div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
 <form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
+<div class="language_type">
+	<select id="default_lang" class="ko lang_us">
+		<option value="us" class="us">English</option>
+	</select> To
+	<select id="target_lang" class="ko lang_ko">
+		<option value="ko" class="ko">Korean</option>
+	</select>
+</div>
+<div class="list_type"><a href="" class="selected">Sorting by Translation</a><a href="">Sorting by Review</a></div>
+<div class="perPage"><select name="listCount"><option value="5">5</option><option value="10">10</option></select> Items Per Page</div>
+
 <input type="hidden" name="act" value="procTranslationInsertContent" />
 <input type="hidden" name="mid" value="{$mid}" />
 <input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
@@ -48,14 +56,7 @@
 		</div>
 	</div>
 </div>
-<!--
-<div class="t_pagination">
-      <a href="" class="prevEnd">{$lang->first_page}</a>
-	<strong>1</strong>
-	<a href="">2</a>
-      <a href="#" class="nextEnd">{$lang->last_page}</a>
-</div>
--->
+
 <div class="t_pagination">
 			<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
 			<!--@while($page_no = $page_navigation->getNextPage())-->
