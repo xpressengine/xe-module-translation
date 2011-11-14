@@ -93,17 +93,17 @@ div.language_type select{padding-left:20px;border:1px solid #d5d5d5; background-
 .list_type{display:block;float:left;}
 .list_type a{display:inline-block;margin-right:10px;color:#000}
 .list_type a.selected{font-weight:bold}
-div.perPage{margin-bottom:10px;float:right;}
+div.perPage{float:right;}
 div.perPage:after{content:'';display:block;height:0;clear:both;}
-form.fo_translation_insert_content{float:left;*zoom:1;}
+form.fo_translation_insert_content{}
 form.fo_translation_insert_content:after{display:block;content:'';clear:both;}
-#t_list{width:100%;border:1px solid #AAA;overflow:hidden;clear:both;margin-right:3px;float:left;box-shadow:0 0 5px #aaa;*zoom:1;}
+#t_list{width:100%;border:1px solid #AAA;overflow:hidden;clear:both;margin-top:10px;margin-right:3px;float:left;box-shadow:0 0 5px #aaa;*zoom:1;}
 #t_list:after{display:block;clear:both;content:'';}
 #t_list div.t_item{overflow:hidden;}
 #t_list div.item{padding:10px 0;width:100%;float:left;border-bottom:1px solid #CCC;}
 #t_list div.item span.phrase,
-#t_list div.item span.translation{display:block;margin:0;padding:0 10px;float:left;clear:right;}
-#t_list div.item span.phrase{width:50%;;}
+#t_list div.item span.translation{display:block;margin:0;padding:0 10px;float:left;width:49%;}
+#t_list div.item span.phrase{}
 #t_list>div:last-child{border:none;}
 #t_list div.edit{float:left;width:100%;border-bottom:1px solid #ccc}
 #t_list div.edit div.position{margin-bottom:4px;padding: 5px 10px;}
@@ -163,4 +163,4 @@ table.normal_table td.col1 a{display:block;padding:4px 0;width:197px;word-wrap:b
 #project_list {width:100%; float:right}
 
 
-.t_pagination{text-align:center; height:30px;margin:0 auto}
+.t_pagination{text-align:center; height:30px;width:100%;clear:both;}
