@@ -54,7 +54,7 @@
 			Context::set('project_list',$project_list);
 
 			$moduleTranslationTotalCount = $oTranslationModel->getModuleTranslationTotalCount($this->module_info->module_srl);
-			
+
 			// set template_file to be index.html
             $this->setTemplateFile('index');
         }
@@ -160,18 +160,21 @@
         	$projSrl = Context::get('translation_project_srl') ? Context::get('translation_project_srl'):null;
         	$oTransModel = &getModel('translation');
 
-        	$sourceLang = Context::get('slang') ? Context::get('slang') : $this->module_info->default_lang;
-        	$targetLang = Context::get('tlang') ? Context::get('tlang') : 'zh-CN';
+        	$sourceLang = Context::get('source_lang') ? Context::get('source_lang') : $this->module_info->default_lang;
+        	$targetLang = Context::get('target_lang') ? Context::get('target_lang') : 'zh-CN';
 
 			$page = Context::get('page');
             if(!$page) Context::set('page', $page=1);
         	$sourceList = $oTransModel->getSourceList($sourceLang, $targetLang, $fileSrl, $projSrl,
         												$this->listCount, $page, $this->pageCount);
         	Context::set('page_navigation', $sourceList->page_navigation);
+        	if(empty($sourceList->data)){
+        		$sourceList->data = array();
+        	}
 
 			//get the file Info
         	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
-//var_dump($fileInfo);exit;
+
 			//get other info :targetInfo
         	$contentNode = array();
         	foreach($sourceList->data as $key => $dataObj){
@@ -182,6 +185,7 @@
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
 
         	//combine the target info,file info into the source
+
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
         		foreach($targetList->data as $key2 => $obj2){

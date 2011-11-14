@@ -152,7 +152,6 @@
 			$args->targetLang = $targetLang;
 			$args->isOriginal = 1;
 
-
 			//page paramets
 			$args->page = $page;
             $args->list_count = $listCount;
@@ -321,10 +320,10 @@
 			if(!$module_srl) return;
 
 			$obj->module_srl = $module_srl;
-			
+
 			$output = executeQuery('translation.getModuleTranslationTotalCount',$obj);
-			if(!$output->toBool()) {return 0;} 
-			
+			if(!$output->toBool()) {return 0;}
+
 			$total_count = 0;
 			$count_list = $output->data;
 			if($count_list){
@@ -340,7 +339,7 @@
 			if(!$module_srl || !$lang) return;
 
 			$obj->module_srl = $module_srl;
-			
+
 		}
 
 		function multi2dSortAsc(&$arr, $key){
