@@ -34,9 +34,9 @@
 			<p class="phrase us">Installed Addons</p>
 			<div class="translation">
 				<ul>
-					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
-					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
-					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
+					<li class="vote"  cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
+						{$val2->content}<span class="btn_vote">vote</span>
+					</li>
 				</ul>
 				<label for="new_t">Add your own translation</label>
 				<textarea cols="50" rows="1" class="resizable" name="content[{$content_node}]"></textarea>

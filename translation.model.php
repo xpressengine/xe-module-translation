@@ -113,6 +113,10 @@
 				$args->projSrl = $projSrl;
 			}
 			$output = executeQuery('translation.getFileInfo',$args);
+
+			if(count($output->data) == 1){
+				$output->data = array($output->data);
+			}
 			return $output;
 		}
 

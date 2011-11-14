@@ -156,8 +156,8 @@
         }
 
         function dispTransContent(){
-        	$fileSrl = Context::get('fsrl') ? Context::get('fsrl'):null;
-        	$projSrl = Context::get('psrl') ? Context::get('psrl'):null;
+        	$fileSrl = Context::get('translation_file_srl') ? Context::get('translation_file_srl'):null;
+        	$projSrl = Context::get('translation_project_srl') ? Context::get('translation_project_srl'):null;
         	$oTransModel = &getModel('translation');
 
         	$sourceLang = Context::get('slang') ? Context::get('slang') : $this->module_info->default_lang;
@@ -171,7 +171,7 @@
 
 			//get the file Info
         	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
-
+//var_dump($fileInfo);exit;
 			//get other info :targetInfo
         	$contentNode = array();
         	foreach($sourceList->data as $key => $dataObj){
@@ -188,6 +188,9 @@
 					if($obj->content_node == $obj2->content_node){
 						$obj->targetList[] = $obj2;
 					}
+        		}
+        		if(empty($fileInfo)){
+        			continue;
         		}
         		$obj->fileInfo = null;
         		foreach($fileInfo->data as $key2 => $obj2){
