@@ -1,54 +1,67 @@
+<load target="js/jquery.textarearesizer.compressed.js" />
+<load target="js/script.js" />
 <include target="_header.html" />
 
-<h2>Translation File Content Page</h2>
+<h2 class="m_title">Translation File Content Page</h2>
 
-<div class="container">
+
 	<div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
     <div class="language_type"><select id="default_lang" class="ko lang_us"><option value="us" class="us">English</option></select> To <select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select></div>
 	<div class="list_type"><a href="" class="selected">Sorting by Translation</a><a href="">Sorting by Review</a></div>
 	<div class="perPage"><select><option value="5">5</option><option value="10">10</option></select> Items Per Page</div>
 
-	<div id="t_form">
-		<form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent">
-		<input type="hidden" name="act" value="procTranslationInsertContent" />
-		<input type="hidden" name="mid" value="{$mid}" />
-		<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
-		<input type="hidden" name="source_lang" value="{$source_lang}" />
-		<input type="hidden" name="target_lang" value="{$target_lang}" />
-		<input type="hidden" name="member_srl" value="{$logged_info->member_srl}" />
-		<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
-		<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
-		<div id="t_list">
-			<div loop="$source_contents => $key, $val" class="item">
-				{@ $content_node = strval($val['source']->content_node);}
-				<p class="phrase us">{$val['source']->content}</p>
-				<p class="translation">
-					<block cond="count($val['target'])>1" loop="$val['target']=>$key2,$val2">
-						{$val2->content}<br />
-					</block>
-					<block cond="count($val['target'])==1">
-						{$val['target']->content}<br />
-					</block>
-				</p>
-				<div class="edit">
-					<div class="position">
-						position:<span>./module/board/lang/lang.xml:invalid number</span>
-					</div>
-					<p class="phrase us"></p>
-					<div class="translation">
-						<label for="new_t">Add your own translation</label>
-						<textarea cols="50" rows="1" class="resizable" name="content[{$content_node}]"></textarea>
-					</div>
-					<div class="btns">
-						<button class="btn_prev">Prev</button><button class="btn_next">Next</button>
-					</div>
-				</div>
+<form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
+<input type="hidden" name="act" value="procTranslationInsertContent" />
+<input type="hidden" name="mid" value="{$mid}" />
+<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+<input type="hidden" name="source_lang" value="{$source_lang}" />
+<input type="hidden" name="target_lang" value="{$target_lang}" />
+<input type="hidden" name="member_srl" value="{$logged_info->member_srl}" />
+<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+<div id="t_list">
+	<div loop="$source_contents => $key, $val" class="t_item">
+		{@ $content_node = strval($val['source']->content_node);}
+		<div class="item">
+			<span class="phrase us">{$val['source']->content}</span>
+			<span class="translation">
+				<block cond="count($val['target'])>1" loop="$val['target']=>$key2,$val2">
+					{$val2->content}<br />
+				</block>
+				<block cond="count($val['target'])==1">
+					{$val['target']->content}<br />
+				</block>
+			</span>
+		</div>
+		<div class="edit">
+			<div class="position">position:<span>./module/board/lang/lang.xml:invalid number</span></div>
+			<p class="phrase us">Installed Addons</p>
+			<div class="translation">
+				<ul>
+					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
+					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
+					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>						
+				</ul>
+				<label for="new_t">Add your own translation</label>
+				<textarea cols="50" rows="1" class="resizable" name="content[{$content_node}]"></textarea>
+
+			</div>
+			<ul class="glossary">
+				<li><span class="term">Username</span><span class="translation">사용자 이름</span></li>
+			</ul>
+			<div class="btns">
+				<button class="btn_prev">Prev</button><button class="btn_next">Next</button>
 			</div>
 		</div>
-		<div style="text-align:center; margin-top:5px"><span style="margin-right: 2px">first page</span><b>1</b>|2|3<span style="margin-left: 2px">last page</span><div>
-		<div class="save_translations"><input type="submit" value="Save Translation" class="sty_btn"/></div>
-		</form>
-	</div><!-- //t_form  -->
-</div><!-- //container -->
+	</div>
+</div>
 
+<div class="t_pagination">
+      <a href="" class="prevEnd">{$lang->first_page}</a>
+	<strong>1</strong>
+	<a href="">2</a>
+      <a href="#" class="nextEnd">{$lang->last_page}</a>
+</div>
 
+<div class="save_translations"><input type="submit" value="Save Translation" class="sty_btn"/></div>
+</form>

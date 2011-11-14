@@ -1,12 +1,15 @@
 @charset "utf-8";
 
 /* common */
-html,body,div,p,dl,dt,dd,button{margin:0;padding:0;font-size:12px;line-height:16px;font-family:'나눔고딕','NanumGothic','맑은 고딕','MalgunGothic',Arial, Helvetica, sans-serif}
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0;font-size:12px;line-height:16px;font-family:'나눔고딕','NanumGothic','맑은 고딕','MalgunGothic',Arial, Helvetica, sans-serif}
+ul,ol{list-style:none}
 .container {margin:0px;padding:0px;width:100%;}
 .blind{display: block;overflow: hidden;top: 0;left: 0;width: 0;height: 0;border: 0;background: none;font-size:0;line-height: 0;}
 .sty_btn{ vertical-align:text-top;border:1px solid #ababab;border-radius:2px;text-shadow:0 1px #FFF; font-weight:bold;background:#ededed;background: -webkit-gradient(linear, 0 0, 0 100%, from(#FEFEFE), to(#DCDCDC)); background: -moz-linear-gradient(top, #FEFEFE, #DCDCDC);}
 table caption.blind{display:inline;visibility:hidden;line-height:0;}
 
+
+h2.m_title{margin:5px 0 20px; font-size:16px;font-weight:bold;}
 .graph{width:200px;height:15px;}
 .track {width:inherit;height:15px;margin:0 auto;position:relative;overflow:hidden;}
 .track span{display:inline-block;float:left;margin:0;padding:0;height:15px; text-align:center;font-size:12px;line-height:14px;overflow:hidden;}
@@ -81,60 +84,68 @@ h2.page_h2{float:left;margin:0 0 24px 10px;font-size:15px;line-height:15px;}
 #project_files {margin-top:20px}
 
 /* 번역페이지 */
-.container .project{float:left;}
-.container .project a{color:#000}
-.container .language_type{margin-bottom:20px;text-align:right;}
-.container .language_type select{padding-left:20px;border:1px solid #d5d5d5; background-position:2px 3px;-webkit-appearance:none}
+div.project{float:left;}
+div.project a{color:#000}
+div.language_type{margin-bottom:20px;text-align:right;}
+div.language_type select{padding-left:20px;border:1px solid #d5d5d5; background-position:2px 3px;-webkit-appearance:none}
 
-.container .language_type select option{text-align:center;}
-.container .list_type{display:block;float:left;}
-.container .list_type a{display:inline-block;margin-right:10px;color:#000}
-.container .list_type a.selected{font-weight:bold}
+.language_type select option{text-align:center;}
+.list_type{display:block;float:left;}
+.list_type a{display:inline-block;margin-right:10px;color:#000}
+.list_type a.selected{font-weight:bold}
 div.perPage{margin-bottom:10px;float:right;}
-#t_list{width:100%;border:1px solid #AAA;overflow:hidden;box-shadow:0 0 5px #aaa;}
-#t_list div.item{padding:10px 0;width:100%;float:left;border-bottom:1px solid #CCC}
-#t_list div.item p.phrase,
-#t_list div.item p.translation{margin:0;padding:0 10px;float:left;clear:right;}
-#t_list div.item p.phrase{width:300px;}
+div.perPage:after{content:'';display:block;height:0;clear:both;}
+form.fo_translation_insert_content{*zoom:1;}
+form.fo_translation_insert_content:after{display:block;content:'';clear:both;}
+#t_list{width:100%;border:1px solid #AAA;overflow:hidden;clear:both;margin-right:3px;float:left;box-shadow:0 0 5px #aaa;}
+#t_list div.t_item{overflow:hidden;}
+#t_list div.item{padding:10px 0;width:100%;float:left;border-bottom:1px solid #CCC;}
+#t_list div.item span.phrase,
+#t_list div.item span.translation{display:block;margin:0;padding:0 10px;float:left;clear:right;}
+#t_list div.item span.phrase{width:50%;;}
 #t_list>div:last-child{border:none;}
 #t_list div.edit{float:left;width:100%;border-bottom:1px solid #ccc}
 #t_list div.edit div.position{margin-bottom:4px;padding: 5px 10px;}
 #t_list div.edit div.position span{text-decoration:underline;color:#666}
-div.edit p.phrase{width:40%;padding:10px;white-space:normal;float:left}
-div.edit div.translation{padding:5px;float:left;}
+
+
+div.edit p.phrase{width:40%;padding:10px;white-space:normal;float:left;}
+
+#t_list div.edit ul.glossary{float:left;position:relative;left:20px;width:300px;overflow-y:auto;border:1px solid #EEE;border-bottom:none;}
+#t_list div.edit ul.glossary li{height:20px;width:100%;border-bottom:1px solid #eee;}
+div.edit ul.glossary li span{display:inline-block;float:left;padding-top:2px;height:18px;padding-left:10px;}
+div.edit ul.glossary span.term{width:90px;border-right:1px solid #eee;}
+div.edit ul.glossary span.translation{}
+
+div.edit div.translation{width:373px;padding:5px;float:right;}
 div.edit div.translation:after{display:block;content:'';clear:both;font-size:0;line-height:0}
 
 div.edit div.translation label{display:block;color:#666;margin-bottom:5px;padding-left:5px}
-div.edit div.translation p.vote{behavior:expression(
-this.onmouseover = new Function("this.className += ' voteOver';"),
-this.onmouseout = new Function("this.className = this.className.replace(' voteOver', '');"),this.style.behavior = null);margin-bottom:3px;padding:5px 5px 5px 20px;position:relative;border-radius:3px;cursor:pointer;background:url(../images/radio.png) no-repeat 5px 7px;}
-div.edit div.translation p.vote:hover,
-div.edit div.translation p.voteOver{background:#eee url(../images/radio-select.png) no-repeat 5px 7px;}
-div.edit div.translation p.voteOver .btn_vote{display:block;}
+div.edit div.translation li.vote{margin-bottom:3px;padding:5px 5px 5px 20px;position:relative;border-radius:3px;cursor:pointer;background:url(../images/radio.png) no-repeat 5px 7px;}
+
+div.edit div.translation li.voteOver{background:#eee url(../images/radio-select.png) no-repeat 5px 7px;}
+div.edit div.translation li.voteOver .btn_vote{display:block;}
 
 
-div.edit div.translation p.vote .btn_vote{display:none;position:absolute;right:0;top:6px;width:40px;height:15px;background:#FA6363;text-align:center;color:white;line-height:12px;}
-div.edit div.translation p.vote:hover .btn_vote{display:block;}
-div.edit div.translation textarea{margin:3px;padding:3px 3px 10px;width:355px;height:30px;border-radius:3px;font-size:12px;outline:none;border:1px solid #aeaeae;resize:vertical;}
+div.edit div.translation li.vote .btn_vote{display:none;position:absolute;right:0;_right:3px;top:6px;width:40px;height:15px;background:#FA6363;text-align:center;color:white;line-height:12px;}
+
+div.edit div.translation textarea{margin:3px;padding:3px 3px 10px;width:352px;height:30px;border-radius:3px;font-size:12px;outline:none;border:1px solid #aeaeae;resize:vertical;}
 div.edit div.translation textarea:focus{box-shadow: 0 0 3px #96F;}
 
-#t_list div.edit div.btns{margin-bottom:10px;text-align:center;}
+#t_list div.edit div.btns{float:left;width:100%;margin-bottom:10px;text-align:center;}
 #t_list div.edit div.btns button{margin:0;padding:0 20px;height:26px;border:1px solid #ababab;border-radius:2px;text-shadow:0 1px #FFF; background:#ededed;background: -webkit-gradient(linear, 0 0, 0 100%, from(#FEFEFE), to(#DCDCDC)); background: -moz-linear-gradient(top, #FEFEFE, #DCDCDC);}
 #t_list div.edit div.btns button.btn_prev{margin-right:200px;}
-div.save_translations {text-align:center;}
+div.save_translations {text-align:center;float:right;}
 div.save_translations .sty_btn {margin-top:10px;padding:0 20px;height:30px;font-size:14px;line-height:14px;float:right;}
 
 
-
-
-.resizable-textarea{display:inline-block;width:370px;overflow:hidden;}
-div.grippie {margin-left:5px;position:relative; bottom:14px;_bottom:14px;width:359px;z-index:10;cursor:s-resize;height:9px;overflow:hidden;background:#fafafa url(../images/grippie.png) no-repeat center 50%;_background-position-y:30%;}
+.resizable-textarea{display:inline-block;width:373px;overflow:hidden;}
+div.grippie {margin-left:5px;position:relative; bottom:14px;_bottom:14px;width:356px;z-index:10;cursor:s-resize;height:9px;overflow:hidden;background:#fafafa url(../images/grippie.png) no-repeat center 50%;_background-position-y:30%;}
 .resizable-textarea textarea {display:block;margin-bottom:0pt;width:50%;height: 30%;}
 
 #t_form{width:100%; overflow:hidden;}
 
 #more_projects {text-align:right; padding-right:2px;}
-
 #project_list tbody .col3,
 #project_list tbody .col4,#project_list tbody .col5{text-align:center}
 #project_list a.sty_btn{display:inline-block;margin-right:5px;padding-top:2px;width:50px;height:15px; line-height:12px;}
@@ -149,3 +160,6 @@ table.normal_table td.col1 a{display:block;padding:4px 0;width:197px;word-wrap:b
 .btn_area a{display:inline-block;padding-top:5px;text-align:center;width:120px;height:20px;float:right;text-decoration:none;color:#000; margin-top:10px;}
 
 #project_list {width:100%; float:right}
+
+
+.t_pagination{text-align:center;width:100%; height:30px;margin:0}
