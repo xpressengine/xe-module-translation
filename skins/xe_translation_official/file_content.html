@@ -20,27 +20,23 @@
 <input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
 <input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
 <div id="t_list">
-	<div loop="$source_contents => $key, $val" class="t_item">
-		{@ $content_node = strval($val['source']->content_node);}
+	<div loop="$sourceList => $key, $val" class="t_item">
 		<div class="item">
-			<span class="phrase us">{$val['source']->content}</span>
+			<span class="phrase us">{$val->content}</span>
 			<span class="translation">
-				<block cond="count($val['target'])>1" loop="$val['target']=>$key2,$val2">
+				<block cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
 					{$val2->content}<br />
-				</block>
-				<block cond="count($val['target'])==1">
-					{$val['target']->content}<br />
 				</block>
 			</span>
 		</div>
 		<div class="edit">
-			<div class="position">position:<span>./module/board/lang/lang.xml:invalid number</span></div>
+			<div class="position">position:<span>{$val->fileInfo->file_path}:invalid number</span></div>
 			<p class="phrase us">Installed Addons</p>
 			<div class="translation">
 				<ul>
 					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
 					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
-					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>						
+					<li class="vote">설치된 애드온<span class="btn_vote">vote</span></li>
 				</ul>
 				<label for="new_t">Add your own translation</label>
 				<textarea cols="50" rows="1" class="resizable" name="content[{$content_node}]"></textarea>
@@ -55,13 +51,25 @@
 		</div>
 	</div>
 </div>
-
+<!--
 <div class="t_pagination">
       <a href="" class="prevEnd">{$lang->first_page}</a>
 	<strong>1</strong>
 	<a href="">2</a>
       <a href="#" class="nextEnd">{$lang->last_page}</a>
 </div>
+-->
+<div class="t_pagination">
+			<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
+			<!--@while($page_no = $page_navigation->getNextPage())-->
+				<!--@if($page == $page_no)-->
+					<strong>{$page_no}</strong>
+				<!--@else-->
+					<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+				<!--@end-->
+			<!--@end-->
+			<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+		</div>
 
 <div class="save_translations"><input type="submit" value="Save Translation" class="sty_btn"/></div>
 </form>
