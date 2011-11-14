@@ -312,6 +312,33 @@
 			return false;
 		}
 
+		// Statistic Information
+		function getModuleTranslationTotalCount($module_srl){
+			if(!$module_srl) return;
+
+			$obj->module_srl = $module_srl;
+			
+			$output = executeQuery('translation.getModuleTranslationTotalCount',$obj);
+			if(!$output->toBool()) {return 0;} 
+			
+			$total_count = 0;
+			$count_list = $output->data;
+			if($count_list){
+				foreach($count_list as $key => $count)
+					$total_count += intval($count->content_node_count);
+			}
+
+			return $total_count;
+
+		}
+
+		function getModuleTranslationLangApprovedCount($module_srl,$lang){
+			if(!$module_srl || !$lang) return;
+
+			$obj->module_srl = $module_srl;
+			
+		}
+
 		function multi2dSortAsc(&$arr, $key){
 			$sort_col = array();
 			foreach ($arr as $sub) $sort_col[] = $sub[$key];
