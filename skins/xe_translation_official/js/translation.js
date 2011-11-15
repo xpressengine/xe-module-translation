@@ -19,4 +19,3 @@ jQuery(function($){
 	$('tbody tr:last-child>td,tbody tr:last-child>th').css('border-bottom','none');
 	$('thead th:last-child').css('border-right','none');
  });
- 
