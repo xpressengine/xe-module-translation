@@ -321,7 +321,7 @@
 
 			$obj->module_srl = $module_srl;
 
-			$output = executeQuery('translation.getModuleTranslationTotalCount',$obj);
+			$output = executeQueryArray('translation.getModuleTranslationTotalCount',$obj);
 			if(!$output->toBool()) {return 0;}
 
 			$total_count = 0;
@@ -332,13 +332,113 @@
 			}
 
 			return $total_count;
-
 		}
 
-		function getModuleTranslationLangApprovedCount($module_srl,$lang){
+		function getModuleTranslationLangCount($module_srl,$lang,$approved = false){
 			if(!$module_srl || !$lang) return;
 
 			$obj->module_srl = $module_srl;
+			$obj->lang = $lang;
+
+			if($approved){
+				$obj->recommended_count = 1;
+				$output = executeQueryArray('translation.getModuleTranslationLangApprovedCount',$obj);
+			}else{
+				$output = executeQueryArray('translation.getModuleTranslationLangCount',$obj);
+			}
+
+			if(!$output->toBool()) {return 0;} 
+			
+			$total_count = 0;
+			$count_list = $output->data;
+
+			if($count_list){
+				foreach($count_list as $key => $count)
+					$total_count += intval($count->content_node_count);
+			}
+
+			return $total_count;
+		}
+
+		function getModuleLangLatestUpdate($module_srl, $lang){
+			if(!$module_srl || !$lang) return;
+
+			$obj->module_srl = $module_srl;
+
+			$obj->lang = $lang;
+
+			$output = executeQueryArray('translation.getModuleLangLatestUpdate',$obj);
+			if(!$output->toBool()) {return 0;} 
+		}
+	
+
+		function getProjectTranslationTotalCount($translation_project_srl){
+			if(!$translation_project_srl) return;
+
+			$obj->translation_project_srl = $translation_project_srl;
+			
+			$output = executeQueryArray('translation.getProjectTranslationTotalCount',$obj);
+			if(!$output->toBool()) {return 0;} 
+			
+			$total_count = 0;
+			$count_list = $output->data;
+			if($count_list){
+				foreach($count_list as $key => $count)
+					$total_count += intval($count->content_node_count);
+			}
+		
+			return $total_count;
+		}
+
+		function getProjectTranslationCount($translation_project_srl,$approved = false){
+			if(!$translation_project_srl) return;
+
+			$obj->translation_project_srl = $translation_project_srl;
+
+			if($approved){
+				$obj->recommended_count = 1;
+				$output = executeQueryArray('translation.getProjectTranslationApprovedCount',$obj);
+			}else{
+				$obj->is_original = 1;
+				$obj->is_new_lang = 1;
+				$output = executeQueryArray('translation.getProjectTranslationCount',$obj);
+			}
+			if(!$output->toBool()) {return 0;} 
+			
+			$total_count = 0;
+			$count_list = $output->data;
+			if($count_list){
+				foreach($count_list as $key => $count)
+					$total_count += intval($count->content_node_count);
+			}
+
+			return $total_count;
+		}
+
+		function getTranslatorRanking($module_srl,$limit_count = 5){
+			if(!$module_srl) return;
+
+			$obj->module_srl = $module_srl;
+			$obj->limit_count = $limit_count;
+
+			$output = executeQueryArray('translation.getTranslatorRanking',$obj);
+			if(!$output->toBool()) {return 0;} 
+
+			return $output->data;
+
+		}
+
+		function getReviewerRanking($module_srl,$limit_count = 5){
+			if(!$module_srl) return;
+
+			$obj->module_srl = $module_srl;
+			$obj->limit_count = $limit_count;
+			$obj->recommended_count = 1;
+
+			$output = executeQueryArray('translation.getReviewerRanking',$obj);
+			if(!$output->toBool()) {return 0;} 
+
+			return $output->data;
 
 		}
 

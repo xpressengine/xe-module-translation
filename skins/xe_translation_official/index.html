@@ -84,69 +84,29 @@
 	<h2 class="member">Contributor</h2>
 
 	<table id="type_translate" class="info_table rank_table" cellpadding="0" cellspacing="0">
-		<caption>Translate</caption>
+		<caption>Translation</caption>
 		<colgroup>
 			<col width="40%" />
 			<col />
 		</colgroup>
 		<tbody>
-			<tr>
-				<th class="col1">ngleader</th>
-				<td class="col2">18000건</td>
-			</tr>
-			<tr>
-				<th class="col1">zero</th>
-				<td class="col2">8000건</td>
-			</tr>
-			<tr>
-				<th class="col1">sol</tthd>
-				<td class="col2">16200건</td>
-			</tr>
-			<tr>
-				<th class="col1">mygony</th>
-				<td class="col2">17300건</td>
-			</tr>
-			<tr>
-				<th class="col1">cherryfilter</th>
-				<td class="col2">187건</td>
-			</tr>
-			<tr>
-				<th class="col1">dece24</th>
-				<td class="col2">1200건</td>
+			<tr loop="$translator_list => $key, $translator">
+				<th class="col1">{$translator->nick_name}</th>
+				<td class="col2">{$translator->translation_count}</td>
 			</tr>
 		</tbody>
 	</table>
 
 	<table id="type_audits" class="info_table rank_table" cellpadding="0" cellspacing="0">
-		<caption>Review</caption>
+		<caption>Recommend</caption>
 		<colgroup>
 			<col width="40%" />
 			<col />
 		</colgroup>
 		<tbody>
-			<tr>
-				<th class="col1">dece24</th>
-				<td class="col2">18000건</td>
-			</tr>
-			<tr>
-				<th class="col1">cherryfilter</th>
-				<td class="col2">110건</td>
-			</tr>
-			<tr>
-				<th class="col1">mygony</th>
-				<td class="col2">160건</td>
-			</tr>
-			<tr>
-				<th class="col1">zero</th>
-				<td class="col2">180건</td>
-			</tr>
-			<tr>
-				<th class="col1">sol</th>
-				<td class="col2">1870건</td>
-			</tr>
-			<tr>
-				<th class="col1">ngleader</th>
-				<td class="col2">1400건</td>
+			<tr loop="$reviewer_list => $key, $reviewer">
+				<th class="col1">{$reviewer->nick_name}</th>
+				<td class="col2">{$reviewer->total_recommended_count}</td>
 			</tr>
 		</tbody>
 	</table>
