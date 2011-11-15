@@ -6,31 +6,35 @@
 <div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
 <form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
 <div class="language_type">
-	<select id="default_lang" name="source_lang" class="ko lang_us">
-		<option value="us" class="us">English</option>
+	<select id="default_lang" name="source_lang" class="ko lang_us" onchange="window.location = '{$listUrl}' + '&source_lang=' + this.value">
+		<option value="us" selected="true"|cond="$source_lang == 'us'" class="us">English</option>
 	</select> To
-	<select id="target_lang" name="target_lang" class="ko lang_ko">
-		<option value="ko" class="ko">Korean</option>
+	<select id="target_lang" name="target_lang" class="ko lang_ko" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
+		<option value="ko" selected="true"|cond="$target_lang == 'ko'" class="ko">Korean</option>
 	</select>
 </div>
-<div class="list_type"><a href="" class="selected">Sorting by Translation</a><a href="">Sorting by Review</a></div>
-<div class="perPage"><select name="listCount"><option value="5">5</option><option value="10">10</option></select> Items Per Page</div>
+<div class="list_type">
+	<a href="{$listUrl.'&listType=translation_count'}" class="selected"|cond="$listType=='translation_count'">Sorting by Translation</a>
+	<a href="{$listUrl.'&listType=recommend_count'}" class="selected"|cond="$listType=='recommend_count'">Sorting by Review</a>
+</div>
+<div class="perPage">
+	<select onchange="window.location = '{$listUrl}' + '&listCount=' + this.value">
+		<option value="5" selected="true"|cond="$listCount == 5">5</option>
+		<option value="10" selected="true"|cond="$listCount == 10">10</option>
+	</select> Items Per Page
+</div>
 
-<input type="hidden" name="act" value="procTranslationInsertContent" />
+<input type="hidden" name="act" value="procTransInsertContent" />
 <input type="hidden" name="mid" value="{$mid}" />
-<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
-<input type="hidden" name="source_lang" value="{$source_lang}" />
-<input type="hidden" name="target_lang" value="{$target_lang}" />
-<input type="hidden" name="member_srl" value="{$logged_info->member_srl}" />
 <input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
 <input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
 <div id="t_list">
 	<div loop="$sourceList => $key, $val" class="t_item">
 		<div class="item">
 			<span class="phrase us">{$val->content}</span>
-			<span class="translation">
-				<block cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
-					{$val2->content}<br />
+			<span class="translation" >
+				<block cond="$val->targetListTop">
+					{$val->targetListTop->content}<br />
 				</block>
 			</span>
 		</div>
@@ -44,8 +48,7 @@
 					</li>
 				</ul>
 				<label for="new_t">Add your own translation</label>
-				<textarea cols="50" rows="1" class="resizable" name="content[{$content_node}]"></textarea>
-
+				<textarea cols="50" rows="1" class="resizable" name="content[{$val->translation_content_srl}]"></textarea>
 			</div>
 			<ul class="glossary">
 				<li><span class="term">Username</span><span class="translation">사용자 이름</span></li>
@@ -57,17 +60,17 @@
 	</div>
 </div>
 
-<div class="t_pagination">
-			<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
-			<!--@while($page_no = $page_navigation->getNextPage())-->
-				<!--@if($page == $page_no)-->
-					<strong>{$page_no}</strong>
-				<!--@else-->
-					<a href="{getUrl('page',$page_no)}">{$page_no}</a>
-				<!--@end-->
-			<!--@end-->
-			<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
-		</div>
+<div class="t_pagination" cond="$page_navigation">
+	<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong>
+		<!--@else-->
+			<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+</div>
 
 <div class="save_translations"><input type="submit" value="Save Translation" class="sty_btn"/></div>
 </form>

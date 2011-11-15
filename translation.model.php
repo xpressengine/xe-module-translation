@@ -128,10 +128,10 @@
 
 			//paramets
 			if(!empty($fileSrl)){
-				$args->translation_file_srl = $fileSrl;
+				$args->fileSrl = $fileSrl;
 			}
 			if(!empty($projSrl)){
-				$args->translation_project_srl = $projSrl;
+				$args->prjSrl = $projSrl;
 			}
 
 			$args->targetLang = $targetLang;
@@ -140,13 +140,17 @@
 			return $output;
 		}
 
-		function getSourceList($sourceLang = 'ko', $targetLang = 'zh-Ch', $fileSrl=null, $projSrl = null, $listCount = 1000, $page = 1, $pageCount = 20){
+		function getSourceList($sourceLang = 'ko', $targetLang = 'zh-Ch', $fileSrl=null, $projSrl = null,
+								$sortType = null,	$listCount = 1000, $page = 1, $pageCount = 20){
 			//paramets
 			if(!empty($fileSrl)){
-				$args->translation_file_srl = $fileSrl;
+				$args->fileSrl = $fileSrl;
 			}
 			if(!empty($projSrl)){
-				$args->translation_project_srl = $projSrl;
+				$args->prjSrl = $projSrl;
+			}
+			if(!empty($sortType)){
+				$args->sort_index = $sortType;
 			}
 			$args->sourceLang = $sourceLang;
 			$args->targetLang = $targetLang;

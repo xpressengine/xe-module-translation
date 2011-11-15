@@ -26,7 +26,7 @@
 		<action name="procTranslationAdminInsertTranslation" type="controller" standalone="true" ruleset="insertTranslation"/>
 		<action name="procTranslationInsertProject" type="controller" standalone="true" ruleset="insertProject"/>
 		<action name="procTranslationInsertFile" type="controller" standalone="true" ruleset="insertFile"/>
-		<action name="procTranslationInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
+		<action name="procTransInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
 
     </actions>
 </module>

@@ -158,23 +158,26 @@
         function dispTransContent(){
         	$fileSrl = Context::get('translation_file_srl') ? Context::get('translation_file_srl'):null;
         	$projSrl = Context::get('translation_project_srl') ? Context::get('translation_project_srl'):null;
+        	$mid = Context::get('mid');
         	$oTransModel = &getModel('translation');
 
         	$sourceLang = Context::get('source_lang') ? Context::get('source_lang') : $this->module_info->default_lang;
         	$targetLang = Context::get('target_lang') ? Context::get('target_lang') : 'zh-CN';
         	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
+        	$sortType = Context::get('listType') ? Context::get('listType') : 'translation_count';
 
+			//get the file Info
+        	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
+
+			//get Source List
 			$page = Context::get('page');
             if(!$page) Context::set('page', $page=1);
-        	$sourceList = $oTransModel->getSourceList($sourceLang, $targetLang, $fileSrl, $projSrl,
+        	$sourceList = $oTransModel->getSourceList($sourceLang, $targetLang, $fileSrl, $projSrl, $sortType,
         												$listCount, $page, $this->pageCount);
         	Context::set('page_navigation', $sourceList->page_navigation);
         	if(empty($sourceList->data)){
         		$sourceList->data = array();
         	}
-
-			//get the file Info
-        	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
 
 			//get other info :targetInfo
         	$contentNode = array();
@@ -191,9 +194,15 @@
         		foreach($targetList->data as $key2 => $obj2){
 					if($obj->content_node == $obj2->content_node){
 						$obj->targetList[] = $obj2;
+						if($obj2->is_original){
+							$obj->targetListTop = $obj2;
+						}
 					}
         		}
-        		if(empty($fileInfo)){
+        		if(!$obj->targetListTop && count($obj->targetList)>0){
+					$obj->targetListTop = $obj->targetList[0];
+        		}
+        		if(empty($fileInfo->data)){
         			continue;
         		}
         		$obj->fileInfo = null;
@@ -204,11 +213,15 @@
         			}
         		}
         	}
-
         	Context::set('sourceList', $sourceList->data);
 
+			$url = getUrl('','mid', $mid, 'act','dispTransContent','translation_project_srl',$projSrl,
+							'translation_file_srl',$fileSrl,
+							'source_lang',$sourceLang,
+							'target_lang',$targetLang,
+							'listType',$sortType);
+        	Context::set('listUrl', $url);
             $this->setTemplateFile('file_content');
-
         }
 
         /**
