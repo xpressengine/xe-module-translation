@@ -11,8 +11,8 @@ table caption.blind{display:inline;visibility:hidden;line-height:0;}
 
 h2.m_title{margin:5px 0 20px; font-size:16px;font-weight:bold;}
 .graph{width:200px;height:15px;}
-.track {width:inherit;height:15px;margin:0 auto;position:relative;overflow:hidden;}
-.track span{display:inline-block;float:left;margin:0;padding:0;height:15px; text-align:center;font-size:12px;line-height:14px;overflow:hidden;}
+.track {width:inherit;height:15px;margin:0 auto;position:relative;white-space:nowrap;}
+.track span{display:inline-block;float:left;margin:0;padding:0;height:15px; text-align:center;font-size:12px;line-height:14px;overflow:hidden;white-space:nowrap;}
 /* .track span:first-child{border-radius:7px 0 0 7px;} */
 .track span:first-child{border-radius:7px 0 0 7px;}
 .track span:last-child{border-radius:0 7px 7px 0;}
@@ -56,7 +56,7 @@ div.newfile a{display:inline-block;margin:0;padding:6px 20px 0;height:20px;font-
 
 #type_project tbody td.col1{padding:0 0 0 10px; white-space:normal;} 
 
-.info_table .percentage{padding:0 10px;text-align:center;}
+.info_table .percentage{padding:0 10px;text-align:center;white-space:nowrap;}
 .normal_table{width:100%;}
 .normal_table .percentage{width:30%;}
 table.normal_table td.col3,
