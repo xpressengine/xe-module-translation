@@ -41,7 +41,7 @@
 						<span cond="$lang->perc_notTranslated > 0" class="color_3">{$lang->perc_notTranslated}%</span>
 					</div><!-- //graph -->
 				</td>
-				<td class="col3 recent">2011.10.18</td>
+				<td class="col3 recent">{$lang->last_update}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -70,7 +70,7 @@
 						<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
 					</div>
 				</td>
-				<td class="col3 recent">2011.10.18 (sol)</td>
+				<td class="col3 recent">{$project->last_update}</td>
 			</tr>
 			<tr><td id="more_projects" colspan="3"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">More Projects</a></td></tr>
 		</tbody>
