@@ -310,17 +310,6 @@
 			return $output->data;
 		}
 
-		function isExistLangInfo($translation_file_srl,$lang){
-			if(!$translation_file_srl || !$lang) return;
-
-			$obj->translation_file_srl = $translation_file_srl;
-			$obj->lang = $lang;
-
-			$output = executeQuery('translation.getLangContentNodeInfoCount',$obj);
-			if(!$output->toBool() || intval($output->data->node_count)>0) {return true;}
-			return false;
-		}
-
 		// Statistic Information
 		function getModuleTranslationTotalCount($module_srl){
 			if(!$module_srl) return;
