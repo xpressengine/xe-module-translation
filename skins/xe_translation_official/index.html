@@ -60,7 +60,7 @@
 		</thead>
 		<tbody>
 			<tr loop="$project_list => $project_key, $project">
-				<td class="col1"><a href="a11-project_info_lang.html">{$project->project_name}</a></td>
+				<td class="col1"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$project->translation_project_srl)}">{$project->project_name}</a></td>
 				<td class="col2">
 					<div cond="!$project->no_files" class="track">
 						<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
