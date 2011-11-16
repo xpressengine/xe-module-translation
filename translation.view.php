@@ -63,7 +63,7 @@
 					$mNotApprovedCount = $mCount - $mApprovedCount;
 					$mNotTranslatedCount = $mTranslationTotalCount - $mCount;
 					$mLangLastUpdate = $oTranslationModel->getModuleLangLastUpdate($this->module_info->module_srl,$lang_key);
-					
+
 					$lang_list[$lang_key]->value = $lang;
 					$lang_list[$lang_key]->perc_approved = number_format($mApprovedCount/$mTranslationTotalCount * 100,2);
 					$lang_list[$lang_key]->perc_notApproved = number_format($mNotApprovedCount/$mTranslationTotalCount * 100,2);
@@ -85,7 +85,7 @@
 					$pNotApprovedCount = $pTranslatedCount - $pApprovedCount;
 					$pNotTranslatedCount = $pTranslationTotalCount - $pTranslatedCount;
 					$pLastUpdate = $oTranslationModel->getProjectLastUpdate($project->translation_project_srl);
-					
+
 					$project_list[$project_key]->project_name = $project->project_name;
 					$project_list[$project_key]->perc_approved = number_format($pApprovedCount/$pTranslationTotalCount * 100,2);
 					$project_list[$project_key]->perc_notApproved = number_format($pNotApprovedCount/$pTranslationTotalCount * 100,2);
@@ -107,7 +107,7 @@
 					$translator_list[$key]->translation_count = $translator->translation_count?$translator->translation_count:0;
 				}
 			}
-		
+
 			Context::set('translator_list',$translator_list);
 
 			$reviewerList = $oTranslationModel->getReviewerRanking($this->module_info->module_srl);
@@ -170,7 +170,7 @@
 					$pApprovedCount = $oTranslationModel->getProjectLangTranslationCount($project->translation_project_srl,$select_lang, true);
 					$pNotApprovedCount = $pTranslatedCount - $pApprovedCount;
 					$pNotTranslatedCount = $pTranslationTotalCount - $pTranslatedCount;
-					
+
 					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
 					$project_list[$project_key]->project_name = $project->project_name;
 					$project_list[$project_key]->perc_approved = number_format($pApprovedCount/$pTranslationTotalCount * 100,2);
@@ -280,6 +280,9 @@
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
+        		if(empty($targetList->data)){
+        			continue;
+        		}
         		foreach($targetList->data as $key2 => $obj2){
 					if($obj->content_node == $obj2->content_node){
 						$obj->targetList[] = $obj2;
