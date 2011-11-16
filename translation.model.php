@@ -486,6 +486,17 @@
 			return $output;
 		}
 
+		function voteItem($tsrl){
+			$args->translation_content_srl = $tsrl;
+			$output = $this->_getContentBySrlArr(array($tsrl));
+			if(empty($output->data)){
+				return;
+			}
+			$args->recommended_count= $output->data[0]->recommended_count + 1;
+			$output = executeQueryArray('translation.updateVoteItem',$args);
+			return $output;
+		}
+
 		function insertContent($nodeObj){
 			$data = array();
 			$flag = true;
@@ -514,7 +525,7 @@
 				$insertNode->content = $contentValue;
 
 				$o = executeQueryArray('translation.insertContents', $insertNode);
-				if($o->toBool()){
+				if(!$o->toBool()){
 					$flag = $o;
 				}
 			}

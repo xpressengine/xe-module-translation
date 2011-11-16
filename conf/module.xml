@@ -24,6 +24,8 @@
 		<action name="procTranslationAdminInsertTranslation" type="controller" standalone="true" ruleset="insertTranslation"/>
 		<action name="procTranslationInsertProject" type="controller" standalone="true" ruleset="insertProject"/>
 		<action name="procTranslationInsertFile" type="controller" standalone="true" ruleset="insertFile"/>
+		<action name="procVoteItem" type="controller" standalone="true" ruleset="insertFile"/>
+
 		<action name="procTransInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
 
     </actions>

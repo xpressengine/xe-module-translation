@@ -253,6 +253,13 @@ class translationController extends translation {
 		}
 	}
 
+	function procVoteItem(){
+		$tsrl = Context::get('translation_content_srl');
+		$oTransModel = &getModel('translation');
+		$output = $oTransModel->voteItem($tsrl);
+		if(!$output->toBool()) return $output;
+	}
+
 	function procTransInsertContent(){
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
 		$logged_info = Context::get('logged_info');
@@ -279,7 +286,7 @@ class translationController extends translation {
 		}
 		if($flag === true){
 			$msg_code = 'success_registed';
-			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTransContent');
+			$returnUrl = Context::get('error_return_url') ? Context::get('error_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTransContent');
 		}else{
 			return $flag;
 		}

@@ -44,7 +44,7 @@
 			<div class="translation">
 				<ul>
 					<li class="vote"  cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
-						{$val2->content}<span class="btn_vote">vote</span>
+						{$val2->content}<span class="btn_vote" data="{$val2->translation_content_srl}">vote</span>
 					</li>
 				</ul>
 				<label for="new_t">Add your own translation</label>
