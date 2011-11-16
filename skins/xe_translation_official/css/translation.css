@@ -47,14 +47,14 @@ div.newfile a{display:inline-block;margin:0;padding:6px 20px 0;height:20px;font-
 .info_table tr{height:30px;}
 .info_table th{border-bottom:1px solid #c0c0c0;border-right:1px solid #c0c0c0}
 .info_table a{color:#000;}
-.info_table tbody td{padding-left:10px;text-align:left;border-bottom:1px solid #CCC} 
+.info_table tbody td{padding-left:10px;text-align:left;border-bottom:1px solid #CCC}
 .info_table tbody td.col1{padding:0 0 0 25px; background-position:5px 50%;white-space:normal;}
 .info_table tbody td.col1 a{display:block;}
 .info_table thead th.col1,
 .info_table thead th.col3,
 .info_table thead th.col4{}
 
-#type_project tbody td.col1{padding:0 0 0 10px; white-space:normal;} 
+#type_project tbody td.col1{padding:0 0 0 10px; white-space:normal;}
 
 .info_table .percentage{padding:0 10px;text-align:center;white-space:nowrap;}
 .normal_table{width:100%;}
@@ -136,6 +136,7 @@ div.edit div.translation textarea:focus{box-shadow: 0 0 3px #96F;}
 #t_list div.edit div.btns{float:left;width:100%;margin-bottom:10px;text-align:center;}
 #t_list div.edit div.btns button{margin:0;padding:0 20px;height:26px;border:1px solid #ababab;border-radius:2px;text-shadow:0 1px #FFF; background:#ededed;background: -webkit-gradient(linear, 0 0, 0 100%, from(#FEFEFE), to(#DCDCDC)); background: -moz-linear-gradient(top, #FEFEFE, #DCDCDC);}
 #t_list div.edit div.btns button.btn_prev{margin-right:200px;}
+#t_list div.edit div.btns button.btn_hidden{visibility:hidden}
 div.save_translations {text-align:center;float:right;}
 div.save_translations .sty_btn {margin-top:10px;padding:0 20px;height:30px;font-size:14px;line-height:14px;float:right;}
 

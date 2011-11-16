@@ -49,6 +49,9 @@ jQuery(function($){
 
 	});
 
+	btns.first().toggleClass('btn_hidden');
+	btns.last().toggleClass('btn_hidden');
+
 	var voteBts = votes.find('span.btn_vote');
 	voteBts.each(function(ind, btEl){
 		btEl.onclick = function(eventObj){
