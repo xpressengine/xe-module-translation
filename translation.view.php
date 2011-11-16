@@ -35,6 +35,9 @@
 				Context::set('file_info',$file_info);
 			}
 
+			$lang_supported_list = Context::loadLangSupported();
+			Context::set('lang_supported_list',$lang_supported_list);
+
 			//set view 's default list count/page count
 			$this->listCount = 5;
 			$this->pageCount = 10;
@@ -45,15 +48,80 @@
          * @brief display translation index page
          **/
         function dispTranslationIndex() {
-			// get supported language list
-			$lang_supported_list = Context::loadLangSupported();
-			Context::set('lang_supported_list',$lang_supported_list);
 
 			$oTranslationModel = &getModel('translation');
-			$project_list = $oTranslationModel->getProjectList($this->module_info->module_srl);
+
+			// get supported language list
+			$lang_supported_list = Context::loadLangSupported();
+			$lang_list = array();
+			$mTranslationTotalCount = $oTranslationModel->getModuleTranslationTotalCount($this->module_info->module_srl);
+
+			if($lang_supported_list){
+				foreach($lang_supported_list as $lang_key => $lang){
+					$mCount = $oTranslationModel->getModuleTranslationLangCount($this->module_info->module_srl,$lang_key);
+					$mApprovedCount = $oTranslationModel->getModuleTranslationLangCount($this->module_info->module_srl,$lang_key,true);
+					$mNotApprovedCount = $mCount - $mApprovedCount;
+					$mNotTranslatedCount = $mTranslationTotalCount - $mCount;
+					$mLangLastUpdate = $oTranslationModel->getModuleLangLastUpdate($this->module_info->module_srl,$lang_key);
+					
+					$lang_list[$lang_key]->value = $lang;
+					$lang_list[$lang_key]->perc_approved = number_format($mApprovedCount/$mTranslationTotalCount * 100,2);
+					$lang_list[$lang_key]->perc_notApproved = number_format($mNotApprovedCount/$mTranslationTotalCount * 100,2);
+					$lang_list[$lang_key]->perc_notTranslated = number_format($mNotTranslatedCount/$mTranslationTotalCount * 100,2);
+					$lang_list[$lang_key]->last_update = zdate($mLangLastUpdate->last_update,"Y.m.d");
+				}
+			}
+
+			Context::set('lang_list',$lang_list);
+
+			$projectList = $oTranslationModel->getProjectList($this->module_info->module_srl);
+			$project_list = array();
+
+			if($projectList){
+				foreach($projectList as $project_key => $project){
+					$pTranslationTotalCount = $oTranslationModel->getProjectTranslationTotalCount($project->translation_project_srl) * count($lang_list);
+					$pTranslatedCount = $oTranslationModel->getProjectTranslationCount($project->translation_project_srl);
+					$pApprovedCount = $oTranslationModel->getProjectTranslationCount($project->translation_project_srl, true);
+					$pNotApprovedCount = $pTranslatedCount - $pApprovedCount;
+					$pNotTranslatedCount = $pTranslationTotalCount - $pTranslatedCount;
+					$pLastUpdate = $oTranslationModel->getProjectLastUpdate($project->translation_project_srl);
+					
+					$project_list[$project_key]->project_name = $project->project_name;
+					$project_list[$project_key]->perc_approved = number_format($pApprovedCount/$pTranslationTotalCount * 100,2);
+					$project_list[$project_key]->perc_notApproved = number_format($pNotApprovedCount/$pTranslationTotalCount * 100,2);
+					$project_list[$project_key]->perc_notTranslated = number_format($pNotTranslatedCount/$pTranslationTotalCount * 100,2);
+					$project_list[$project_key]->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
+
+				}
+			}
+
 			Context::set('project_list',$project_list);
 
-			$moduleTranslationTotalCount = $oTranslationModel->getModuleTranslationTotalCount($this->module_info->module_srl);
+			$translatorList = $oTranslationModel->getTranslatorRanking($this->module_info->module_srl);
+			$translator_list = array();
+
+			if($translatorList){
+				foreach($translatorList as $key => $translator){
+					$translator_list[$key]->member_srl = $translator->member_srl;
+					$translator_list[$key]->nick_name = $translator->nick_name;
+					$translator_list[$key]->translation_count = $translator->translation_count?$translator->translation_count:0;
+				}
+			}
+		
+			Context::set('translator_list',$translator_list);
+
+			$reviewerList = $oTranslationModel->getReviewerRanking($this->module_info->module_srl);
+			$reviewer_list = array();
+
+			if($reviewerList){
+				foreach($reviewerList as $key => $reviewer){
+					$reviewer_list[$key]->member_srl = $reviewer->member_srl;
+					$reviewer_list[$key]->nick_name = $reviewer->nick_name;
+					$reviewer_list[$key]->total_recommended_count = $reviewer->total_recommended_count?$reviewer->total_recommended_count:0;
+				}
+			}
+
+			Context::set('reviewer_list',$reviewer_list);
 
 			// set template_file to be index.html
             $this->setTemplateFile('index');
@@ -82,15 +150,34 @@
 
 			// get member_srl
             $member_srl = Context::get('member_srl');
+			$select_lang = Context::get('select_lang')?Context::get('select_lang'):$this->module_info->default_lang;
 
 			$oTranslationModel =  &getModel('translation');
 			$obj->module_srl = $this->module_info->module_srl;
 
 			if($member_srl){
 				$obj->member_srl = $member_srl;
-				$project_list =  $oTranslationModel->getMemberProjectList($obj);
+				$projectList =  $oTranslationModel->getMemberProjectList($obj);
 			}else{
-				$project_list =  $oTranslationModel->getProjectList($obj->module_srl);
+				$projectList =  $oTranslationModel->getProjectList($obj->module_srl);
+			}
+
+			$project_list = array();
+			if($projectList){
+				foreach($projectList as $project_key => $project){
+					$pTranslationTotalCount = $oTranslationModel->getProjectTranslationTotalCount($project->translation_project_srl);
+					$pTranslatedCount = $oTranslationModel->getProjectLangTranslationCount($project->translation_project_srl,$select_lang);
+					$pApprovedCount = $oTranslationModel->getProjectLangTranslationCount($project->translation_project_srl,$select_lang, true);
+					$pNotApprovedCount = $pTranslatedCount - $pApprovedCount;
+					$pNotTranslatedCount = $pTranslationTotalCount - $pTranslatedCount;
+					
+					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
+					$project_list[$project_key]->project_name = $project->project_name;
+					$project_list[$project_key]->perc_approved = number_format($pApprovedCount/$pTranslationTotalCount * 100,2);
+					$project_list[$project_key]->perc_notApproved = number_format($pNotApprovedCount/$pTranslationTotalCount * 100,2);
+					$project_list[$project_key]->perc_notTranslated = number_format($pNotTranslatedCount/$pTranslationTotalCount * 100,2);
+
+				}
 			}
 
 			Context::set('project_list',$project_list);

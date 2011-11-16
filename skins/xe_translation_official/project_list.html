@@ -31,7 +31,6 @@
 		</thead>
 		<tbody>
 			<tr loop="$project_list => $project_key, $project">
-
 				<td class="col1">
 					<a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$project->translation_project_srl)}">{$project->project_name}</a>
 				</td>
@@ -51,6 +50,11 @@
 			</tr>
 		</tbody>
 	</table>
+	<dl class="color_desc">
+		<dt><span class="color_1"></span></dt><dd>Translated</dd>
+		<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+		<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+	</dl>
 
 	<div class="btn_area">
         <a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject')}" class="sty_btn gray">Add New Project</a>
