@@ -161,6 +161,8 @@ class translationController extends translation {
 		$oXMLContext = new XMLContext($file, "en");
 		$_xmlContext = $oXMLContext->_xmlContext;
 
+		$lang_contents = array();
+
 		foreach($_xmlContext as $key => $val){
 			if($val['attr']['xml_lang']){
 				$obj->translation_content_srl = getNextSequence();
@@ -173,12 +175,45 @@ class translationController extends translation {
 				$obj->content = strval($val['value']);
 				$obj->recommended_count = 0;
 				$obj->is_original = 1;
+				$lang_contents[$obj->content_node][$obj->lang] = $obj->content;
 
 				// DB query
 				$output = executeQuery('translation.insertXMLContents', $obj);
 				if(!$output->toBool()) { return $output;}
 			}
 		}
+		
+		$this->insertDicContents($lang_contents);
+
+	}
+
+	/**
+	 * @brief insert single English word into translation_ table
+	 **/
+	function insertDicContents($lang_contents){
+		if($lang_contents){
+			foreach($lang_contents as $key => $value){
+				// count English words
+				$wordCount = str_word_count($value['en']);
+
+				// only there is one english word
+				if($wordCount == 1){
+					$obj->source_lang = 'en';
+					$obj->source_content = strval($value['en']);
+					foreach($value as $lang_key => $lang_value){
+						if($lang_key != 'en'){
+							$obj->translation_dictionary_srl = getNextSequence();
+							$obj->target_lang = $lang_key;
+							$obj->target_content = $lang_value;
+							
+							$output = executeQuery('translation.insertDicContents', $obj);
+							if(!$output->toBool()) { return $output;}
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	/**
