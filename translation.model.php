@@ -50,13 +50,14 @@
 		/**
 		 * @brief get all project list
 		 **/
-		function getProjectList($module_srl){
+		function getProjectList($module_srl,$obj = null){
 			if(!$module_srl) return;
 
 			$oModuleModel = &getModel('module');
 			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
 
 			$args->module_srl = $module_srl;
+
 			$output = executeQueryArray('translation.getProjectList',$args);
 
 			if(!$output->data) return null;
@@ -365,15 +366,20 @@
 			return $total_count;
 		}
 
-		function getModuleLangLatestUpdate($module_srl, $lang){
+		function getModuleLangLastUpdate($module_srl, $lang){
 			if(!$module_srl || !$lang) return;
 
 			$obj->module_srl = $module_srl;
-
 			$obj->lang = $lang;
+
+			$output = executeQuery('translation.getModuleLangLastUpdate',$obj);
+			if(!$output->toBool()) {return $output;} 
+
+			return $output->data;
 
 			$output = executeQueryArray('translation.getModuleLangLatestUpdate',$obj);
 			if(!$output->toBool()) {return 0;}
+
 		}
 
 
@@ -418,6 +424,48 @@
 			}
 
 			return $total_count;
+		}
+
+		function getProjectLangTranslationCount($translation_project_srl,$lang,$approved = false){
+			if(!$translation_project_srl||!$lang) return;
+
+			$obj->translation_project_srl = $translation_project_srl;
+			$obj->lang = $lang;
+
+			if($approved){
+				$obj->recommended_count = 1;
+				$output = executeQueryArray('translation.getProjectLangTranslationApprovedCount',$obj);
+			}else{
+				$output = executeQueryArray('translation.getProjectLangTranslationCount',$obj);
+			}
+
+			if(!$output->toBool()) {return 0;} 
+			
+			$total_count = 0;
+			$count_list = $output->data;
+			if($count_list){
+				foreach($count_list as $key => $count)
+					$total_count += intval($count->translation_count);
+			}
+
+			return $total_count;
+		}
+
+		function getProjectLastUpdate($translation_project_srl, $lang = null){
+			if(!$translation_project_srl) return;
+
+			$obj->translation_project_srl = $translation_project_srl;
+		
+			if($lang){
+				$obj->lang = $lang;
+				$output = executeQuery('translation.getProjectLangLastUpdate',$obj);
+			}else{
+				$output = executeQuery('translation.getProjectLastUpdate',$obj);
+			}
+
+			if(!$output->toBool()) {return $output;} 
+
+			return $output->data;
 		}
 
 		function getTranslatorRanking($module_srl,$limit_count = 5){
