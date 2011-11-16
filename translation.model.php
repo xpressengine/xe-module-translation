@@ -373,7 +373,7 @@
 			$obj->lang = $lang;
 
 			$output = executeQuery('translation.getModuleLangLastUpdate',$obj);
-			if(!$output->toBool()) {return $output;} 
+			if(!$output->toBool()) {return $output;}
 
 			return $output->data;
 
@@ -439,8 +439,8 @@
 				$output = executeQueryArray('translation.getProjectLangTranslationCount',$obj);
 			}
 
-			if(!$output->toBool()) {return 0;} 
-			
+			if(!$output->toBool()) {return 0;}
+
 			$total_count = 0;
 			$count_list = $output->data;
 			if($count_list){
@@ -455,7 +455,7 @@
 			if(!$translation_project_srl) return;
 
 			$obj->translation_project_srl = $translation_project_srl;
-		
+
 			if($lang){
 				$obj->lang = $lang;
 				$output = executeQuery('translation.getProjectLangLastUpdate',$obj);
@@ -463,7 +463,7 @@
 				$output = executeQuery('translation.getProjectLastUpdate',$obj);
 			}
 
-			if(!$output->toBool()) {return $output;} 
+			if(!$output->toBool()) {return $output;}
 
 			return $output->data;
 		}
@@ -528,57 +528,10 @@
 			}
 		}
 
-		private function _getContentBySrlArr($srlArr){
+		function getContentBySrlArr($srlArr){
 			$args->translation_content_srl = $srlArr;
 			$output = executeQueryArray('translation.getContentList',$args);
 			return $output;
 		}
-
-		function voteItem($tsrl){
-			$args->translation_content_srl = $tsrl;
-			$output = $this->_getContentBySrlArr(array($tsrl));
-			if(empty($output->data)){
-				return;
-			}
-			$args->recommended_count= $output->data[0]->recommended_count + 1;
-			$output = executeQueryArray('translation.updateVoteItem',$args);
-			return $output;
-		}
-
-		function insertContent($nodeObj){
-			$data = array();
-			$flag = true;
-			foreach($nodeObj->content as $key => $value){
-				$srl[] = $key;
-			}
-			$output = $this->_getContentBySrlArr($srl);
-
-			$insertNode = clone $nodeObj;
-			foreach($nodeObj->content as $nodeSrl => $contentValue){
-				foreach($output->data as $obj){
-					if($nodeSrl == $obj->translation_content_srl){
-						$sourceObj = $obj;
-						break;
-					}
-				}
-				if(empty($sourceObj)){
-					continue;
-				}
-				foreach($sourceObj as $key => $value){
-					if($key == 'translation_project_srl' || $key == 'translation_file_srl' || $key=='content_node'){
-						$insertNode->$key = $value;
-					}
-				}
-				$insertNode->translation_content_srl = getNextSequence();
-				$insertNode->content = $contentValue;
-
-				$o = executeQueryArray('translation.insertContents', $insertNode);
-				if(!$o->toBool()){
-					$flag = $o;
-				}
-			}
-			return $flag;
-		}
-
 	}
 ?>

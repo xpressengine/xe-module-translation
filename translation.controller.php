@@ -193,11 +193,60 @@ class translationController extends translation {
 		}
 	}
 
-	function procVoteItem(){
-		$tsrl = Context::get('translation_content_srl');
+	private function _voteItem($tsrl){
+		$args->translation_content_srl = $tsrl;
 		$oTransModel = &getModel('translation');
-		$output = $oTransModel->voteItem($tsrl);
+		$output = $oTransModel->getContentBySrlArr(array($tsrl));
+		if(empty($output->data)){
+			return;
+		}
+		$args->recommended_count= $output->data[0]->recommended_count + 1;
+		$output = executeQueryArray('translation.updateVoteItem',$args);
+		return $output;
+	}
+
+	function procVoteItem(){
+		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
+		$logged_info = Context::get('logged_info');
+		$tsrl = Context::get('translation_content_srl');
+		$output = $this->_voteItem($tsrl);
 		if(!$output->toBool()) return $output;
+	}
+
+	private function _insertContent($nodeObj){
+		$data = array();
+		$flag = true;
+		$oTransModel = &getModel('translation');
+		foreach($nodeObj->content as $key => $value){
+			$srl[] = $key;
+		}
+		$output = $oTransModel->getContentBySrlArr($srl);
+
+		$insertNode = clone $nodeObj;
+		foreach($nodeObj->content as $nodeSrl => $contentValue){
+			foreach($output->data as $obj){
+				if($nodeSrl == $obj->translation_content_srl){
+					$sourceObj = $obj;
+					break;
+				}
+			}
+			if(empty($sourceObj)){
+				continue;
+			}
+			foreach($sourceObj as $key => $value){
+				if($key == 'translation_project_srl' || $key == 'translation_file_srl' || $key=='content_node'){
+					$insertNode->$key = $value;
+				}
+			}
+			$insertNode->translation_content_srl = getNextSequence();
+			$insertNode->content = $contentValue;
+
+			$o = executeQueryArray('translation.insertContents', $insertNode);
+			if(!$o->toBool()){
+				$flag = $o;
+			}
+		}
+		return $flag;
 	}
 
 	function procTransInsertContent(){
@@ -221,8 +270,8 @@ class translationController extends translation {
 
 		$flag = true;
 		if(!empty($var->content)){
-			$oTransModel = &getModel('translation');
-			$flag = $oTransModel->insertContent($var);
+
+			$flag = $this->_insertContent($var);
 		}
 		if($flag === true){
 			$msg_code = 'success_registed';
@@ -235,54 +284,5 @@ class translationController extends translation {
 		header('location:'.$returnUrl);
 	}
 
-	/**
-	 * @brief insert new translations
-	 **/
-//	function procTranslationInsertContent(){
-//
-//		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
-//        $logged_info = Context::get('logged_info');
-//
-//		// only logged user can insert content
-//		if(!$logged_info) return $this->stop('msg_invalid_request');
-//
-//		$obj = Context::getRequestVars();
-//		$args->translation_file_srl = $obj->translation_file_srl;
-//		$args->lang = $obj->target_lang;
-//		$args->member_srl = $obj->member_srl;
-//		$args->recommended_count = 0;
-//		$args->is_original = 0;
-//
-//
-//		foreach($obj->content as $key => $val){
-//			if($val){
-//				$args->translation_content_srl = getNextSequence();
-//				$args->content_node = $key;
-//				$args->content = strval($val);
-//
-//				$oTranslationModel = &getModel('translation');
-//				$default_contents = $oTranslationModel->getDefaultTargetContents($args);
-//
-//				if($default_contents)
-//					$args->is_new_lang = 0;
-//				else
-//					$args->is_new_lang = 1;
-//
-//				$output = executeQuery('translation.insertXMLContents', $args);
-//				if(!$output->toBool()) { return $output;}
-//
-//				$this->add('translation_content_srl', $args->translation_content_srl);
-//			}
-//		}
-//
-//		// output success inserted/updated message
-//		$this->setMessage($msg_code);
-//
-//	    if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
-//			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTranslationFileContent','translation_file_srl',$args->translation_file_srl,'translation_project_srl',$obj->translation_project_srl);
-//			header('location:'.$returnUrl);
-//			return;
-//		}
-//
-//	}
+
 }
