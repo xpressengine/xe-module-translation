@@ -19,4 +19,8 @@
     <conditions>
 		<condition operation="equal" column="module_srl" var="module_srl" filter="number" notnull="notnull" />
     </conditions>
+    <navigation>
+		<index var="sort_index" default="translation_project_srl" order="asc" />
+		<list_count var="list_count" default="10" />
+    </navigation>
 </query>
