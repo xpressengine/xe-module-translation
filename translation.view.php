@@ -90,6 +90,7 @@
 					$pNotTranslatedCount = $pTranslationTotalCount - $pTranslatedCount;
 					$pLastUpdate = $oTranslationModel->getProjectLastUpdate($project->translation_project_srl);
 
+					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
 					$project_list[$project_key]->project_name = $project->project_name;
 					if($pTranslationTotalCount){
 						$project_list[$project_key]->perc_approved = number_format($pApprovedCount/$pTranslationTotalCount * 100,2);
