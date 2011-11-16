@@ -30,11 +30,14 @@
 			<tr loop="$lang_list => $lang_key, $lang">
 				<td class="col1 lang_{$lang_key}"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','select_lang',$lang_key)}">{$lang->value}</a></td>
 				<td class="col2 percentage">
-					<div class="track">
+					<div cond="!$lang->no_files" class="track">
 						<span cond="$lang->perc_approved > 0" class="color_1">{$lang->perc_approved}%</span>
 						<span cond="$lang->perc_notApproved > 0" class="color_2">{$lang->perc_notApproved}%</span>
 						<span cond="$lang->perc_notTranslated > 0" class="color_3">{$lang->perc_notTranslated}%</span>
 					</div><!-- //graph -->
+					<div cond="$lang->no_files" class="track">
+						<span >no files</span>
+					</div>
 				</td>
 				<td class="col3 recent">{$lang->last_update}</td>
 			</tr>
@@ -59,10 +62,13 @@
 			<tr loop="$project_list => $project_key, $project">
 				<td class="col1"><a href="a11-project_info_lang.html">{$project->project_name}</a></td>
 				<td class="col2">
-					<div class="track">
+					<div cond="!$project->no_files" class="track">
 						<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
 						<span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span>
 						<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
+					</div>
+					<div cond="$project->no_files" class="track">
+						<span >no files</span>
 					</div>
 				</td>
 				<td class="col3 recent">{$project->last_update}</td>

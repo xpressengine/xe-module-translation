@@ -103,10 +103,6 @@ class translationController extends translation {
 			// insert XML contents to xe_translation_contents table
 			$this->insertXMLContents($obj->target_file, $obj->translation_file_srl,$obj->translation_project_srl);
 
-			// delete and insert content node information to xe_translation_content_node table
-			$this->deleteContentNodeInfo($obj->translation_file_srl);
-			$this->insertContentNodeInfo($obj->translation_file_srl,$obj->translation_project_srl);
-
 			// DB query, insert file
 			$output = executeQuery('translation.insertFile', $obj);
 			if(!$output->toBool()) { return $output;}
@@ -127,10 +123,6 @@ class translationController extends translation {
 				// delete and insert XML contents to xe_translation_contents table
 				$this->deleteXMLContents($file_info->translation_file_srl);
 				$this->insertXMLContents($obj->target_file, $file_info->translation_file_srl,$obj->translation_project_srl);
-
-				// delete and insert content node information to xe_translation_content_node table
-				$this->deleteContentNodeInfo($file_info->translation_file_srl);
-				$this->insertContentNodeInfo($file_info->translation_file_srl,$obj->translation_project_srl);
 			}
 			$output = executeQuery('translation.updateFile', $obj);
 			if(!$output->toBool()) { return $output; }
@@ -195,58 +187,6 @@ class translationController extends translation {
 	function deleteXMLContents($translation_file_srl){
 		$obj->translation_file_srl = $translation_file_srl;
 		$output = executeQuery('translation.deleteXMLContents', $obj);
-
-		if(!$output->toBool()) {
-			return $output;
-		}
-	}
-
-	/**
-	 * @brief insert the file contents stats information to xe_translation_content_node table, based on the target lanuage
-	 **/
-	function insertContentNodeInfo($translation_file_srl, $translation_project_srl,$target_lang=null){
-		$obj->translation_file_srl = $translation_file_srl;
-		$oTranslationModel = &getModel('translation');
-		if(!$target_lang) $target_lang = 'zh-CN';
-
-		$content_nodes_list = $oTranslationModel->getFileContentNodes($obj->translation_file_srl);
-		$obj->translation_project_srl = $translation_project_srl;
-
-		$isExistLangInfo = $oTranslationModel->isExistLangInfo($obj->translation_file_srl,$target_lang);
-
-		if($isExistLangInfo) {return;}
-
-		// get supported language list
-		$lang_supported_list = Context::loadLangSupported();
-
-		foreach($content_nodes_list as $key => $content_node){
-			foreach($lang_supported_list as $lang_key => $lang_value){
-				if($lang_key ==  $target_lang){
-					$translation_count_data = $oTranslationModel->getTranslationCount($translation_file_srl,$content_node->content_node, $lang_key);
-					$translation_count = intval($translation_count_data->translation_count);
-					$recommend_count = 0;
-
-					$obj->translation_content_node_srl = getNextSequence();
-					$obj->content_node = $content_node->content_node;
-					$obj->lang = $lang_key;
-					$obj->translation_count = $translation_count;
-					$obj->recommend_count = $recommend_count;
-
-					// DB query
-					$output = executeQuery('translation.insertContentNodeInfo', $obj);
-					if(!$output->toBool()) { return $output;}
-					break;
-				}
-			}
-		}
-	}
-
-	/**
-	 * @brief delete the file contents stats information from xe_translation_content_node table
-	 **/
-	function deleteContentNodeInfo($translation_file_srl){
-		$obj->translation_file_srl = $translation_file_srl;
-		$output = executeQuery('translation.deleteContentNodeInfo', $obj);
 
 		if(!$output->toBool()) {
 			return $output;
