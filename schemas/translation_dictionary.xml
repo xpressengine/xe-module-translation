@@ -1,15 +1,7 @@
 <table name="translation_dictionary">
     <column name="translation_dictionary_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
-	<column name="en" type="varchar" />
-	<column name="ko" type="varchar" />
-	<column name="jp" type="varchar" />
-	<column name="zh-CN" type="varchar" />
-	<column name="zh-TW" type="varchar" />
-	<column name="fr" type="varchar" />
-	<column name="de" type="varchar" />
-	<column name="ru" type="varchar" />
-	<column name="es" type="varchar" />
-	<column name="tr" type="varchar" />
-	<column name="vi" type="varchar" />
-	<column name="mn" type="varchar" />
+	<column name="source_lang" type="varchar" size="128" notnull="notnull"/>
+	<column name="source_content" type="varchar" size="128" notnull="notnull"/>
+	<column name="target_lang" type="varchar" size="128" notnull="notnull"/>
+	<column name="target_content" type="varchar" size="128" notnull="notnull"/>
 </table>
