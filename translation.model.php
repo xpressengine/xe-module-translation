@@ -149,9 +149,6 @@
 			if(!empty($projSrl)){
 				$args->prjSrl = $projSrl;
 			}
-			if(!empty($sortType)){
-				$args->sort_index = $sortType;
-			}
 			$args->sourceLang = $sourceLang;
 			$args->targetLang = $targetLang;
 			$args->isOriginal = 1;
@@ -160,7 +157,11 @@
 			$args->page = $page;
             $args->list_count = $listCount;
             $args->page_count = $pageCount;
-            $output = executeQuery('translation.getSourceLangList',$args);
+            if($sortType == 'translation_count'){
+        		$output = executeQuery('translation.getSourceLangList',$args);
+        	}else{
+        		$output = executeQuery('translation.getSourceListByRev',$args);
+        	}
             return $output;
 		}
 
@@ -351,8 +352,8 @@
 				$output = executeQueryArray('translation.getModuleTranslationLangCount',$obj);
 			}
 
-			if(!$output->toBool()) {return 0;} 
-			
+			if(!$output->toBool()) {return 0;}
+
 			$total_count = 0;
 			$count_list = $output->data;
 
@@ -372,25 +373,25 @@
 			$obj->lang = $lang;
 
 			$output = executeQueryArray('translation.getModuleLangLatestUpdate',$obj);
-			if(!$output->toBool()) {return 0;} 
+			if(!$output->toBool()) {return 0;}
 		}
-	
+
 
 		function getProjectTranslationTotalCount($translation_project_srl){
 			if(!$translation_project_srl) return;
 
 			$obj->translation_project_srl = $translation_project_srl;
-			
+
 			$output = executeQueryArray('translation.getProjectTranslationTotalCount',$obj);
-			if(!$output->toBool()) {return 0;} 
-			
+			if(!$output->toBool()) {return 0;}
+
 			$total_count = 0;
 			$count_list = $output->data;
 			if($count_list){
 				foreach($count_list as $key => $count)
 					$total_count += intval($count->content_node_count);
 			}
-		
+
 			return $total_count;
 		}
 
@@ -407,8 +408,8 @@
 				$obj->is_new_lang = 1;
 				$output = executeQueryArray('translation.getProjectTranslationCount',$obj);
 			}
-			if(!$output->toBool()) {return 0;} 
-			
+			if(!$output->toBool()) {return 0;}
+
 			$total_count = 0;
 			$count_list = $output->data;
 			if($count_list){
@@ -426,7 +427,7 @@
 			$obj->limit_count = $limit_count;
 
 			$output = executeQueryArray('translation.getTranslatorRanking',$obj);
-			if(!$output->toBool()) {return 0;} 
+			if(!$output->toBool()) {return 0;}
 
 			return $output->data;
 
@@ -440,7 +441,7 @@
 			$obj->recommended_count = 1;
 
 			$output = executeQueryArray('translation.getReviewerRanking',$obj);
-			if(!$output->toBool()) {return 0;} 
+			if(!$output->toBool()) {return 0;}
 
 			return $output->data;
 
@@ -477,6 +478,47 @@
 				}
 				fclose ($fd);
 			}
+		}
+
+		private function _getContentBySrlArr($srlArr){
+			$args->translation_content_srl = $srlArr;
+			$output = executeQueryArray('translation.getContentList',$args);
+			return $output;
+		}
+
+		function insertContent($nodeObj){
+			$data = array();
+			$flag = true;
+			foreach($nodeObj->content as $key => $value){
+				$srl[] = $key;
+			}
+			$output = $this->_getContentBySrlArr($srl);
+
+			$insertNode = clone $nodeObj;
+			foreach($nodeObj->content as $nodeSrl => $contentValue){
+				foreach($output->data as $obj){
+					if($nodeSrl == $obj->translation_content_srl){
+						$sourceObj = $obj;
+						break;
+					}
+				}
+				if(empty($sourceObj)){
+					continue;
+				}
+				foreach($sourceObj as $key => $value){
+					if($key == 'translation_project_srl' || $key == 'translation_file_srl' || $key=='content_node'){
+						$insertNode->$key = $value;
+					}
+				}
+				$insertNode->translation_content_srl = getNextSequence();
+				$insertNode->content = $contentValue;
+
+				$o = executeQueryArray('translation.insertContents', $insertNode);
+				if($o->toBool()){
+					$flag = $o;
+				}
+			}
+			return $flag;
 		}
 
 	}

@@ -15,7 +15,7 @@ class translationController extends translation {
 
 	/**
 	 * @brief insert and update project
-	 **/	
+	 **/
 	function procTranslationInsertProject(){
 
 		// check permission
@@ -47,7 +47,7 @@ class translationController extends translation {
 
 		$this->add('module_srl', $obj->module_srl);
 		$this->add('translation_project_srl', $obj->translation_project_srl);
-	
+
 		// output success inserted/updated message
 		$this->setMessage($msg_code);
 
@@ -69,7 +69,7 @@ class translationController extends translation {
 
 		// only logged user can insert project
 		if(!$logged_info) return $this->stop('msg_invalid_request');
-		
+
 		$obj = Context::getRequestVars();
 		$obj->translation_file_srl = $obj->translation_file_srl;
 		$obj->translation_project_srl = $obj->translation_project_srl;
@@ -120,7 +120,7 @@ class translationController extends translation {
 				$obj->file_type = $file_info->file_type;
 				$obj->target_file = $file_info->target_file;
 			}else{
-				FileHandler::removeFile($file_info->target_file); 
+				FileHandler::removeFile($file_info->target_file);
 				$target_filename = $this->insertXmlFile($this->module_info->module_srl,$obj->translation_project_srl,$obj->translation_file_srl, $obj->file_name, $xml_file['tmp_name'] );
 				$obj->target_file = $target_filename;
 
@@ -157,7 +157,7 @@ class translationController extends translation {
 
 		@copy($target_file, $target_filename);
 
-		return $target_filename;	
+		return $target_filename;
 	}
 
 	/**
@@ -165,7 +165,7 @@ class translationController extends translation {
 	 **/
 	function insertXMLContents($file, $translation_file_srl,$translation_project_srl){
 		$logged_info = Context::get('logged_info');
-		
+
 		$oXMLContext = new XMLContext($file, "en");
 		$_xmlContext = $oXMLContext->_xmlContext;
 
@@ -181,7 +181,7 @@ class translationController extends translation {
 				$obj->content = strval($val['value']);
 				$obj->recommended_count = 0;
 				$obj->is_original = 1;
-				
+
 				// DB query
 				$output = executeQuery('translation.insertXMLContents', $obj);
 				if(!$output->toBool()) { return $output;}
@@ -207,7 +207,7 @@ class translationController extends translation {
 	function insertContentNodeInfo($translation_file_srl, $translation_project_srl,$target_lang=null){
 		$obj->translation_file_srl = $translation_file_srl;
 		$oTranslationModel = &getModel('translation');
-		if(!$target_lang) $target_lang = 'zh-CN'; 
+		if(!$target_lang) $target_lang = 'zh-CN';
 
 		$content_nodes_list = $oTranslationModel->getFileContentNodes($obj->translation_file_srl);
 		$obj->translation_project_srl = $translation_project_srl;
@@ -215,7 +215,7 @@ class translationController extends translation {
 		$isExistLangInfo = $oTranslationModel->isExistLangInfo($obj->translation_file_srl,$target_lang);
 
 		if($isExistLangInfo) {return;}
-		
+
 		// get supported language list
 		$lang_supported_list = Context::loadLangSupported();
 
@@ -225,7 +225,7 @@ class translationController extends translation {
 					$translation_count_data = $oTranslationModel->getTranslationCount($translation_file_srl,$content_node->content_node, $lang_key);
 					$translation_count = intval($translation_count_data->translation_count);
 					$recommend_count = 0;
-					
+
 					$obj->translation_content_node_srl = getNextSequence();
 					$obj->content_node = $content_node->content_node;
 					$obj->lang = $lang_key;
@@ -253,55 +253,89 @@ class translationController extends translation {
 		}
 	}
 
+	function procTransInsertContent(){
+		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
+		$logged_info = Context::get('logged_info');
+
+		//only logged user can insert content
+		if(!$logged_info) return $this->stop('msg_invalid_request');
+
+		$var->module_srl = $this->module_info->module_srl;
+		$obj = Context::getRequestVars();
+		$var->lang = $obj->target_lang;
+		$var->member_srl = $logged_info->member_srl;
+
+		foreach($obj->content as $key => $value){
+			$v = trim($value);
+			if(!empty($v)){
+				$var->content[$key] = $value;
+			}
+		}
+
+		$flag = true;
+		if(!empty($var->content)){
+			$oTransModel = &getModel('translation');
+			$flag = $oTransModel->insertContent($var);
+		}
+		if($flag === true){
+			$msg_code = 'success_registed';
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTransContent');
+		}else{
+			return $flag;
+		}
+		$this->setMessage($msg_code);
+
+		header('location:'.$returnUrl);
+	}
+
 	/**
 	 * @brief insert new translations
 	 **/
-	function procTranslationInsertContent(){
-
-		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
-        $logged_info = Context::get('logged_info');
-
-		// only logged user can insert content
-		if(!$logged_info) return $this->stop('msg_invalid_request');
-		
-		$obj = Context::getRequestVars();
-		$args->translation_file_srl = $obj->translation_file_srl;
-		$args->lang = $obj->target_lang;
-		$args->member_srl = $obj->member_srl;
-		$args->recommended_count = 0;
-		$args->is_original = 0;
-
-
-		foreach($obj->content as $key => $val){
-			if($val){
-				$args->translation_content_srl = getNextSequence();
-				$args->content_node = $key;
-				$args->content = strval($val);
-
-				$oTranslationModel = &getModel('translation');
-				$default_contents = $oTranslationModel->getDefaultTargetContents($args);
-
-				if($default_contents)
-					$args->is_new_lang = 0;
-				else
-					$args->is_new_lang = 1;
-				
-				$output = executeQuery('translation.insertXMLContents', $args);
-				if(!$output->toBool()) { return $output;}
-
-				$this->add('translation_content_srl', $args->translation_content_srl);
-			}
-		}
-	
-		// output success inserted/updated message
-		$this->setMessage($msg_code);
-
-	    if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
-			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTranslationFileContent','translation_file_srl',$args->translation_file_srl,'translation_project_srl',$obj->translation_project_srl);
-			header('location:'.$returnUrl);
-			return;
-		}
-		
-	}
+//	function procTranslationInsertContent(){
+//
+//		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
+//        $logged_info = Context::get('logged_info');
+//
+//		// only logged user can insert content
+//		if(!$logged_info) return $this->stop('msg_invalid_request');
+//
+//		$obj = Context::getRequestVars();
+//		$args->translation_file_srl = $obj->translation_file_srl;
+//		$args->lang = $obj->target_lang;
+//		$args->member_srl = $obj->member_srl;
+//		$args->recommended_count = 0;
+//		$args->is_original = 0;
+//
+//
+//		foreach($obj->content as $key => $val){
+//			if($val){
+//				$args->translation_content_srl = getNextSequence();
+//				$args->content_node = $key;
+//				$args->content = strval($val);
+//
+//				$oTranslationModel = &getModel('translation');
+//				$default_contents = $oTranslationModel->getDefaultTargetContents($args);
+//
+//				if($default_contents)
+//					$args->is_new_lang = 0;
+//				else
+//					$args->is_new_lang = 1;
+//
+//				$output = executeQuery('translation.insertXMLContents', $args);
+//				if(!$output->toBool()) { return $output;}
+//
+//				$this->add('translation_content_srl', $args->translation_content_srl);
+//			}
+//		}
+//
+//		// output success inserted/updated message
+//		$this->setMessage($msg_code);
+//
+//	    if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
+//			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTranslationFileContent','translation_file_srl',$args->translation_file_srl,'translation_project_srl',$obj->translation_project_srl);
+//			header('location:'.$returnUrl);
+//			return;
+//		}
+//
+//	}
 }
-?>

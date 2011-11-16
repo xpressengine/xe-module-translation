@@ -3,8 +3,6 @@
     <customrules>
     </customrules>
     <fields>
-		<field name="translation_file_srl" required="true"/>
-		<field name="member_srl" required="true"/>
-		<field name="target_lang" required="true"/>
+
     </fields>
 </ruleset>

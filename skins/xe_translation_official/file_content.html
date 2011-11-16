@@ -7,10 +7,10 @@
 <form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
 <div class="language_type">
 	<select id="default_lang" name="source_lang" class="ko lang_us" onchange="window.location = '{$listUrl}' + '&source_lang=' + this.value">
-		<option value="us" selected="true"|cond="$source_lang == 'us'" class="us">English</option>
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="true"|cond="$source_lang == $key" class="us">{$val}</option>
 	</select> To
 	<select id="target_lang" name="target_lang" class="ko lang_ko" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
-		<option value="ko" selected="true"|cond="$target_lang == 'ko'" class="ko">Korean</option>
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="true"|cond="$target_lang == $key" class="ko">{$val}</option>
 	</select>
 </div>
 <div class="list_type">

@@ -163,6 +163,8 @@
 
         	$sourceLang = Context::get('source_lang') ? Context::get('source_lang') : $this->module_info->default_lang;
         	$targetLang = Context::get('target_lang') ? Context::get('target_lang') : 'zh-CN';
+        	Context::set('source_lang',$sourceLang);
+        	Context::set('target_lang',$targetLang);
         	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
         	$sortType = Context::get('listType') ? Context::get('listType') : 'translation_count';
 
@@ -221,6 +223,11 @@
 							'target_lang',$targetLang,
 							'listType',$sortType);
         	Context::set('listUrl', $url);
+
+        	// get supported language list
+			$lang_supported_list = Context::loadLangSupported();
+			Context::set('lang_supported_list',$lang_supported_list);
+
             $this->setTemplateFile('file_content');
         }
 
@@ -269,7 +276,6 @@
 			$this->write_txt($test);
 			// set template_file to be register_file.html
             $this->setTemplateFile('download');
-
 		}
 
 		function write_txt($contents){

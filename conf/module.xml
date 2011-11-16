@@ -18,10 +18,8 @@
 		<action name="dispTransContent" type="view" standalone="true" />
 		<action name="downloadTranslationFile" type="view" standalone="true" />
 
-
 		<action name="dispTranslationFileContents" type="view" standalone="true" />
 		<action name="loadTranslationFile" type="view" standalone="true" />
-
 
 		<action name="procTranslationAdminInsertTranslation" type="controller" standalone="true" ruleset="insertTranslation"/>
 		<action name="procTranslationInsertProject" type="controller" standalone="true" ruleset="insertProject"/>
