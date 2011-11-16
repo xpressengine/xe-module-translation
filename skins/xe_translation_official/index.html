@@ -35,7 +35,7 @@
             
             
 			<tr loop="$lang_list => $lang_key, $lang">
-				<td class="col1 lang_{$lang_key}"><a href="a10-project_list.html">{$lang->value}</a></td>
+				<td class="col1 lang_{$lang_key}"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','select_lang',$lang_key)}">{$lang->value}</a></td>
 				<td class="col2 percentage">
 					<div class="track">
 						<span cond="$lang->perc_approved > 0" class="color_1">{$lang->perc_approved}%</span>

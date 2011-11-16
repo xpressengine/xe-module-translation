@@ -4,19 +4,14 @@
 
 <h2>Translation Project List Page</h2>
 
-<ul>
-	<li loop="$project_list => $key, $val">
-		<div>
-			<span style="margin-right:300px"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$val->translation_project_srl)}">{$val->project_name}</a></span>
-			<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject','translation_project_srl',$val->translation_project_srl)}">update</a>
-
-		</div>
-	</li>
-</ul>
-
-
+{var_Dump($mid);}
 <div class="container">
     <h2 class="page_h2">My Project List</h2>
+	<div class="language_type">
+		<select id="select_lang" class="us lang_us">
+			<option loop="$lang_supported_list => $lang_key, $lang" value="{$lang_key}" class="ko" selected="selected"|cond="$lang_key==$select_lang">{$lang}</option>
+		</select>
+	</div>
 	<table id="project_list" class="info_table" cellpadding="0" cellspacing="0">
 		<colgroup>
 			<col width="13%" />
@@ -36,12 +31,15 @@
 		</thead>
 		<tbody>
 			<tr loop="$project_list => $project_key, $project">
-				<td class="col1"><a href="a11-project_info_lang.html">{$project->project_name}</a></td>
+
+				<td class="col1">
+					<a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$project->translation_project_srl)}">{$project->project_name}</a>
+				</td>
 				<td class="col2">
 					<div class="track">
-						<span class="color_1">40%</span>
-						<span class="color_2">25%</span>
-						<span class="color_3">35%</span>
+						<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
+						<span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span>
+						<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
 					</div>
 				</td>
 				<td class="col3">{$project->files_count}</td>
@@ -60,3 +58,12 @@
 
 </div>
 
+<script type="text/javascript">
+	jQuery(function($){
+		$('select#select_lang').change(function() {
+			var new_url = "{getUrl('','mid',$mid,'act','dispTranslationProjectList')}"+"&select_lang="+$(this).val();
+			new_url = new_url.replace('&amp;','&');
+			window.location = new_url;
+		});
+	});
+</script>
