@@ -3,17 +3,10 @@
 
 <h2>Translation Center Index Page</h2>
 
-<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">Project List</a>
-
-<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject')}">Register Project</a>
-
-<a href="{getUrl('','mid','translation','act','loadTranslationFile','f_id',1)}">load file</a>
-
-<a href="{getUrl('','mid','translation','act','dispTranslationFileContents','f_id',1,'source_lang','zh-CN', 'target_lang','en')}">display file</a>
 
 <div class="container">
 	<div cond="$logged_info->is_admin == 'Y'" class="newfile">
-		<a href="b10-my_project_list.html" class="sty_btn">My Projects List</a>&nbsp;&nbsp;
+		<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl',$logged_info->member_srl)}" class="sty_btn">My Projects List</a>&nbsp;&nbsp;
 		<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile')}" class="sty_btn">Add a New File</a>
 	</div>
 

@@ -1,12 +1,9 @@
 <include target="_header.html" />
 <load target="js/translation.js" />
 
-
-<h2>Translation Project List Page</h2>
-
-{var_Dump($mid);}
 <div class="container">
-    <h2 class="page_h2">My Project List</h2>
+    <h2 cond="$member_srl" class="page_h2">My Project List</h2>
+	<h2 cond="!$member_srl" class="page_h2">Project List</h2>
 	<div class="language_type">
 		<select id="select_lang" class="us lang_us">
 			<option loop="$lang_supported_list => $lang_key, $lang" value="{$lang_key}" class="ko" selected="selected"|cond="$lang_key==$select_lang">{$lang}</option>

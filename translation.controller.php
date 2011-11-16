@@ -138,7 +138,7 @@ class translationController extends translation {
 		}
 
 		if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
-			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTranslationFileContent','translation_file_srl',$obj->translation_file_srl);
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTransContent','translation_file_srl',$obj->translation_file_srl);
 			header('location:'.$returnUrl);
 			return;
 		}
