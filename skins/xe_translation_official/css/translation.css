@@ -123,7 +123,7 @@ div.edit div.translation:after{display:block;content:'';clear:both;font-size:0;l
 
 div.edit div.translation label{display:block;color:#666;margin-bottom:5px;padding-left:5px}
 div.edit div.translation li.vote{margin-bottom:3px;padding:5px 5px 5px 20px;position:relative;border-radius:3px;cursor:pointer;background:url(../images/radio.png) no-repeat 5px 7px;}
-
+div.edit div.translation li.vote .recomCount{font-size:10px;margin-left:5px;color:#F66}
 div.edit div.translation li.voteOver{background:#eee url(../images/radio-select.png) no-repeat 5px 7px;}
 div.edit div.translation li.voteOver .btn_vote{display:block;}
 
