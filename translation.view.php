@@ -266,6 +266,7 @@
         	Context::set('target_lang',$targetLang);
         	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
         	$sortType = Context::get('listType') ? Context::get('listType') : 'translation_count';
+        	Context::set('listType',$sortType);
 
 			//get the file Info
         	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
