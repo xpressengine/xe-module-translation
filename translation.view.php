@@ -280,14 +280,20 @@
         		$sourceList->data = array();
         	}
 
-			//get other info :targetInfo
+			//get other info :targetInfo, dictionary item
         	$contentNode = array();
         	foreach($sourceList->data as $key => $dataObj){
         		$contentNode[] = $dataObj->content_node;
+        		$nodeContent[$dataObj->translation_content_srl] = $dataObj->content;
         	}
 
         	//get translation_content_srl
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
+
+			//get dictionary content
+			if($sourceLang == 'en'){
+				$dicList = $oTransModel->getDicList($nodeContent);
+			}
 
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
@@ -315,6 +321,16 @@
         				$obj->fileInfo = $obj2;
         				break;
         			}
+        		}
+        		$obj->dic = array();
+        		if(empty($dicList)){
+        			continue;
+        		}
+        		foreach($dicList as $srl => $transArr){
+        			if($srl != $obj->translation_content_srl){
+        				continue;
+        			}
+        			$obj->dic = array_merge($obj->dic, $transArr);
         		}
         	}
         	Context::set('sourceList', $sourceList->data);

@@ -44,14 +44,17 @@
 			<div class="translation">
 				<ul>
 					<li class="vote"  cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
-						{$val2->content}<span class="btn_vote" data="{$val2->translation_content_srl}">vote</span>
+						{$val2->content}<span class="recomCount">{$val2->recommended_count}</span><span class="btn_vote" data="{$val2->translation_content_srl}">vote</span>
 					</li>
 				</ul>
 				<label for="new_t">Add your own translation</label>
 				<textarea cols="50" rows="1" class="resizable" name="content[{$val->translation_content_srl}]"></textarea>
 			</div>
-			<ul class="glossary">
-				<li><span class="term">Username</span><span class="translation">사용자 이름</span></li>
+			<ul class="glossary" cond="$val->dic">
+				<li loop="$val->dic => $sourceContent,$targetContent">
+					<span class="term">{$sourceContent}</span>
+					<span class="translation">{$targetContent}</span>
+				</li>
 			</ul>
 			<div class="btns">
 				<button class="btn_prev">Prev</button><button class="btn_next">Next</button>

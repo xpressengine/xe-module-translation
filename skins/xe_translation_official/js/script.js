@@ -60,7 +60,9 @@ jQuery(function($){
 
 		    params['translation_content_srl'] = btObj.attr('data');
 		    var callBack = function(){
-				location.reload();
+				var recomCountObj = $(btEl).parent().find('.recomCount');
+				var refreshNum = parseInt(recomCountObj.html()) + 1;
+				recomCountObj.html(refreshNum);
 		    }
 		    exec_xml('translation','procVoteItem', params, callBack);
 		}

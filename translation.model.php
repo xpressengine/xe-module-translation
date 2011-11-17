@@ -517,6 +517,34 @@
 			}
 		}
 
+		function getDicList($nodeArr, $sourceLangArr = 'en'){
+			$wordArr = array();
+			foreach($nodeArr as $srl => &$content){
+				$content = str_word_count($content, 1);
+				$wordArr = array_merge($wordArr, $content);
+			}
+			$wordArr = array_unique($wordArr);
+			if(empty($wordArr)){
+				return;
+			}
+			$args->source_content = $wordArr;
+			$args->source_lang = $sourceLangArr;
+			$output = executeQueryArray('translation.getDicList',$args);
+			if(empty($output->data)){
+				return;
+			}
+			$refer = array();
+			foreach($output->data as $key => $obj){
+				foreach($nodeArr as $srl => $contArr){
+					if(!in_array($obj->source_content,$contArr)){
+						continue;
+					}
+					$refer[$srl]= array($obj->source_content => $obj->target_content);
+				}
+			}
+			return $refer;
+		}
+
 		function getContentBySrlArr($srlArr){
 			$args->translation_content_srl = $srlArr;
 			$output = executeQueryArray('translation.getContentList',$args);

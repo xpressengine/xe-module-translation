@@ -182,7 +182,7 @@ class translationController extends translation {
 				if(!$output->toBool()) { return $output;}
 			}
 		}
-		
+
 		$this->insertDicContents($lang_contents);
 
 	}
@@ -205,7 +205,7 @@ class translationController extends translation {
 							$obj->translation_dictionary_srl = getNextSequence();
 							$obj->target_lang = $lang_key;
 							$obj->target_content = $lang_value;
-							
+
 							$output = executeQuery('translation.insertDicContents', $obj);
 							if(!$output->toBool()) { return $output;}
 						}
@@ -243,6 +243,10 @@ class translationController extends translation {
 	function procVoteItem(){
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
 		$logged_info = Context::get('logged_info');
+
+		//only logged user can insert content
+		if(!$logged_info) return $this->stop('msg_invalid_request');
+
 		$tsrl = Context::get('translation_content_srl');
 		$output = $this->_voteItem($tsrl);
 		if(!$output->toBool()) return $output;
