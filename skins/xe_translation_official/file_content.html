@@ -1,16 +1,15 @@
 <load target="js/jquery.textarearesizer.compressed.js" />
 <load target="js/script.js" />
 <include target="_header.html" />
-
 <h2 class="m_title">Translation File Content Page</h2>
 <div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
 <form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
 <div class="language_type">
-	<select id="default_lang" name="source_lang" class="ko lang_us" onchange="window.location = '{$listUrl}' + '&source_lang=' + this.value">
-		<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="true"|cond="$source_lang == $key" class="us">{$val}</option>
+	<select id="default_lang" name="source_lang" class="lang_{$source_lang}" onchange="window.location = '{$listUrl}' + '&source_lang=' + this.value">
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$target_lang" selected="true"|cond="$source_lang == $key" class="lang_{$key}">{$val}</option>
 	</select> To
-	<select id="target_lang" name="target_lang" class="ko lang_ko" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
-		<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="true"|cond="$target_lang == $key" class="ko">{$val}</option>
+	<select id="target_lang" name="target_lang" class="lang_{$target_lang}" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$source_lang" selected="true"|cond="$target_lang == $key" class="lang_{$key}">{$val}</option>
 	</select>
 </div>
 <div class="list_type">
