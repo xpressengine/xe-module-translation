@@ -87,8 +87,6 @@ jQuery(function($){
 				dicObj.toggleClass("glossary");
 				dicObj.html(htmlStr);
 			}
-
-			//class="glossary"
 		};
 		var params = [];
 		params['translation_content_srl'] = srl;
@@ -119,7 +117,6 @@ jQuery(function($){
 			findDicTable(srlArr[idx]);
 			return;
 		default:
-
 	}
 	return false;
 }
