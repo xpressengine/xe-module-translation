@@ -27,6 +27,7 @@
 		<action name="procVoteItem" type="controller" standalone="true" ruleset="insertFile"/>
 
 		<action name="procTransInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
+		<action name="procGetDicInfo" type="model" standalone="true"/>
 
     </actions>
 </module>

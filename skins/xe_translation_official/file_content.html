@@ -49,11 +49,7 @@
 				<label for="new_t">Add your own translation</label>
 				<textarea cols="50" rows="1" class="resizable" name="content[{$val->translation_content_srl}]"></textarea>
 			</div>
-			<ul class="glossary" cond="$val->dic">
-				<li loop="$val->dic => $sourceContent,$targetContent">
-					<span class="term">{$sourceContent}</span>
-					<span class="translation">{$targetContent}</span>
-				</li>
+			<ul class="dic_content_{$val->translation_content_srl}">
 			</ul>
 			<div class="btns">
 				<button class="btn_prev">Prev</button><button class="btn_next">Next</button>

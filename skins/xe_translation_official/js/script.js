@@ -63,25 +63,52 @@ jQuery(function($){
 				var recomCountObj = $(btEl).parent().find('.recomCount');
 				var refreshNum = parseInt(recomCountObj.html()) + 1;
 				recomCountObj.html(refreshNum);
-		    }
+		    };
 		    exec_xml('translation','procVoteItem', params, callBack);
 		}
 
 	});
-})
-function acc(idx,dir){
+
+	var textAreaObj = edit_ta.find('textarea');
+	var srlArr = [];
+	var i = 0;
+	textAreaObj.each(function(ind, taObj){
+		srlArr[i] = $(taObj).attr('name');
+		srlArr[i] = srlArr[i].slice(8,srlArr[i].length - 1);
+		i++;
+	});
+
+	var findDicTable = function(srl){
+		srl = srl || srlArr[0];
+		var callBack = function(ret_obj){
+			var htmlStr = ret_obj['html'];
+			var dicObj = $('.dic_content_' + srl);
+			if(htmlStr != ''){
+				dicObj.toggleClass("glossary");
+				dicObj.html(htmlStr);
+			}
+
+			//class="glossary"
+		};
+		var params = [];
+		params['translation_content_srl'] = srl;
+		exec_xml('translation','procGetDicInfo', params, callBack, new Array('error','message','html'));
+	}
+	findDicTable();
+
+	function acc(idx,dir){
 	var tBlock = jQuery('div#t_list>div.t_item');
 	var length = tBlock.length;
 
 	switch (dir)
 	{
-
 		case 'prev':
 			idx = (idx == 0)?idx=0:idx-=1;
 			tBlock.children('div.item').show();
 			tBlock.children('div.edit').hide();
 			tBlock.eq(idx).find('div.item').hide();
 			tBlock.eq(idx).find('div.edit').show();
+			findDicTable(srlArr[idx]);
 			return;
 		case 'next':
 			idx = (idx == length - 1)?idx=length - 1:idx+=1;
@@ -89,9 +116,11 @@ function acc(idx,dir){
 			tBlock.children('div.edit').hide();
 			tBlock.eq(idx).find('div.item').hide();
 			tBlock.eq(idx).find('div.edit').show();
+			findDicTable(srlArr[idx]);
 			return;
 		default:
 
 	}
 	return false;
 }
+})

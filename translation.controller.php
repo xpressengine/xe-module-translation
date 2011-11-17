@@ -240,17 +240,28 @@ class translationController extends translation {
 		return $output;
 	}
 
-	function procVoteItem(){
+	private function _checkPermition(){
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
 		$logged_info = Context::get('logged_info');
 
 		//only logged user can insert content
 		if(!$logged_info) return $this->stop('msg_invalid_request');
 
+		return true;
+	}
+
+	function procVoteItem(){
+		$checkResult = $this->_checkPermition();
+		if($checkResult !== true){
+			return $checkResult;
+		}
+
 		$tsrl = Context::get('translation_content_srl');
 		$output = $this->_voteItem($tsrl);
 		if(!$output->toBool()) return $output;
 	}
+
+
 
 	private function _insertContent($nodeObj){
 		$data = array();

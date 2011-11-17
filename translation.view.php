@@ -291,11 +291,6 @@
         	//get translation_content_srl
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
 
-			//get dictionary content
-			if($sourceLang == 'en'){
-				$dicList = $oTransModel->getDicList($nodeContent);
-			}
-
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
@@ -322,16 +317,6 @@
         				$obj->fileInfo = $obj2;
         				break;
         			}
-        		}
-        		$obj->dic = array();
-        		if(empty($dicList)){
-        			continue;
-        		}
-        		foreach($dicList as $srl => $transArr){
-        			if($srl != $obj->translation_content_srl){
-        				continue;
-        			}
-        			$obj->dic = array_merge($obj->dic, $transArr);
         		}
         	}
         	Context::set('sourceList', $sourceList->data);

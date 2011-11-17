@@ -517,6 +517,35 @@
 			}
 		}
 
+		function procGetDicInfo(){
+			$sourceLang = Context::get('translation_content_srl');
+
+			//get dictionary content
+			$tsrl = Context::get('translation_content_srl');
+			$output = $this->getContentBySrlArr(array($tsrl));
+
+			if(!$output->data){
+				return;
+			}
+
+			if($output->data[0]->lang == 'en'){
+				$dicList = $this->getDicList(array($output->data[0]->content));
+			}
+			Context::set('dicList', $dicList);
+
+			$module_info = $this->module_info;
+            $module_path = './modules/'.$module_info->module.'/';
+			$skin_path = $module_path.'skins/'.$module_info->skin.'/';
+			if(!$module_info->skin || !is_dir($skin_path)) {
+				$skin_path = $module_path.'skins/xe_translation_official/';
+			}
+
+			$oTemplateHandler = &TemplateHandler::getInstance();
+            $result = new Object();
+            $result->add('html', $oTemplateHandler->compile($skin_path, 'dic_content.html'));
+            $this->add('html', $result->get('html'));
+		}
+
 		function getDicList($nodeArr, $sourceLangArr = 'en'){
 			$wordArr = array();
 			foreach($nodeArr as $srl => &$content){
@@ -539,7 +568,7 @@
 					if(!in_array($obj->source_content,$contArr)){
 						continue;
 					}
-					$refer[$srl]= array($obj->source_content => $obj->target_content);
+					$refer = array_merge($refer,array($obj->source_content => $obj->target_content));
 				}
 			}
 			return $refer;
