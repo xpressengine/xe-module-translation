@@ -1,0 +1,8 @@
+<query id="deleteFileByProject" action="delete">
+    <tables>
+        <table name="translation_files" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>
