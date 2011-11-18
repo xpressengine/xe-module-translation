@@ -84,7 +84,7 @@ h2.page_h2{float:left;margin:0 0 24px 10px;font-size:15px;line-height:15px;}
 #project_files {margin-top:20px}
 
 /* 번역페이지 */
-div.project{float:left;}
+div.project{float:left;margin-bottom: 10px;}
 div.project a{color:#000}
 div.language_type{margin-bottom:20px;text-align:right;}
 div.language_type select{padding-left:20px;border:1px solid #d5d5d5; background-position:2px 3px;-webkit-appearance:none}
