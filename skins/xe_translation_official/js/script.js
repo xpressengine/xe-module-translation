@@ -23,7 +23,6 @@ jQuery(function($){
 	tBlock.children('div.edit:gt(0)').hide();
 	tBlock.children('div.item:gt(0)').show();
 
-
 	// click item
 	tItem.click(function(){
 		var idx = tItem.index(this);
@@ -31,6 +30,11 @@ jQuery(function($){
 		tBlock.children('div.edit').hide();
 		$(this).hide();
 		tBlock.eq(idx).children('div.edit').show();
+		var dicDiv = tBlock.find('div[class^="dic_content_"]');
+		var classNam = dicDiv.attr('class');
+		var reg = /\d+/;
+		srl = reg.exec(classNam);
+		findDicTable(srl);
 	});
 
 	var btns = tBlock.find('div.btns button');
