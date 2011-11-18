@@ -293,6 +293,7 @@
 
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
+        		$obj->content_node = preg_replace('/\//','>',$obj->content_node);
         		$obj->targetList = array();
         		if(empty($targetList->data)){
         			continue;
