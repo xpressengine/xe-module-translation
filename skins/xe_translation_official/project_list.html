@@ -5,9 +5,27 @@
     <h2 cond="$member_srl" class="page_h2">My Project List</h2>
 	<h2 cond="!$member_srl" class="page_h2">Project List</h2>
 	<div class="language_type">
-		<select id="select_lang" class="us lang_us">
+		<!-- <select id="select_lang" class="us lang_us">
 			<option loop="$lang_supported_list => $lang_key, $lang" value="{$lang_key}" class="ko" selected="selected"|cond="$lang_key==$select_lang">{$lang}</option>
-		</select>
+		</select> -->
+		<div id="" class="lang_select">
+			<div class="selected off"><span class="ico lang_en"></span><span class="label">English</span><span class="arrow"></span></div>
+			<ul class="lang_list">
+				<li><a onclick="return false;" href="#" class="lang_ko" >한국어</a></li>
+				<li><a onclick="return false;" href="#" class="lang_en" >English</a></li>
+				<li><a onclick="return false;" href="#" class="lang_jp" >日本語</a></li>
+				<li><a onclick="return false;" href="#" class="lang_zh-CN" >中文(中国)</a></li>
+				<li><a onclick="return false;" href="#" class="lang_zh-TW" >中文(臺灣)</a></li>
+				<li><a onclick="return false;" href="#" class="lang_fr" >Français</a></li>
+				<li><a onclick="return false;" href="#" class="lang_de" >Deutsche Sprache</a></li>
+				<li><a onclick="return false;" href="#" class="lang_ru" >Русский</a></li>
+				<li><a onclick="return false;" href="#" class="lang_es" >Español</a></li>
+				<li><a onclick="return false;" href="#" class="lang_tr" >Turkey</a></li>
+				<li><a onclick="return false;" href="#" class="lang_vi" >Tiếng Việt</a></li>
+				<li><a onclick="return false;" href="#" class="lang_mn" >Mongolian</a></li>
+			</ul>
+		</div>
+
 	</div>
 	<table id="project_list" class="info_table" cellpadding="0" cellspacing="0">
 		<colgroup>

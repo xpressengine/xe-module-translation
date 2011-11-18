@@ -10,13 +10,19 @@ jQuery(function($){
 		sp = $(tracks[i]).find('span');
 		
 		var m = 0;
+		//var flag = 0;
+		
 		while(m<sp.length){
 			var el = $(sp[m]);
+			var isFe = (m == 0);
+			var isLe = (m == (sp.length - 1));
 			w = tw*(el.html().replace(/%$/,'')*.01);
-			if (m == 0 || m == (sp.length - 1)){
+			if (foe){
 				(w < 5)? w = (5 + 'px'):w = (w + 'px'); 
 				el.css('text-indent','-1000');
-			} else{
+				flag = true;
+			} 
+			if(flag && !foe){
 				w = (w - 10) + 'px';
 			}
 			el.css('width',w);

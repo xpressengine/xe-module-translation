@@ -1,4 +1,5 @@
 <include target="_header.html" />
+<load target="js/script.js" />
 <load target="js/translation.js" />
 <load target="css/style.css" />
 
@@ -7,7 +8,27 @@
 
 <div class="container">
 	<h4 class="page_h2">Project "{$project_info->project_name}"</h4>
-	<div class="language_type"><select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select></div>
+	<div class="language_type">
+	<!-- <select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select> -->
+	
+	<div id="" class="lang_select">
+	  	<div class="selected off"><span class="ico lang_en"></span><span class="label">English</span><span class="arrow"></span></div>
+	  	<ul class="lang_list">
+	  		<li><a onclick="return false;" href="#" class="lang_ko" >한국어</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_en" >English</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_jp" >日本語</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_zh-CN" >中文(中国)</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_zh-TW" >中文(臺灣)</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_fr" >Français</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_de" >Deutsche Sprache</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_ru" >Русский</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_es" >Español</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_tr" >Turkey</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_vi" >Tiếng Việt</a></li>
+	  		<li><a onclick="return false;" href="#" class="lang_mn" >Mongolian</a></li>
+	  	</ul>
+	</div>
+	</div>
 
 	<table id="project_summary" class="info_table normal_table" cellpadding="0" cellspacing="0">
 		<caption class="blind">Project "XE Core"</caption>
