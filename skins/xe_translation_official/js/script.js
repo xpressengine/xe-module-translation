@@ -1,4 +1,7 @@
 jQuery(function($){
+
+	var _root = this;
+	_root.targetLang = targetLang;
 	var edit_ta = $('div.translation');
 	edit_ta.find('textarea.resizable:not(.processed)').TextAreaResizer();
 
@@ -89,6 +92,7 @@ jQuery(function($){
 
 	var findDicTable = function(srl){
 		srl = srl || srlArr[0];
+		var targetLang = _root.targetLang || 'zh-CN';
 		var callBack = function(ret_obj){
 			var htmlStr = ret_obj['html'];
 			var dicObj = $('.dic_content_' + srl);
@@ -99,6 +103,7 @@ jQuery(function($){
 		};
 		var params = [];
 		params['translation_content_srl'] = srl;
+		params['target_lang'] = targetLang;
 		exec_xml('translation','procGetDicInfo', params, callBack, new Array('error','message','html'));
 	}
 	findDicTable();
@@ -129,4 +134,4 @@ jQuery(function($){
 	}
 	return false;
 }
-})
+});

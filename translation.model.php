@@ -522,6 +522,7 @@
 
 			//get dictionary content
 			$tsrl = Context::get('translation_content_srl');
+			$targetLang = Context::get('target_lang');
 			$output = $this->getContentBySrlArr(array($tsrl));
 
 			if(!$output->data){
@@ -529,7 +530,7 @@
 			}
 
 			if($output->data[0]->lang == 'en'){
-				$dicList = $this->getDicList(array($output->data[0]->content));
+				$dicList = $this->getDicList(array($output->data[0]->content),$targetLang);
 			}
 			Context::set('dicList', $dicList);
 
@@ -546,7 +547,7 @@
             $this->add('html', $result->get('html'));
 		}
 
-		function getDicList($nodeArr, $sourceLangArr = 'en'){
+		function getDicList($nodeArr, $targetLang, $sourceLangArr = 'en'){
 			$wordArr = array();
 			foreach($nodeArr as $srl => &$content){
 				$content = str_word_count($content, 1);
@@ -558,6 +559,7 @@
 			}
 			$args->source_content = $wordArr;
 			$args->source_lang = $sourceLangArr;
+			$args->target_lang = $targetLang;
 			$output = executeQueryArray('translation.getDicList',$args);
 			if(empty($output->data)){
 				return;
