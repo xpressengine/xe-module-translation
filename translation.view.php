@@ -295,30 +295,29 @@
         	foreach($sourceList->data as $key => &$obj){
         		$obj->content_node = preg_replace('/\//','>',$obj->content_node);
         		$obj->targetList = array();
-        		if(empty($targetList->data)){
-        			continue;
-        		}
-        		foreach($targetList->data as $key2 => $obj2){
-					if($obj->content_node == $obj2->content_node){
-						$obj->targetList[] = $obj2;
-						if($obj2->is_original){
-							$obj->targetListTop = $obj2;
+
+        		if(!empty($targetList->data)){
+	        		foreach($targetList->data as $key2 => $obj2){
+						if($obj->content_node == $obj2->content_node){
+							$obj->targetList[] = $obj2;
+							if($obj2->is_original){
+								$obj->targetListTop = $obj2;
+							}
 						}
-					}
-        		}
+	        		}
+	        	}
         		if(!$obj->targetListTop && count($obj->targetList)>0){
 					$obj->targetListTop = $obj->targetList[0];
         		}
-        		if(empty($fileInfo->data)){
-        			continue;
-        		}
         		$obj->fileInfo = null;
-        		foreach($fileInfo->data as $key2 => $obj2){
-        			if($obj->translation_file_srl == $obj2->translation_file_srl){
-        				$obj->fileInfo = $obj2;
-        				break;
-        			}
-        		}
+        		if(!empty($fileInfo->data)){
+	        		foreach($fileInfo->data as $key2 => $obj2){
+	        			if($obj->translation_file_srl == $obj2->translation_file_srl){
+	        				$obj->fileInfo = $obj2;
+	        				break;
+	        			}
+	        		}
+	        	}
         	}
         	Context::set('sourceList', $sourceList->data);
 
