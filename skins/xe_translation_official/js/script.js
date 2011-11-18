@@ -60,9 +60,14 @@ jQuery(function($){
 
 		    params['translation_content_srl'] = btObj.attr('data');
 		    var callBack = function(){
-				var recomCountObj = $(btEl).parent().find('.recomCount');
-				var refreshNum = parseInt(recomCountObj.html()) + 1;
-				recomCountObj.html(refreshNum);
+		    	var recomCountObj = $(btEl).parent().find('.recomCount');
+				var recomCountHtml = recomCountObj.html();
+				var reg = /\D*/g;
+				var countNum = recomCountHtml.replace(reg, '');
+				var refreshNum = parseInt(countNum) + 1;
+				var reg = /(\D*)(\d+)(\D*)/;
+				refreshStr = recomCountHtml.replace(reg, '$1' + refreshNum + '$3');
+				recomCountObj.html(refreshStr);
 		    };
 		    exec_xml('translation','procVoteItem', params, callBack);
 		}
