@@ -7,7 +7,7 @@ jQuery(function($){
 	var w = Number(wpx.replace(/px$/,''));
 	combo.find('>div').css('width',(w+3)+'px');
 	combo.find('a').css({'display':'inline-block','width':(w-15) + 'px'});
-	
+
 	//combo.find('ul.lang_list').css('display','none');
 	list_li.mouseover(function(){$(this).css('background-color','#dedede')});
 	list_li.mouseout(function(){$(this).css('background-color','transparent')});
@@ -27,16 +27,16 @@ jQuery(function($){
 	function listToggle()
 	{
 		var sel = $(this);
-		
+
 		var state;
 		($('div.lang_select>div').hasClass('on'))?state = true:state = false;
-		
+
 		if (state){
 			sel.find('ul').css('display','none');
 			sel.find('div.selected').removeClass('on').addClass('off');
 		}else{
 			sel.find('ul').css('display','block');
-			
+
 			sel.find('div.selected').removeClass('off').addClass('on');
 		}
 	}
@@ -48,7 +48,8 @@ jQuery(function($){
 	}
 
 	var _root = this;
-	_root.targetLang = targetLang;
+	_root.targetLang = window.targetLang || '';
+
 	var edit_ta = $('div.translation');
 	edit_ta.find('textarea.resizable:not(.processed)').TextAreaResizer();
 
