@@ -33,31 +33,31 @@
 	<thead>
 		<tr>
 			<th class="col1">Project</th>
-			<th class="col2"><a href="">Percentage</a></th>
+			<th class="col2">Percentage</th>
 			<th cond="!$member_srl" class="col3">Summary</th>
 			<th class="col3">Number of Files</th>
-			<th class="col4"><a href="">Recent Update</a></th>
+			<th class="col4"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl', $member_srl, 'select_lang',$select_lang,'sort_target','project','sort_type',$sort_type)}">Recent Update</a></th>
 			<th cond="$member_srl" class="col5"></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr loop="$project_list => $project_key, $project">
 			<td class="col1">
-				<a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl,'member_srl', $member_srl)}">{$project->project_name}</a>
+				<a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project['item']->translation_project_srl,'member_srl', $member_srl)}">{$project['item']->project_name}</a>
 			</td>
 			<td class="col2">
-				<div cond="!$project->no_files" class="track">
-					<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
-					<span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span>
-					<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
+				<div cond="!$project['item']->no_files" class="track">
+					<span cond="$project['item']->perc_approved > 0" class="color_1">{$project['item']->perc_approved}%</span>
+					<span cond="$project['item']->perc_notApproved > 0" class="color_2">{$project['item']->perc_notApproved}%</span>
+					<span cond="$project['item']->perc_notTranslated > 0" class="color_3">{$project['item']->perc_notTranslated}%</span>
 				</div>
-				<div cond="$project->no_files" class="track">
+				<div cond="$project['item']->no_files" class="track">
 					<span >no files</span>
 				</div>
 			</td>
-			<td cond="!$member_srl"  class="col3">Translated {$project->trans_count}, Need to approve {$project->no_approved_count}</td>
-			<td class="col3">{$project->file_count}</td>
-			<td class="col4 recent">{$project->last_update}<block cond="!$project->last_update">No update</block></td>
+			<td cond="!$member_srl"  class="col3">Translated {$project['item']->trans_count}, Need to approve {$project['item']->no_approved_count}</td>
+			<td class="col3">{$project['item']->file_count}</td>
+			<td class="col4 recent">{$project['item']->last_update}<block cond="!$project['item']->last_update">No update</block></td>
 			<td cond="$member_srl" class="col5">
 				<a href="{getUrl('','mid',$mid,'act','dispTranslationRegProject','translation_project_srl',$project->translation_project_srl)}" class="sty_btn">modify</a>
 				<a href="{getUrl('','mid',$mid,'act','dispTranslationDeleteProject','translation_project_srl',$project->translation_project_srl,'member_srl', $member_srl)}" class="sty_btn">delete</a>
