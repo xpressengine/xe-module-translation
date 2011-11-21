@@ -5,50 +5,41 @@
 <div class="project"><a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl)}">Project "{$project_info->project_name}"</a> &gt; {$file_info->file_path}</div>
 <form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
 <div class="language_type">
-	<!-- <select id="default_lang" name="source_lang" class="lang_{$source_lang}" onchange="window.location = '{$listUrl}' + '&source_lang=' + this.value">
+	<!-- <select id="default_lang" name="source_lang" class="lang_{$source_lang}" onchange="">
 		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$target_lang" selected="true"|cond="$source_lang == $key" class="lang_{$key}">{$val}</option>
 	</select> -->
 	<div id="default_lang" class="lang_select">
-	  	<div class="selected off"><span class="ico lang_en"></span><span class="label">English</span><span class="arrow"></span></div>
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$key == $source_lang">
+	  		<span class="ico lang_{$key}"></span>
+	  		<span class="label">{$val}</span>
+	  		<span class="arrow"></span>
+	  	</div>
 	  	<ul class="lang_list">
-	  		<li><a onclick="return false;" href="#" class="lang_ko" >한국어</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_en" >English</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_jp" >日本語</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-CN" >中文(中国)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-TW" >中文(臺灣)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_fr" >Français</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_de" >Deutsche Sprache</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_ru" >Русский</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_es" >Español</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_tr" >Turkey</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_vi" >Tiếng Việt</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_mn" >Mongolian</a></li>
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$target_lang" value="{$key}">
+	  			<a href="{$listUrl.'&target_lang='.$target_lang.'&source_lang='.$key}" class="lang_{$key}" >{$val}</a>
+	  		</li>
 	  	</ul>
 	</div>
 	<span class="tt">To</span>
 	<!-- <select id="target_lang" name="target_lang" class="lang_{$target_lang}" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
 		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$source_lang" selected="true"|cond="$target_lang == $key" class="lang_{$key}">{$val}</option>
 	</select> -->
-	
 	<div id="target_lang" class="lang_select">
-	  	<div class="selected off"><span class="ico lang_ko"></span><span class="label">한국어</span><span class="arrow"></span></div>
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$target_lang == $key">
+
+	  		<span class="ico lang_{$key}"></span>
+	  		<span class="label">{$val}</span>
+	  		<span class="arrow"></span>
+	  	</div>
 	  	<ul class="lang_list">
-	  		<li><a onclick="return false;" href="#" class="lang_ko" >한국어</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_en" >English</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_jp" >日本語</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-CN" >中文(中国)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-TW" >中文(臺灣)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_fr" >Français</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_de" >Deutsche Sprache</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_ru" >Русский</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_es" >Español</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_tr" >Turkey</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_vi" >Tiếng Việt</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_mn" >Mongolian</a></li>
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$source_lang" value="{$key}">
+	  			<a href="{$listUrl.'&source_lang='.$source_lang.'&target_lang='.$key}" class="lang_{$key}" >{$val}</a>
+	  		</li>
 	  	</ul>
 	</div>
 </div>
-
+<input type="hidden" name="target_lang" value="{$target_lang}" />
+<input type="hidden" name="source_lang" value="{$source_lang}" />
 <input type="hidden" name="act" value="procTransInsertContent" />
 <input type="hidden" name="mid" value="{$mid}" />
 <input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />

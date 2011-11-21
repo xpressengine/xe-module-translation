@@ -529,6 +529,7 @@
 				return;
 			}
 
+			//only english source can have dictionary reference
 			if($output->data[0]->lang == 'en'){
 				$dicList = $this->getDicList(array($output->data[0]->content),$targetLang);
 			}
