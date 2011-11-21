@@ -108,9 +108,9 @@ div.perPage:after{content:'';display:block;height:0;clear:both;}
 .list_type a.selected{font-weight:bold}
 
 #t_list div.t_item{overflow:hidden;}
-#t_list div.item{padding:10px 0;width:100%;float:left;border-bottom:1px solid #CCC;}
+#t_list div.item{padding:10px;overflow:hidden;border-bottom:1px solid #CCC;}
 #t_list div.item span.phrase,
-#t_list div.item span.translation{display:block;margin:0;padding:0 10px;float:left;width:49%;}
+#t_list div.item span.translation{display:block;margin:0;float:left;width:50%;}
 #t_list div.item span.phrase{}
 #t_list>div:last-child{border:none;}
 #t_list div.edit{float:left;width:100%;border-bottom:1px solid #ccc}
