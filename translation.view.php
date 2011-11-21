@@ -66,7 +66,7 @@
 					}
 				}
 			}
-			
+
 			if($sort_target == 'lang' && $sort_type_lang == 'asc'){
 				$this->multi2dSortAsc($lang_list,'sort_index');
 				Context::set('sort_type_lang','desc');
@@ -202,8 +202,8 @@
 				}
 			}
 
-			Context::set('p_lang_list',$p_lang_list); 
-			Context::set('project_info',$project_info); 
+			Context::set('p_lang_list',$p_lang_list);
+			Context::set('project_info',$project_info);
 
 			// set template_file to be register_project.html
             $this->setTemplateFile('project_info_lang');
@@ -277,7 +277,7 @@
 
 			// get project inforamtion
 			$project_info = $oTransModel->getProject($translation_project_srl);
-	
+
 			if($project_info){
 				$pTransTotalCount = $oTransModel->getProjectTranslationTotalCount($project_info->translation_project_srl);
 				$pTransCount = $oTransModel->getProjectLangTranslationCount($project_info->translation_project_srl,$select_lang);
@@ -297,12 +297,12 @@
 					$project_info->no_files = true;
 				}
 			}
-			
+
 			// get files inforamtion
 			$obj->module_srl = $this->module_info->module_srl;
 			$obj->translation_project_srl = $translation_project_srl;
 			$fileList = $oTransModel->getProjectFileList($obj);
-				
+
 			$file_list = array();
 			if($fileList){
 				foreach($fileList as $file_key => $file){
@@ -331,8 +331,8 @@
 
 			$lang_supported_list = Context::loadLangSupported();
 
-			Context::set('lang_supported_list',$lang_supported_list);		
-			Context::set('project_info',$project_info);			
+			Context::set('lang_supported_list',$lang_supported_list);
+			Context::set('project_info',$project_info);
 			Context::set('file_list',$file_list);
 
 			// set template_file to be file_list.html
@@ -387,6 +387,20 @@
 			//get the file Info
         	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
 
+        	//get project info
+        	if($projSrl || $fileInfo){
+        	    $f = current($fileInfo->data);
+        	    $projInfo = $oTransModel->getProjInfoBySrl(array($f->translation_project_srl));
+        	    if($projInfo && $projInfo->data){
+        	        Context::set('projInfo',$projInfo->data);
+        	    }
+        	}
+
+        	//if has file_srl in the get params, need file_info to show in the page
+        	if($fileSrl){
+        	    Context::set('fileInfo',current($fileInfo->data));
+        	}
+
 			//get Source List
 			$page = Context::get('page');
             if(!$page) Context::set('page', $page=1);
@@ -438,7 +452,7 @@
 
         	Context::set('sourceList', $sourceList->data);
 
-			$url = getUrl('','mid', $mid, 'act','dispTransContent','translation_project_srl',$projSrl,
+			$url = getUrl('','mid', $mid, 'act',Context::get('act'),'translation_project_srl',$projSrl,
 							'translation_file_srl',$fileSrl,
 							'source_lang',$sourceLang,
 							'target_lang',$targetLang,

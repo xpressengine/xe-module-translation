@@ -582,5 +582,15 @@
 			$output = executeQueryArray('translation.getContentList',$args);
 			return $output;
 		}
+
+		function getProjInfoBySrl($projSrlArr = array()){
+		    if(!is_array($projSrlArr)){
+                return null;
+		    }
+		    $args->translation_project_srl = $projSrlArr;
+		    $output = executeQuery('translation.getProjInfo',$args);
+		    return $output;
+		}
+
 	}
 ?>
