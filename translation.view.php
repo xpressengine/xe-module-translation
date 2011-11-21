@@ -370,6 +370,10 @@
             $this->setTemplateFile('file_register');
         }
 
+        function _removeSpecialTag($content){
+            return removeHackTag($content);
+        }
+
         function dispTransContent(){
         	$fileSrl = Context::get('translation_file_srl') ? Context::get('translation_file_srl'):null;
         	$projSrl = Context::get('translation_project_srl') ? Context::get('translation_project_srl'):null;
@@ -382,7 +386,7 @@
         	Context::set('target_lang',$targetLang);
         	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
         	$sortType = Context::get('listType') ? Context::get('listType') : 'translation_count';
-        	Context::set('listType',$sortType);
+        	Context::set('listType', $sortType);
 
 			//get the file Info
         	$fileInfo = $oTransModel->getFileInfo($fileSrl, $projSrl);
@@ -415,7 +419,7 @@
         	$contentNode = array();
         	foreach($sourceList->data as $key => $dataObj){
         		$contentNode[] = $dataObj->content_node;
-        		$nodeContent[$dataObj->translation_content_srl] = $dataObj->content;
+        		$nodeContent[$dataObj->translation_content_srl] = $this->_removeSpecialTag($dataObj->content);
         	}
 
         	//get translation_content_srl
@@ -425,8 +429,10 @@
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
 
+        		$obj->content =$this->_removeSpecialTag( $obj->content);
         		if(!empty($targetList->data)){
-	        		foreach($targetList->data as $key2 => $obj2){
+	        		foreach($targetList->data as $key2 => &$obj2){
+	        		    $obj2->content = $this->_removeSpecialTag($obj2->content);
 						if($obj->content_node == $obj2->content_node){
 							$obj->targetList[] = $obj2;
 							if($obj2->is_original){
