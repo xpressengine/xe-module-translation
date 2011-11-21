@@ -1,97 +1,99 @@
 <include target="_header.html" />
-<load target="js/script.js" />
 <load target="js/translation.js" />
-<load target="css/style.css" />
+<load target="js/script.js" />
 
+<h2 class="m_title">Project "{$project_info->project_name}"</h2>
 
-<h2>Translation File List Page</h2>
-
-<div class="container">
-	<h4 class="page_h2">Project "{$project_info->project_name}"</h4>
-	<div class="language_type">
-	<!-- <select id="target_lang" class="ko lang_ko"><option value="ko" class="ko">Korean</option></select> -->
-	
+<div class="project">
+	<a href="{getUrl('','mid', $mid,'act','dispTransProLangInfo','translation_project_srl',$translation_project_srl,'member_srl',$member_srl)}">{$project_info->project_name} </a> &gt;&gt; 
+	<strong>{$project_info->project_name} file list</strong>
+</div>
+<div class="language_type">
 	<div id="" class="lang_select">
-	  	<div class="selected off"><span class="ico lang_en"></span><span class="label">English</span><span class="arrow"></span></div>
+	  	<div class="selected off"><span class="ico lang_{$select_lang}"></span><span class="label">{$lang_supported[$select_lang]}</span><span class="arrow"></span></div>
 	  	<ul class="lang_list">
-	  		<li><a onclick="return false;" href="#" class="lang_ko" >한국어</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_en" >English</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_jp" >日本語</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-CN" >中文(中国)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_zh-TW" >中文(臺灣)</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_fr" >Français</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_de" >Deutsche Sprache</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_ru" >Русский</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_es" >Español</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_tr" >Turkey</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_vi" >Tiếng Việt</a></li>
-	  		<li><a onclick="return false;" href="#" class="lang_mn" >Mongolian</a></li>
+			<li loop="$lang_supported_list => $lang_key, $lang">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl', $translation_project_srl, 'member_srl', $member_srl, 'select_lang',$lang_key)}" class="lang_{$lang_key}">{$lang}</a>
+			</li>
 	  	</ul>
 	</div>
-	</div>
+</div>
 
-	<table id="project_summary" class="info_table normal_table" cellpadding="0" cellspacing="0">
-		<caption class="blind">Project "XE Core"</caption>
-		<thead>
-			<tr>
-				<th class="col1" scope="col" >File</th>
-				<th class="col2" scope="col" >Percentage</th>
-				<!--<th class="col3" scope="col" >Summary</th>-->
-				<th class="col4" scope="col" >Recent Update</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="col1"><a href="a30-translate_project_all_file.html">Total {count($file_list)}</a></td>
-				<td class="percentage" >
-					<div class="track">
-						<span class="color_1">20%</span>
-						<span class="color_2">20%</span>
-						<span class="color_3">60%</span>
-					</div><!-- //graph -->
-				</td>
-				<!--<td class="col3">Translated 1090 , Need to approve 210</td>-->
-				<td class="col4">2011.10.18 (sol)</td>
-			</tr>
-		</tbody>
-	</table>
 
-	<table id="project_files" class="info_table normal_table longTxt" cellpadding="0" cellspacing="0">
+<table id="project_summary" class="info_table normal_table" cellpadding="0" cellspacing="0">
 	<caption class="blind">Project "XE Core"</caption>
 	<thead>
 		<tr>
-			<th class="col1" scope="col" >File</th>
+			<th class="col1" scope="col" >Total Files</th>
 			<th class="col2" scope="col" >Percentage</th>
-			<!--<th class="col3" scope="col" >Summary</th>-->
+			<th class="col3" scope="col" >Summary</th>
+			<th class="col4" scope="col" >Recent Update</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="col1">
+				<a href="{getUrl('','mid',$mid,'act','dispTransContent','translation_project_srl',$translation_project_srl)}">Total {count($file_list)} Files</a>
+			</td>
+			<td class="percentage" >
+				<div cond="!$project_info->no_files" class="track">
+					<span cond="$project_info->perc_approved > 0" class="color_1">{$project_info->perc_approved}%</span>
+					<span cond="$project_info->perc_notApproved > 0" class="color_2">{$project_info->perc_notApproved}%</span>
+					<span cond="$project_info->perc_notTranslated > 0" class="color_3">{$project_info->perc_notTranslated}%</span>
+				</div>
+				<div cond="$project_info->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td class="col3">Translated {$project_info->trans_count}, Need to approve {$project_info->no_approved_count}</td>
+			<td class="col4">{$project_info->last_update}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="project_files" class="info_table normal_table longTxt" cellpadding="0" cellspacing="0">
+	<caption class="blind">Project "XE Core"</caption>
+	<thead>
+		<tr>
+			<th class="col1" scope="col" >File List</th>
+			<th class="col2" scope="col" >Percentage</th>
+			<th class="col3" scope="col" >Summary</th>
 			<th class="col4" scope="col" >Recent Update</th>
 			<th class="col5" scope="col" ></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr loop="$file_list => $key, $val">
-			<td class="col1"><a href="{getUrl('','mid',$mid,'act','dispTransContent','translation_file_srl',$val->translation_file_srl,'translation_project_srl',$translation_project_srl)}">{$val->file_path}</a></td>
-			<td class="percentage">
-				<div class="track">
-					<span class="color_1">35%</span>
-					<span class="color_2">25%</span>
-					<span class="color_3">40%</span>
-				</div><!-- //graph -->
+		<tr loop="$file_list => $file_key, $file">
+			<td class="col1">
+				<a href="{getUrl('','mid',$mid,'act','dispTransContent','translation_file_srl',$file->translation_file_srl,'translation_project_srl',$translation_project_srl,'source_lang',$module_info->default_lang,'target_lang',$select_lang)}">{$file->file_path}</a>
 			</td>
-			<!--<td class="col3">Translated 390, Need to approve 210</td>-->
-			<td class="col4">2011.10.18 (sol)</td>
-			<td class="col5"><a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$val->translation_file_srl)}">update<a/>&nbsp;<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">download<a/></td>
+			<td class="percentage">
+				<div cond="!$file->no_contents" class="track">
+					<span cond="$file->perc_approved > 0" class="color_1">{$file->perc_approved}%</span>
+					<span cond="$file->perc_notApproved > 0" class="color_2">{$file->perc_notApproved}%</span>
+					<span cond="$file->perc_notTranslated > 0" class="color_3">{$file->perc_notTranslated}%</span>
+				</div>
+				<div cond="$file->no_contents" class="track">
+					<span >no contents</span>
+				</div>
+			</td>
+			<td class="col3">Translated {$file->trans_count}, Need to approve {$file->no_approved_count}</td>
+			<td class="col4">{$file->last_update}<block cond="!$file->last_update">No update</block></td>
+			<td class="col5">
+				<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">download</a>&nbsp;
+				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$val->translation_file_srl)}">update</a>&nbsp;
+				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">delete</a>
+			</td>
 		</tr>
-		
 	</tbody>
-	</table>
+</table>
 
-	<dl class="color_desc">
+<dl class="color_desc">
 	<dt><span class="color_1"></span></dt><dd>Translated</dd>
 	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
 	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
-	</dl>
+</dl>
 
-</div><!-- //container -->
 
 <div class="btn_area">
 	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_project_srl', $translation_project_srl)}" class="sty_btn">Add New File</a>
