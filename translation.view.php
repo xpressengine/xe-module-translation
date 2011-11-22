@@ -376,6 +376,7 @@
 
 			$translation_project_srl = Context::get('translation_project_srl');
 			$translation_file_srl = Context::get('translation_file_srl');
+			$member_srl = Context::get('member_srl');
 
 			$oTranslationModel =  &getModel('translation');
 
@@ -390,7 +391,8 @@
 
 			// get project list
 			$obj->module_srl = $this->module_info->module_srl;
-			$project_list = $oTranslationModel->getProjectList($obj->module_srl);
+			$obj->member_srl = $member_srl;
+			$project_list = $oTranslationModel->getMemberProjectList($obj);
 
 			Context::set('project_list',$project_list);
 			Context::set('project_info',$project_info);
