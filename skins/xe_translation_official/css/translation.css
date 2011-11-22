@@ -90,17 +90,15 @@ div.project a{color:#000}
 div.language_type{margin-bottom:10px;float:right;text-align:right;}
 div.language_type select{padding-left:20px;border:1px solid #d5d5d5; background-position:2px 3px;-webkit-appearance:none}
 
-div.language_type{margin-bottom:20px;float:right;vertical-align:top;*zoom:1;}
+div.language_type{margin-bottom:40px;float:right;vertical-align:top;*zoom:1;}
 div.language_type:after{display:block;clear:both;content:''}
 /* div.language_type select{padding-left:20px;border:1px solid #d5d5d5; background-position:2px 3px;-webkit-appearance:none}
 .language_type select option{text-align:center;} */
 div.language_type span.tt{display:inline-block;padding:0 5px;float:left;vertical-align:top;}
-div#target_lang{float:left}
-div#default_lang{float:left}
 
 form.fo_translation_insert_content{}
 form.fo_translation_insert_content:after{display:block;content:'';clear:both;}
-#t_list{width:100%;border:1px solid #AAA;clear:both;position:relative;margin-top:20px;margin-right:3px;float:left;box-shadow:0 0 5px #aaa;*zoom:1;}
+#t_list{width:99%;border:1px solid #AAA;clear:both;position:relative;margin:0 auto;box-shadow:0 0 5px #aaa;*zoom:1;}
 #t_list:after{display:block;clear:both;content:'';}
 div.perPage{position:absolute;top:-30px;right:0;}
 div.perPage:after{content:'';display:block;height:0;clear:both;}
@@ -108,13 +106,13 @@ div.perPage:after{content:'';display:block;height:0;clear:both;}
 .list_type a{display:inline-block;margin-right:10px;color:#000}
 .list_type a.selected{font-weight:bold}
 
-#t_list div.t_item{overflow:hidden;}
-#t_list div.item{padding:10px;overflow:hidden;border-bottom:1px solid #CCC;}
+#t_list div.t_item{overflow:hidden;border-bottom:1px solid #CCC;}
+#t_list div.item{padding:10px;overflow:hidden;}
 #t_list div.item span.phrase,
 #t_list div.item span.translation{display:block;margin:0;float:left;width:50%;}
 #t_list div.item span.phrase{}
 #t_list>div:last-child{border:none;}
-#t_list div.edit{float:left;width:100%;border-bottom:1px solid #ccc}
+#t_list div.edit{float:left;width:100%;}
 #t_list div.edit div.position{margin-bottom:4px;padding: 5px 10px;}
 #t_list div.edit div.position span{text-decoration:underline;color:#666}
 
@@ -175,11 +173,9 @@ table.normal_table td.col1 a{display:block;padding:4px 0;width:197px;word-wrap:b
 
 .t_pagination{text-align:center; height:30px;width:100%;clear:both;}
 
-
-
 /* select language comboBox */
 
-div.lang_select{display:inline-block;position:relative;z-index:30;margin:0;padding:0;}
+div.lang_select{display:inline-block;float:left;position:relative;z-index:30;margin:0;padding:0;}
 div.lang_select:after{display:block;clear:both;content:'';height:0;}
 div.lang_select *{font-size:12px;}
 div.lang_select a{float:left;text-decoration:none;text-align:left;padding:0 0 0 23px;color:#000;background-repeat:no-repeat;background-position:3px 3px;_background-position-x:6px;}
