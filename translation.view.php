@@ -42,9 +42,8 @@
 			$lang_supported_list = Context::loadLangSupported();
 			$lang_list = array();
 			$mTransTotalCount = $oTransModel->getModuleTranslationTotalCount($this->module_info->module_srl);
-			$sort_target = Context::get('sort_target');
-			$sort_type_lang = Context::get('sort_type_lang')?Context::get('sort_type_lang'):'asc';
-			$sort_type_project = Context::get('sort_type_project')?Context::get('sort_type_project'):'asc';
+			$sort_lang_target = Context::get('sort_lang_target');
+			$sort_lang_type = Context::get('sort_lang_type')?Context::get('sort_lang_type'):'asc';
 
 			if($lang_supported_list){
 				foreach($lang_supported_list as $lang_key => $lang){
@@ -60,25 +59,34 @@
 						$lang_list[$lang_key]['item']->perc_notApproved = number_format($mNoAppCount/$mTransTotalCount * 100,2);
 						$lang_list[$lang_key]['item']->perc_notTranslated = number_format($mNoTransCount/$mTransTotalCount * 100,2);
 						$lang_list[$lang_key]['item']->last_update = zdate($mLangLastUpdate->last_update,"Y.m.d");
-						$lang_list[$lang_key]['sort_index'] = $mLangLastUpdate->last_update;
 					}else{
 						$lang_list[$lang_key]['item']->no_files = true;
 					}
+					if($sort_lang_target == 'last_update')
+						$lang_list[$lang_key]['sort_index'] = $mLangLastUpdate->last_update;
 				}
 			}
 
-			if($sort_target == 'lang' && $sort_type_lang == 'asc'){
+			if($sort_lang_target && $sort_lang_type == 'asc'){
 				$this->multi2dSortAsc($lang_list,'sort_index');
-				Context::set('sort_type_lang','desc');
+				Context::set('sort_lang_type','desc');
 			}
-			if($sort_target == 'lang' && $sort_type_lang == 'desc'){
+			if($sort_lang_target && $sort_lang_type == 'desc'){
 				$this->multi2dSortDesc($lang_list,'sort_index');
-				Context::set('sort_type_lang','asc');
+				Context::set('sort_lang_type','asc');
 			}
 
 
 			// statistics inforamtion based on various projects
-			$projectList = $oTransModel->getProjectList($this->module_info->module_srl);
+			$obj->sort_index = Context::get('sort_pro_target');
+			$obj->sort_type = Context::get('sort_pro_type')?Context::get('sort_pro_type'):'asc';
+			if($obj->sort_type == 'asc'){
+				Context::set('sort_pro_type','desc');
+			}else{
+				Context::set('sort_pro_type','asc');
+			}
+
+			$projectList = $oTransModel->getProjectList($this->module_info->module_srl,$obj);
 			$project_list = array();
 
 			if($projectList){
@@ -88,29 +96,18 @@
 					$pAppCount = $oTransModel->getProjectTranslationCount($project->translation_project_srl, true);
 					$pNoAppCount = $pTransCount - $pAppCount;
 					$pNoTransCount = $pTransTotalCount - $pTransCount;
-					$pLastUpdate = $oTransModel->getProjectLastUpdate($project->translation_project_srl);
 
-					$project_list[$project_key]['item']->translation_project_srl = $project->translation_project_srl;
-					$project_list[$project_key]['item']->project_name = $project->project_name;
+					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
+					$project_list[$project_key]->project_name = $project->project_name;
 					if($pTransTotalCount){
-						$project_list[$project_key]['item']->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]['item']->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]['item']->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]['item']->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
-						$project_list[$project_key]['sort_index'] = $pLastUpdate->last_update;
+						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
+						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
+						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+						$project_list[$project_key]->last_update = zdate($project->last_update,"Y.m.d");
 					}else{
-						$project_list[$project_key]['item']->no_files = true;
+						$project_list[$project_key]->no_files = true;
 					}
 				}
-			}
-
-			if($sort_target == 'project' && $sort_type_project == 'asc'){
-				$this->multi2dSortAsc($project_list,'sort_index');
-				Context::set('sort_type_project','desc');
-			}
-			if($sort_target == 'project' && $sort_type_project == 'desc'){
-				$this->multi2dSortDesc($project_list,'sort_index');
-				Context::set('sort_type_project','asc');
 			}
 
 			// translator ranking
@@ -171,6 +168,9 @@
 			$translation_project_srl = Context::get('translation_project_srl');
 			$project_info = $oTransModel->getProject($translation_project_srl);
 
+			$sort_target = Context::get('sort_target');
+			$sort_type = Context::get('sort_type')?Context::get('sort_type'):'asc';
+
 			// get supported language list
 			$lang_supported_list = Context::loadLangSupported();
 			$p_lang_list = array();
@@ -186,24 +186,36 @@
 					$pNoTransCount = $pTransTotalCount - $pTransCount;
 					$pLastUpdate = $oTransModel->getProjectLastUpdate($translation_project_srl,$lang_key);
 
-					$p_lang_list[$lang_key]->translation_project_srl = $translation_project_srl;
-					$p_lang_list[$lang_key]->name = $lang;
-					$p_lang_list[$lang_key]->trans_count = $pTransCount;
-					$p_lang_list[$lang_key]->no_approved_count = $pNoAppCount;
+					$p_lang_list[$lang_key]['item']->translation_project_srl = $translation_project_srl;
+					$p_lang_list[$lang_key]['item']->name = $lang;
+					$p_lang_list[$lang_key]['item']->trans_count = $pTransCount;
+					$p_lang_list[$lang_key]['item']->no_approved_count = $pNoAppCount;
 
 					if($pTransTotalCount){
-						$p_lang_list[$lang_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-						$p_lang_list[$lang_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-						$p_lang_list[$lang_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
-						$p_lang_list[$lang_key]->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
+						$p_lang_list[$lang_key]['item']->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
+						$p_lang_list[$lang_key]['item']->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
+						$p_lang_list[$lang_key]['item']->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+						$p_lang_list[$lang_key]['item']->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
 					}else{
-						$p_lang_list[$lang_key]->no_files = true;
+						$p_lang_list[$lang_key]['item']->no_files = true;
 					}
+					if($sort_target == 'last_update')
+						$p_lang_list[$lang_key]['sort_index'] = $pLastUpdate->last_update;
 				}
 			}
 
-			Context::set('p_lang_list',$p_lang_list);
-			Context::set('project_info',$project_info);
+
+			if($sort_target && $sort_type == 'asc'){
+				$this->multi2dSortAsc($p_lang_list,'sort_index');
+				Context::set('sort_type','desc');
+			}
+			if($sort_target && $sort_type == 'desc'){
+				$this->multi2dSortDesc($p_lang_list,'sort_index');
+				Context::set('sort_type','asc');
+			}
+
+			Context::set('p_lang_list',$p_lang_list); 
+			Context::set('project_info',$project_info); 
 
 			// set template_file to be register_project.html
             $this->setTemplateFile('project_info_lang');
@@ -218,6 +230,15 @@
             $member_srl = Context::get('member_srl');
 			$select_lang = Context::get('select_lang')?Context::get('select_lang'):$this->module_info->default_lang;
 
+			// sorting variables
+			$obj->sort_index = Context::get('sort_target');
+			$obj->sort_type = Context::get('sort_type')?Context::get('sort_type'):'asc';
+			if($obj->sort_type == 'asc'){
+				Context::set('sort_type','desc');
+			}else if($obj->sort_type == 'desc'){
+				Context::set('sort_type','asc');
+			}
+
 			$oTransModel =  &getModel('translation');
 			$obj->module_srl = $this->module_info->module_srl;
 
@@ -225,7 +246,7 @@
 				$obj->member_srl = $member_srl;
 				$projectList =  $oTransModel->getMemberProjectList($obj);
 			}else{
-				$projectList =  $oTransModel->getProjectList($obj->module_srl);
+				$projectList =  $oTransModel->getProjectList($obj->module_srl,$obj);
 			}
 
 			$project_list = array();
@@ -236,23 +257,23 @@
 					$pAppCount = $oTransModel->getProjectLangTranslationCount($project->translation_project_srl,$select_lang, true);
 					$pNoAppCount = $pTransCount - $pAppCount;
 					$pNoTransCount = $pTransTotalCount - $pTransCount;
-					$pLastUpdate = $oTransModel->getProjectLastUpdate($project->translation_project_srl,$select_lang);
 					$args->translation_project_srl = $project->translation_project_srl;
 					$args->module_srl = $this->module_info->module_srl;
 
 					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
 					$project_list[$project_key]->project_name = $project->project_name;
-					$project_list[$project_key]->file_count = count($oTransModel->getProjectFileList($args));
+					$project_list[$project_key]->file_count = $project->files_count;
 					$project_list[$project_key]->trans_count = $pTransCount;
 					$project_list[$project_key]->no_approved_count = $pNoAppCount;
 					if($pTransTotalCount){
 						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
 						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
 						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
+						$project_list[$project_key]->last_update = zdate($project->last_update,"Y.m.d");
 					}else{
 						$project_list[$project_key]->no_files = true;
 					}
+
 				}
 			}
 
@@ -301,8 +322,17 @@
 			// get files inforamtion
 			$obj->module_srl = $this->module_info->module_srl;
 			$obj->translation_project_srl = $translation_project_srl;
-			$fileList = $oTransModel->getProjectFileList($obj);
 
+			// sorting variables
+			$obj->sort_index = Context::get('sort_target');
+			$obj->sort_type = Context::get('sort_type')?Context::get('sort_type'):'asc';
+			if($obj->sort_type == 'asc'){
+				Context::set('sort_type','desc');
+			}else if($obj->sort_type == 'desc'){
+				Context::set('sort_type','asc');
+			}
+
+			$fileList = $oTransModel->getProjectFileList($obj);
 			$file_list = array();
 			if($fileList){
 				foreach($fileList as $file_key => $file){
@@ -432,7 +462,7 @@
         		$obj->content =$this->_removeSpecialTag( $obj->content);
         		if(!empty($targetList->data)){
 	        		foreach($targetList->data as $key2 => &$obj2){
-	        		    $obj2->content = $this->_removeSpecialTag($obj2->content);
+						if( $obj2->content) $obj2->content = $this->_removeSpecialTag($obj2->content);
 						if($obj->content_node == $obj2->content_node){
 							$obj->targetList[] = $obj2;
 							if($obj2->is_original){
@@ -519,17 +549,19 @@
 		function downloadTranslationFile(){
 			$translation_file_srl = Context::get('translation_file_srl');
 			$oTranslationModel =  &getModel('translation');
+			$file_info = $oTranslationModel->getFile($translation_file_srl);
 
 			if($translation_file_srl){
 				$filepath = $file_info->target_file;
 				$test = $oTranslationModel->getFileAllContents($translation_file_srl);
+			
 				Context::set('test11',$test);
 			}
 			Context::set('test11',$test);
-
+			var_Dump($test);
 			$this->write_txt($test);
 			// set template_file to be register_file.html
-            $this->setTemplateFile('download');
+            //$this->setTemplateFile('download');*/
 		}
 
 		function write_txt($contents){
