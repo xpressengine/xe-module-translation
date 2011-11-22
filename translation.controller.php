@@ -32,11 +32,20 @@ class translationController extends translation {
 
 		if(!$obj->translation_project_srl){
 			$obj->translation_project_srl = getNextSequence();
+
+			$cache_folder = './files/cache/translation/'.$obj->translation_project_srl;
+			FileHandler::makeDir($cache_folder);
+
 			// DB query, insert project
 			$output = executeQuery('translation.insertProject', $obj);
 			$msg_code = 'success_registed';
 		}else{
 			$obj->translation_project_srl = $obj->translation_project_srl;
+			
+			$cache_folder = './files/cache/translation/'.$obj->translation_project_srl;
+			FileHandler::removeDir($cache_folder);
+			FileHandler::makeDir($cache_folder);
+
 			// DB query, update project
 			$output = executeQuery('translation.updateProject', $obj);
 			$msg_code = 'success_updated';
