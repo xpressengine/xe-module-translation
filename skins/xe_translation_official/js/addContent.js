@@ -54,9 +54,14 @@ jQuery(function($){
 		}
 
 	});
-
-	btns.first().toggleClass('btn_hidden');
-	btns.last().toggleClass('btn_hidden');
+    var firstBt = btns.first();
+	if(!firstBt.hasClass('btn_hidden')){
+	    firstBt.toggleClass('btn_hidden');
+	}
+	var lastBt = btns.last();
+	if(!lastBt.hasClass('btn_hidden')){
+	    lastBt.toggleClass('btn_hidden');
+	}
 
 	var voteBts = votes.find('span.btn_vote');
 	voteBts.each(function(ind, btEl){
