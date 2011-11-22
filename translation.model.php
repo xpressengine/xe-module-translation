@@ -550,24 +550,34 @@
 			array_multisort($sort_col, $arr);
 		}
 
+		function writeXml($contents, $file_name){
 
-		function downloadFile($filepath){
+			if(!file_exists($file_name)){
+				$fp = fopen($file_name,"wb");
+				fclose($fp);}
+			
+				$str = file_get_contents($file_name);
+				$fp = fopen($file_name,"wb");
+				fwrite($fp,$contents);
+
+				fclose($fp);
+		}
+
+		function downloadFile($filepath, $filename){
 			if(file_exists($filepath)){
 				if ($fd = fopen ($filepath, "r")) {
 					$fsize = filesize($filepath);
 					$path_parts = pathinfo($filepath);
-					$ext = strtolower($path_parts["extension"]);
-					switch ($ext) {
-						case "pdf":
-						header("Content-type: application/pdf"); // add here more headers for diff. extensions
-						header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a download
-						break;
-						default;
-						header("Content-type: application/octet-stream");
-						header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
-					}
+
+					header("Content-type: application/octet-stream");
+					header("Content-Disposition: attachment; filename=\"".$filename."\"");
 					header("Content-length: $fsize");
-					header("Cache-control: private"); //use this to open files directly
+					header('Content-Description: File Transfer');
+					header('Content-Transfer-Encoding: binary');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Pragma: public');
+
 					while(!feof($fd)) {
 						$buffer = fread($fd, 2048);
 						echo $buffer;
