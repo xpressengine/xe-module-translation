@@ -17,9 +17,9 @@ jQuery(function($){
 				var el = $(sp[m]);
 				w = tw*(el.html().replace(/%$/,'')*.01);
 
-				if( w < 10){
-					w_add = 10 - w;
-					w = (10 + 'px');
+				if( w < 25){
+					w_add = 25 - w;
+					w = (25 + 'px');
 				}else{
 					if(w_add > 0){
 						w = w - w_add;
@@ -32,7 +32,7 @@ jQuery(function($){
 					if(w_add > 0){
 						for(j=m-1;j>=0;j--){
 							w2 = $(sp[j]).width();
-							if(w2 >10){
+							if(w2 >25){
 								new_width = (w2 - w_add) + 'px';
 								$(sp[j]).css('width',new_width);
 							}

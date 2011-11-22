@@ -12,7 +12,7 @@ table caption.blind{display:inline;visibility:hidden;line-height:0;}
 h2.m_title{margin:5px 0 20px; font-size:16px;font-weight:bold;}
 .graph{width:200px;height:15px;}
 .track {width:inherit;height:15px;margin:0 auto;position:relative;white-space:nowrap;}
-.track span{display:inline-block;float:left;margin:0;padding:0;height:15px; text-align:center;font-size:12px;line-height:14px;overflow:hidden;white-space:nowrap;}
+.track span{display:inline-block;float:left;margin:0;padding:0;height:15px; text-align:center;font-size:11px;line-height:14px;overflow:hidden;white-space:nowrap;}
 /* .track span:first-child{border-radius:7px 0 0 7px;} */
 .track span:first-child{border-radius:7px 0 0 7px;}
 .track span:last-child{border-radius:0 7px 7px 0;}
