@@ -80,9 +80,9 @@
 			<td class="col3">Translated {$file->trans_count}, Need to approve {$file->no_approved_count}</td>
 			<td class="col4">{$file->last_update}<block cond="!$file->last_update">No update</block></td>
 			<td class="col5">
-				<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">download</a>&nbsp;
-				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$val->translation_file_srl)}">update</a>&nbsp;
-				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$val->translation_file_srl)}">delete</a>
+				<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl)}">download</a>&nbsp;
+				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$file->translation_file_srl)}">update</a>&nbsp;
+				<a cond="$logged_info->member_srl == $member_srl" href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl)}">delete</a>
 			</td>
 		</tr>
 	</tbody>

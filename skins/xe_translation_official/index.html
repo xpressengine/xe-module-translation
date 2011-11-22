@@ -26,12 +26,12 @@
 		<tr loop="$lang_list => $lang_key, $lang">
 			<td class="col1 lang_{$lang_key}"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','select_lang',$lang_key)}">{$lang['item']->value}</a></td>
 			<td class="col2 percentage">
-				<div cond="!$lang['object']->no_files" class="track">
+				<div cond="!$lang['item']->no_files" class="track">
 					<span cond="$lang['item']->perc_approved > 0" class="color_1">{$lang['item']->perc_approved}%</span>
 					<span cond="$lang['item']->perc_notApproved > 0" class="color_2">{$lang['item']->perc_notApproved}%</span>
 					<span cond="$lang['item']->perc_notTranslated > 0" class="color_3">{$lang['item']->perc_notTranslated}%</span>
 				</div><!-- //graph -->
-				<div cond="$lang['object']->no_files" class="track">
+				<div cond="$lang['item']->no_files" class="track">
 					<span >no files</span>
 				</div>
 			</td>
