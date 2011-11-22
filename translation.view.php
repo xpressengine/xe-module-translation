@@ -432,6 +432,9 @@
         	    if($projInfo && $projInfo->data){
         	        Context::set('projInfo',$projInfo->data);
         	    }
+        	    if(!$projSrl){
+        	    	Context::set('translation_project_srl',$projInfo->data->translation_project_srl);
+        	    }
         	}
 
         	//if has file_srl in the get params, need file_info to show in the page
