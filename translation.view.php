@@ -469,7 +469,10 @@
         		$obj->content =$this->_removeSpecialTag( $obj->content);
         		if(!empty($targetList->data)){
 	        		foreach($targetList->data as $key2 => &$obj2){
-						if( $obj2->content) $obj2->content = $this->_removeSpecialTag($obj2->content);
+						if( $obj2->content) {
+							$obj2->content = $this->_removeSpecialTag($obj2->content);
+						}
+
 						if($obj->content_node == $obj2->content_node){
 							$obj->targetList[] = $obj2;
 							if($obj2->is_original){
@@ -483,13 +486,14 @@
         		}
         		$obj->fileInfo = null;
         		if(!empty($fileInfo->data)){
-	        		foreach($fileInfo->data as $key2 => $obj2){
-	        			if($obj->translation_file_srl == $obj2->translation_file_srl){
-	        				$obj->fileInfo = $obj2;
+	        		foreach($fileInfo->data as $key3 => $obj3){
+	        			if($obj->translation_file_srl == $obj3->translation_file_srl){
+	        				$obj->fileInfo = $obj3;
 	        				break;
 	        			}
 	        		}
 	        	}
+
 	        	$obj->content_node = preg_replace('/\//','>',$obj->content_node);
         	}
 
