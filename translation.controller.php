@@ -17,7 +17,6 @@ class translationController extends translation {
 	 * @brief insert and update project
 	 **/
 	function procTranslationInsertProject(){
-
 		// check permission
 		if($this->module_info->module != "translation") return new Object(-1, "msg_invalid_request");
         $logged_info = Context::get('logged_info');
@@ -334,5 +333,24 @@ class translationController extends translation {
 		header('location:'.$returnUrl);
 	}
 
+	function procTranslationDeleteProject(){
+
+		$obj = Context::getRequestVars();
+		if($obj->translation_project_srl){
+			$output = executeQuery('translation.deleteProjects', $obj);
+			if(!$output->toBool()) { return $output;}
+			$output = executeQuery('translation.deleteFileByProject', $obj);
+			if(!$output->toBool()) { return $output;}
+			$output = executeQuery('translation.deleteContentByProject', $obj);
+			if(!$output->toBool()) { return $output;}
+		}
+
+		if(!in_array(Context::getRequestMethod(),array('XMLRPC','JSON'))) {
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'mid', $this->module_info->mid, 'act', 'dispTranslationProjectList','member_srl',$obj->member_srl);
+			header('location:'.$returnUrl);
+			return;
+		}
+		
+	}
 
 }
