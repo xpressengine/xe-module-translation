@@ -283,12 +283,13 @@ class translationController extends translation {
 				continue;
 			}
 			foreach($sourceObj as $key => $value){
-				if($key == 'translation_project_srl' || $key == 'translation_file_srl' || $key=='content_node'){
+				if($key == 'translation_project_srl' || $key == 'translation_file_srl' || $key == 'content_node'){
 					$insertNode->$key = $value;
 				}
 			}
 			$insertNode->translation_content_srl = getNextSequence();
 			$insertNode->content = $contentValue;
+			$insertNode->is_new_lang = 1;
 
 			$o = executeQueryArray('translation.insertContents', $insertNode);
 			if(!$o->toBool()){

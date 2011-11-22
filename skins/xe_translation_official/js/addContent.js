@@ -97,6 +97,10 @@ jQuery(function($){
 	var findDicTable = function(srl){
 		srl = srl || srlArr[0];
 		var targetLang = _root.targetLang || 'zh-CN';
+		if(!targetLang || !srl){
+			return;
+		}
+
 		var callBack = function(ret_obj){
 			var htmlStr = ret_obj['html'];
 			var dicObj = $('.dic_content_' + srl);

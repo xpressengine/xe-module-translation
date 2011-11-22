@@ -214,8 +214,8 @@
 				Context::set('sort_type','asc');
 			}
 
-			Context::set('p_lang_list',$p_lang_list); 
-			Context::set('project_info',$project_info); 
+			Context::set('p_lang_list',$p_lang_list);
+			Context::set('project_info',$project_info);
 
 			// set template_file to be register_project.html
             $this->setTemplateFile('project_info_lang');
@@ -423,8 +423,12 @@
 
         	//get project info
         	if($projSrl || $fileInfo){
-        	    $f = current($fileInfo->data);
-        	    $projInfo = $oTransModel->getProjInfoBySrl(array($f->translation_project_srl));
+        		if($projSrl){
+        			$projInfo = $oTransModel->getProjInfoBySrl(array($projSrl));
+        		}else{
+        			$f = current($fileInfo->data);
+        	    	$projInfo = $oTransModel->getProjInfoBySrl(array($f->translation_project_srl));
+        		}
         	    if($projInfo && $projInfo->data){
         	        Context::set('projInfo',$projInfo->data);
         	    }
@@ -554,7 +558,7 @@
 			if($translation_file_srl){
 				$filepath = $file_info->target_file;
 				$test = $oTranslationModel->getFileAllContents($translation_file_srl);
-			
+
 				Context::set('test11',$test);
 			}
 			Context::set('test11',$test);
