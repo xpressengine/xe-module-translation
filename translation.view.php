@@ -566,29 +566,14 @@
 				$filepath = $file_info->target_file;
 				$test = $oTranslationModel->getFileAllContents($translation_file_srl);
 
-				Context::set('test11',$test);
 			}
-			Context::set('test11',$test);
-			var_Dump($test);
-			$this->write_txt($test);
-			// set template_file to be register_file.html
-            //$this->setTemplateFile('download');*/
+			
+			$dir_path = './files/cache/translation/'.$file_info->translation_project_srl;
+			$file_path = $dir_path.'/'.md5(crypt(rand(1000000,900000), rand(0,100))).'.xml';
+			$oTranslationModel->writeXml($test,$file_path);
+			$oTranslationModel->downloadFile($file_path,$file_info->file_name);			
 		}
 
-		function write_txt($contents){
-
-			if(!file_exists("test.xml")){
-
-				$fp = fopen("test.xml","wb");
-
-				fclose($fp);}
-				$str = file_get_contents('test.xml');
-				$fp = fopen("test.xml","wb");
-				fwrite($fp,$contents);
-
-				fclose($fp);
-
-		}
 
 		function multi2dSortAsc(&$arr, $key){
 			$sort_col = array();
