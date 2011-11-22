@@ -21,7 +21,7 @@
 				<select name="translation_project_srl">
 					<option loop="$project_list => $key,$val" value="{$val->translation_project_srl}" selected="selected"|cond="$project_info->translation_project_srl==$val->translation_project_srl">{$val->project_name}</option>
 				</select>
-				<a href="b31-project_register.html" target="_blank" class="mk">create project</a>
+				<a href="{getUrl('mid',$mid,'act','dispTranslationRegProject')}" class="mk">create project</a>
 			</div>
 		</li>
 		<li>

@@ -5,7 +5,7 @@
 
 <div cond="$logged_info->is_admin == 'Y'" class="newfile">
 	<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl',$logged_info->member_srl)}" class="sty_btn">My Projects List</a>&nbsp;&nbsp;
-	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile')}" class="sty_btn">Add a New File</a>
+	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','member_srl',$logged_info->member_srl)}" class="sty_btn">Add a New File</a>
 </div>
 
 <table id="type_lang" class="info_table" cellpadding="0" cellspacing="0">
