@@ -171,7 +171,15 @@ table.normal_table td.col1 a{display:block;padding:4px 0;width:197px;word-wrap:b
 #project_list {width:100%; float:right}
 
 
-.t_pagination{text-align:center; height:30px;width:100%;clear:both;}
+
+.t_pagination{margin:8px 0 0;padding:6px 0;clear:both;height:20px;text-align:center;line-height:normal}
+.t_pagination a,
+.t_pagination strong{position:relative;color:#767676;font:bold 12px/15px Tahoma, Sans-serif;vertical-align:top;display:inline-block;text-decoration:none;padding:1px 8px;margin:0 -3px;border-left:1px solid #ccc;background-color:#fff;z-index:2}
+.t_pagination .prevEnd{border:none}
+.t_pagination a:hover,
+.t_pagination a:active,
+.t_pagination a:focus{background-color:#f8f8f8}
+.t_pagination strong{color:#f60;font-size:18px}
 
 /* select language comboBox */
 
@@ -187,3 +195,4 @@ div.lang_select div span.arrow{display:inline-block;position:absolute;top:2px;ri
 div.lang_select div span.label{display:inline-block;float:left;}
 div.lang_select div.off span.arrow{background:url(../images/arrow_down.gif) no-repeat right top;}
 div.lang_select div.on span.arrow{background:url(../images/arrow_up.gif) no-repeat right top;}
+

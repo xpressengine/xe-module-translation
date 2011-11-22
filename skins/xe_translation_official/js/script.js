@@ -29,7 +29,8 @@ jQuery(function($){
 		var sel = $(this);
 
 		var state;
-		($('div.lang_select>div').hasClass('on'))?state = true:state = false;
+
+		(sel.find('>div').hasClass('on'))?state = true:state = false;
 
 		if (state){
 			sel.find('ul').css('display','none');
