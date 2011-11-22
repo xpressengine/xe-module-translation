@@ -60,7 +60,7 @@
 			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
 
 			$args->module_srl = $module_srl;
-			
+
 			// set sorting variables
 			$args->sort_index = $obj->sort_index?$obj->sort_index:'translation_project_srl';
 			$args->sort_type = $obj->sort_type?$obj->sort_type:'asc';
@@ -147,6 +147,9 @@
 			$args->targetLang = $targetLang;
 
 			$output = executeQuery('translation.getTargetLangList',$args);
+			if(!is_array($output->data)){
+				$output->data = array($output->data);
+			}
 			return $output;
 		}
 
@@ -222,7 +225,7 @@
 		function getFileAllContents($translation_file_srl){
 			if(!$translation_file_srl) return;
 			$content_nodes = $this->getFileContentNodes($translation_file_srl);
-		
+
 			// get supported language list
 			$lang_supported_list = Context::loadLangSupported();
 
@@ -230,7 +233,7 @@
 			foreach($content_nodes as $key => $val){
 				$obj->content_node = $val->content_node;
 				$obj->translation_file_srl = $translation_file_srl;
-				
+
 				foreach($lang_supported_list as $lang_key => $lang_val){
 					$obj->lang = $lang_key;
 					$value = $this->getRecommendValue($obj);
@@ -248,7 +251,7 @@
 
 			$file_info = $this->getFile($translation_file_srl);
 			$oXMLContext = new XMLContext($file_info->target_file, "en");
-			
+
 			$xmlContents = $oXMLContext->getXmlFile($valueArr);
 			return $xmlContents;
 		}
