@@ -55,9 +55,9 @@
 
 					$lang_list[$lang_key]['item']->value = $lang;
 					if($mTransTotalCount){
-						$lang_list[$lang_key]['item']->perc_approved = number_format($mAppCount/$mTransTotalCount * 100,2);
-						$lang_list[$lang_key]['item']->perc_notApproved = number_format($mNoAppCount/$mTransTotalCount * 100,2);
-						$lang_list[$lang_key]['item']->perc_notTranslated = number_format($mNoTransCount/$mTransTotalCount * 100,2);
+						$lang_list[$lang_key]['item']->perc_approved = number_format($mAppCount/$mTransTotalCount * 100,1);
+						$lang_list[$lang_key]['item']->perc_notApproved = number_format($mNoAppCount/$mTransTotalCount * 100,1);
+						$lang_list[$lang_key]['item']->perc_notTranslated = number_format($mNoTransCount/$mTransTotalCount * 100,1);
 						$lang_list[$lang_key]['item']->last_update = zdate($mLangLastUpdate->last_update,"Y.m.d");
 					}else{
 						$lang_list[$lang_key]['item']->no_files = true;
@@ -100,9 +100,9 @@
 					$project_list[$project_key]->translation_project_srl = $project->translation_project_srl;
 					$project_list[$project_key]->project_name = $project->project_name;
 					if($pTransTotalCount){
-						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,1);
+						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,1);
+						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,1);
 						$project_list[$project_key]->last_update = zdate($project->last_update,"Y.m.d");
 					}else{
 						$project_list[$project_key]->no_files = true;
@@ -192,9 +192,9 @@
 					$p_lang_list[$lang_key]['item']->no_approved_count = $pNoAppCount;
 
 					if($pTransTotalCount){
-						$p_lang_list[$lang_key]['item']->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-						$p_lang_list[$lang_key]['item']->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-						$p_lang_list[$lang_key]['item']->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+						$p_lang_list[$lang_key]['item']->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,1);
+						$p_lang_list[$lang_key]['item']->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,1);
+						$p_lang_list[$lang_key]['item']->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,1);
 						$p_lang_list[$lang_key]['item']->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
 					}else{
 						$p_lang_list[$lang_key]['item']->no_files = true;
@@ -266,9 +266,9 @@
 					$project_list[$project_key]->trans_count = $pTransCount;
 					$project_list[$project_key]->no_approved_count = $pNoAppCount;
 					if($pTransTotalCount){
-						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,1);
+						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,1);
+						$project_list[$project_key]->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,1);
 						$project_list[$project_key]->last_update = zdate($project->last_update,"Y.m.d");
 					}else{
 						$project_list[$project_key]->no_files = true;
@@ -310,9 +310,9 @@
 				$project_info->trans_count = $pTransCount;
 				$project_info->no_approved_count = $pNoAppCount;
 				if($pTransTotalCount){
-					$project_info->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,2);
-					$project_info->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,2);
-					$project_info->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,2);
+					$project_info->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,1);
+					$project_info->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,1);
+					$project_info->perc_notTranslated = number_format($pNoTransCount/$pTransTotalCount * 100,1);
 					$project_info->last_update = zdate($pLastUpdate->last_update,"Y.m.d");
 				}else{
 					$project_info->no_files = true;
@@ -349,9 +349,9 @@
 					$file_list[$file_key]->no_approved_count = $fNoAppCount;
 
 					if($fTransTotalCount){
-						$file_list[$file_key]->perc_approved = number_format($fAppCount/$fTransTotalCount * 100,2);
-						$file_list[$file_key]->perc_notApproved = number_format($fNoAppCount/$fTransTotalCount * 100,2);
-						$file_list[$file_key]->perc_notTranslated = number_format($fNoTransCount/$fTransTotalCount * 100,2);
+						$file_list[$file_key]->perc_approved = number_format($fAppCount/$fTransTotalCount * 100,1);
+						$file_list[$file_key]->perc_notApproved = number_format($fNoAppCount/$fTransTotalCount * 100,1);
+						$file_list[$file_key]->perc_notTranslated = number_format($fNoTransCount/$fTransTotalCount * 100,1);
 						$file_list[$file_key]->last_update = zdate($fLastUpdate->last_update,"Y.m.d");
 					}else{
 						$file_list[$project_key]->no_contents = true;
