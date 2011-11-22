@@ -118,15 +118,15 @@ class XMLContext {
 		$data = array();
 		$xpath = !empty($xpath) ? $xpath.'/'.$rootName:$rootName;
 
-		
+
 		$isLangLine = false;
 		foreach($xmlObj->attributes() as $atrrName => $atrrValue){
 			if($atrrName == 'xml_lang'){
 				$isLangLine = true;
 			}
 
-			//set xpath:if has name attribute set xpath as nodeName[nameValue]
-			if($atrrName == 'name' || $atrrName == 'id'){
+			//set xpath:if has name,id,value attribute set xpath as nodeName[nameValue]
+			if($atrrName == 'name' || $atrrName == 'id' || $atrrName == 'value'){
 				$xpath = $this->getDbContentName($xpath, $atrrValue);
 				$rootName .= '('.$atrrValue.')';
 			}
@@ -141,12 +141,12 @@ class XMLContext {
 			}
 			if($rootName == 'name' && strpos($xpath,'options')){
 				$xpath = $this->getDbContentName($xpath, $this->_options_value);
+				$rootName .= '('.$this->_options_value.')';
 			}
 		}
-		
+	
 		array_push($data, $this->_storageNode($xmlObj, $xpath, $isLangLine));
 		
-
 		foreach($xmlObj as $nodeName => $subNode){
 			$data = array_merge($data, $this->_parseFile($subNode, $nodeName));
 		}
@@ -169,7 +169,7 @@ class XMLContext {
 			if($aName == "xml_lang"){
 				$aName = 'xml:lang';
 			}
-			$output .= sprintf(' %s="%s" ' , $aName, $avalue);
+			$output .= sprintf(' %s="%s"' , $aName, $avalue);
 		}
 		$output .= sprintf('>');
 		return $output;
@@ -185,7 +185,7 @@ class XMLContext {
 			if($aName == "xml_lang"){
 				$aName = 'xml:lang';
 			}
-			$output .= sprintf(' %s="%s" ' , $aName, $avalue);
+			$output .= sprintf(' %s="%s"' , $aName, $avalue);
 		}
 		$output .= sprintf(">\n");
 		return $output;
@@ -204,6 +204,7 @@ class XMLContext {
 	}
 
 	private function _addLangLine($parseArr, $valueArr){
+
 		$output = '';
 		$paramN = null;
 		foreach($parseArr['attr'] as $key => $value){
@@ -218,12 +219,13 @@ class XMLContext {
 		$arr = explode('/', $xpath);
 		$nodeName = array_pop($arr);
 		foreach($valueArr as $vkey => $vArr){
-			if($vArr['content_node'] == $dbNodeName && $vArr['is_new_lang'] == 1){
-				foreach($parseArr['attr'] as $key => $value){
+			if($vArr['content_node'] == $dbNodeName){
+				/*foreach($parseArr['attr'] as $key => $value){
 					if($key == 'xml_lang'){
 						$parseArr['attr'][$key] = strval($vArr['lang']);
 					}
-				}
+				}*/
+				$parseArr['attr'][$key] = strval($vArr['lang']);
 				$output .= $this->_startTag($parseArr);
 				$output .= $this->_fillContent($vArr['content']);
 				$output .= $this->_endTag($nodeName);
@@ -284,7 +286,7 @@ class XMLContext {
      * @param $valueArr array the data from database
      * @return string the xml file
      */
-	public function getXmlFile($valueArr = array(),$file_type){
+	public function getXmlFile($valueArr = array()){
 		$stackNodes = array();
 		$context = $this->_xmlContext;
 		$output = "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -303,36 +305,53 @@ class XMLContext {
 				$nN = array_pop($stackNodes);
 				$output .= $this->_endTag($nN);
 			}
+			
 
-			if($this->_hasSubNode($parseArr['value'])){
-				$output .= $this->_startTagNewLine($parseArr);
-			}else{
-				$output .= $this->_startTag($parseArr);
+			if(!isset($parseArr['isLangLine'])){
+				if($this->_hasSubNode($parseArr['value'])){
+					$output .= $this->_startTagNewLine($parseArr);
+				}else{
+					$output .= $this->_startTag($parseArr);
+				}
 			}
 
-			if(isset($parseArr['isLangLine'])){
+			/*if(isset($parseArr['isLangLine'])){
 				$update_line = $this->_updateLangLine($parseArr,$valueArr);
 				$output .= $update_line;
 				if(!$update_line) $output .= $this->_fillContent($parseArr['value']);
 			}else{
 				$output .= $this->_fillContent($parseArr['value']);
-			}
-
-
-			if($this->_hasSubNode($parseArr['value'])){
-				$stackNodes[] = $nodeName;
-			}else{
-				$output .= $this->_endTag($nodeName);
-			}
+			}*/
 
 			$nextNode = $context[$key+1];
+			$nextPath = $this->_getXpath($nextNode['xpath']);
+
+			if($curXpath != $nextPath){
+				if(isset($parseArr['isLangLine'])){
+					$add_line = $this->_addLangLine($parseArr,$valueArr);
+					$output .= $add_line;
+				}else{
+					$output .= $this->_fillContent($parseArr['value']);
+				}
+			}
+
+			if(!isset($parseArr['isLangLine'])){
+				if($this->_hasSubNode($parseArr['value'])){
+					$stackNodes[] = $nodeName;
+				}else{
+					$output .= $this->_endTag($nodeName);
+				}
+			}
+
+
+			/*$nextNode = $context[$key+1];
 			$nextPath = $this->_getXpath($nextNode['xpath']);
 			if($curXpath != $nextPath){
 				if(isset($parseArr['isLangLine'])){
 					$add_line = $this->_addLangLine($parseArr,$valueArr);
 					$output .= $add_line;
 				}
-			}
+			}*/
 
 			$lastPath = $curXpath;
 		}
