@@ -1,0 +1,11 @@
+<query id="getFileTransTotalCount" action="select">
+	<tables>
+	   <table name="translation_contents" />
+	</tables>
+	<columns>
+	   <column name="count(distinct(content_node))" alias="content_node_count"/>
+	</columns>
+	<conditions>
+		<condition operation="equal" column="translation_file_srl" var="translation_file_srl" filter="number" notnull="notnull" />
+	</conditions>
+</query>

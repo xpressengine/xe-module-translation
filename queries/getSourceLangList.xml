@@ -1,0 +1,35 @@
+<query id="getSourceLangList" action="select">
+    <tables>
+        <table name="translation_contents" alias="transTable"/>
+    </tables>
+    <columns>
+        <column name="transTable.*" />
+        <query id="subQuery" alias="translation_count">
+        	<tables>
+    			<table name="translation_contents" alias="tr2"></table>
+    		</tables>
+    		<columns>
+    			<column name="count(*)" />
+    		</columns>
+    		<conditions>
+    			<condition operation="equal" column="tr2.content_node" default="transTable.content_node"/>
+    			<condition operation="equal" column="tr2.translation_file_srl" var="fileSrl" pipe="and"/>
+				<condition operation="equal" column="tr2.translation_project_srl" var="prjSrl" pipe="and"/>
+				<condition operation="equal" column="tr2.lang" var="targetLang" pipe="and"/>
+    		</conditions>
+        </query>
+    </columns>
+    <conditions>
+        <condition operation="equal" column="transTable.translation_file_srl" var="fileSrl"/>
+		<condition operation="equal" column="transTable.translation_project_srl" var="prjSrl" pipe="and"/>
+		<condition operation="equal" column="transTable.lang" default="ko" var="sourceLang" pipe="and"/>
+		<condition operation="equal" column="transTable.is_original" default="1" var="isOriginal" pipe="and"/>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="translation_count" order="asc" />
+        <!--<index var="sort_index" default="reply.list_order" order="order_type" />-->
+        <list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

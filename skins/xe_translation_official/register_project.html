@@ -1,0 +1,19 @@
+<h2>Translation Register Project Page</h2>
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+
+<form action="./" method="post" id="fo_translation_insert_project" ruleset="insertProject">
+	<input type="hidden" name="act" value="procTranslationInsertProject" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+
+	<b>Project Name</b><br/>
+	<input type="text" name="project_name" value="{$project_info->project_name}" class="inputTypeText w200" style="width:300px; margin-bottom:10px"/>
+	<br/>
+
+	<input type="submit" value="{$lang->cmd_registration}" accesskey="s" />
+</form>

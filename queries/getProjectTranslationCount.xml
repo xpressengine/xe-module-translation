@@ -1,0 +1,18 @@
+<query id="getProjectTranslationCount" action="select">
+	<tables>
+	   <table name="translation_contents" />
+	</tables>
+	<columns>
+	   <column name="count(*)" alias="content_node_count"/>
+	</columns>
+	<conditions>
+		<condition operation="equal" column="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+		<group pipe="and">
+			<condition operation="equal" column="is_original" var="is_original" filter="number" notnull="notnull" />
+			<condition operation="equal" column="is_new_lang" var="is_new_lang" filter="number" notnull="notnull" pipe = "or"/>
+		</group>
+	</conditions>
+	<groups>
+		<group column="translation_file_srl" />
+	</groups>
+</query>

@@ -1,0 +1,14 @@
+<table name="translation_contents">
+    <column name="translation_content_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+	<column name="module_srl" type="varchar" size="128" notnull="notnull" index="idx_module_srl"/>
+	<column name="translation_project_srl" type="number" size="11" notnull="notnull" index="idx_translation_project_srl"/>
+    <column name="translation_file_srl" type="number" size="11" notnull="notnull" index="idx_translation_file_srl"/>
+    <column name="content_node" type="varchar" size="256" notnull="notnull"/>
+    <column name="lang" type="varchar" size="16" notnull="notnull"/>
+    <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl"/>
+    <column name="content" type="varchar" size="512" notnull="notnull"/>
+    <column name="recommended_count" type="number" size="9" notnull="notnull" default="0"/>
+	<column name="is_original" type="number" size="2" notnull="notnull" default="0"/>
+	<column name="is_new_lang" type="number" size="2" notnull="notnull" default="0"/>
+	<column name="reg_date" type="date" notnull="notnull" />
+</table>
