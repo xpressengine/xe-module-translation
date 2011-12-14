@@ -1,0 +1,19 @@
+<span class="modalWindow"></span>
+<div id="proLayer" class="proLayer proTypeA">
+	<h2>Delete File</h2>
+	<button type="button" class="close" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X"><span>Close Login Layer</span></button>
+	<form action="./" method="post" id="fo_translation_delete_project" ruleset="deleteFile">
+		<input type="hidden" name="act" value="delFile" />
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="member_srl" value="{$member_srl}" />
+		<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+		<fieldset>
+			<legend>Translation Delete File Page</legend>
+			<dl>
+				<dt><label for="uid">Are you sure to delete {$file_info->file_path}?</label></dt>
+			</dl>
+			<span class="proButton"><input name="" type="submit" value="{$lang->cmd_delete}" /></span>
+		</fieldset>
+	</form>
+
+</div>

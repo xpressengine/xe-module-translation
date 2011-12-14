@@ -1,0 +1,60 @@
+<include target="_header.html" />
+<load target="css/style.css"/>
+<load target="js/trans_manage.js" />
+
+<h2 class="m_title">Translation Register File Page</h2>
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<div id="wrap">
+<form action="./" method="post" id="fo_translation_insert_file" ruleset="insertFile" enctype="multipart/form-data">
+	<input type="hidden" name="act" value="procTranslationInsertFile" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+
+	<div id="file_register_content" style="margin-top:10px">
+		<ol class="program">
+		<li>
+			<h3>1. Select a Project</h3>
+			<div class="item_cont">
+				<select name="translation_project_srl">
+					<option loop="$project_list => $key,$val" value="{$val->translation_project_srl}" selected="selected"|cond="$project_info->translation_project_srl==$val->translation_project_srl">{$val->project_name}</option>
+				</select>
+				<a id="pro_add" href="#proWindow" class="mk">create project</a>
+			</div>
+		</li>
+		<li>
+			<h3>2. File Path</h3>
+			<div class="item_cont">
+				<input type="text" name="file_path" value="{$file_info->file_path}" style="width:300px" />
+				<p class="eg">Input the file path, ex:./modules/textyle/lang/lang.xml</p>
+			</div>
+		</li>
+
+		<li>
+			<h3>3. File Upload </h3>
+			<div class="item_cont">
+				<input type="radio" id="rd" name="upload_option" class="radio" value="upload_f" checked/><label for="rd">upload file</label><br />
+				<input type="file" name="uploaded_file" />
+				<a cond="$file_info->translation_file_srl" href="{$file_info->target_file}" target="_blank">{$file_info->file_name}</a>
+				<br />
+				<input type="radio" id="rd2" name="upload_option" class="radio" value="url_f"/><label for="rd2">add the URL of web file</label><br />
+				<input type="text" name="file_url" value="http://" class="url_txt" />
+			</div>
+		</li>
+		</ol>
+		<div class="btn_area_1">
+			<input type="submit" class="sty_btn" value="{$lang->cmd_registration}" style="float:left; width:50px" accesskey="s" />
+		</div>	
+	</div>
+</form>
+</div>
+
+<script >
+	window.mid = '{$mid}';
+	window.module_srl = '{$module_info->module_srl}';
+	window.scope = '{$scope}';
+</script>

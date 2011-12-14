@@ -1,0 +1,29 @@
+<query id="getProjectFileList" action="select">
+    <tables>
+        <table name="translation_files" alias="tr_f"/>
+    </tables>
+    <columns>
+        <column name="tr_f.*" />
+		<query alias="last_update">
+		   <tables>
+			   <table name="translation_contents" alias="con"/>
+		   </tables>
+		   <columns>
+			   <column name="max(con.reg_date)"/>
+		   </columns>
+			<conditions>
+				<condition operation="equal" column="tr_f.translation_file_srl"  default="con.translation_file_srl" notnull="notnull" />
+				<condition operation="equal" column="con.lang"  var="lang" notnull="notnull" pipe="and"/>
+			</conditions>
+		</query>
+    </columns>
+    <conditions>
+		<condition operation="equal" column="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+    </conditions>
+    <navigation>
+		<index var="sort_index" default="translation_file_srl" order="sort_type" />
+		<list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

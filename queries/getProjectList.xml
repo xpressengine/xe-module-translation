@@ -1,0 +1,39 @@
+<query id="getProjectList" action="select">
+    <tables>
+        <table name="translation_projects" alias="pro"/>
+    </tables>
+    <columns>
+		<column name="pro.*" />
+		<query alias="files_count">
+		   <tables>
+			   <table name="translation_files" alias="file"/>
+		   </tables>
+		   <columns>
+			   <column name="count(file.translation_project_srl)"/>
+		   </columns>
+			<conditions>
+				<condition operation="equal" column="pro.translation_project_srl"  default="file.translation_project_srl" notnull="notnull" />
+			</conditions>
+		</query>
+		<query alias="last_update">
+		   <tables>
+			   <table name="translation_contents" alias="con"/>
+		   </tables>
+		   <columns>
+			   <column name="max(con.reg_date)"/>
+		   </columns>
+			<conditions>
+				<condition operation="equal" column="pro.translation_project_srl"  default="con.translation_project_srl" notnull="notnull" />
+			</conditions>
+		</query>
+    </columns>
+    <conditions>
+		<condition operation="equal" column="pro.module_srl" var="module_srl" filter="number" notnull="notnull" />
+    </conditions>
+    <navigation>
+		<index var="sort_index" default="translation_project_srl" order="sort_type" />
+		<list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

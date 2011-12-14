@@ -1,0 +1,11 @@
+<query id="getProjectFileTotalCount" action="select">
+    <tables>
+        <table name="translation_files" alias="tr_f"/>
+    </tables>
+    <columns>
+        <column name="count(*)" alias="total_file_count"/>
+    </columns>
+    <conditions>
+		<condition operation="equal" column="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>

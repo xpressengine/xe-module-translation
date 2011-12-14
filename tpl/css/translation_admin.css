@@ -1,0 +1,4 @@
+@charset "utf-8";
+
+/* override admin.min.css 2011-11-23 */
+.x .rowTable th, .x .rowTable td, .x .colTable th, .x .rowTable td, .x .crossTable th, .x .rowTable td{white-space: normal !important;}

@@ -1,0 +1,20 @@
+<span class="modalWindow"></span>
+<div id="proLayer" class="proLayer proTypeA">
+	<h2>Delete Project</h2>
+	<button type="button" class="close" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X"><span>Close Login Layer</span></button>
+	<form action="./" method="post" id="fo_translation_delete_project" ruleset="deleteProject">
+		<input type="hidden" name="act" value="procTranslationDeleteProject" />
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="member_srl" value="{$member_srl}" />
+		<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+		<input type="hidden" name="scope" value="{$scope}" />
+		<fieldset>
+			<legend>Translation Delete Project Page</legend>
+			<dl>
+				<dt><label for="uid">Are you sure to delete {$project_info->project_name}?</label></dt>
+			</dl>
+			<span class="proButton"><input name="" type="submit" value="{$lang->cmd_delete}" /></span>
+		</fieldset>
+	</form>
+
+</div>

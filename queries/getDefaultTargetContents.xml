@@ -1,0 +1,17 @@
+<query id="getDefaultTargetContents" action="select">
+    <tables>
+        <table name="translation_contents" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="translation_file_srl" var="translation_file_srl"/>
+		<condition operation="equal" column="lang" var="lang" pipe="and"/>
+		<condition operation="equal" column="content_node" var="content_node" pipe="and"/>
+		<condition operation="equal" column="is_original" var="is_original" pipe="and"/>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="translation_content_srl" order="asc" />
+    </navigation>
+</query>

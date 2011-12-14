@@ -1,0 +1,27 @@
+<query id="getProjectLangTranslationApprovedCount" action="select">
+	<tables>
+		<table name="translation_contents" alias="tr1"/>
+	</tables>
+	<columns>
+		<column name="tr1.*" />
+		<query id="getFileApprovedTranslationCount" alias="translation_count">
+			<tables>
+				<table name="translation_contents" alias="tr2" />
+			</tables>
+			<columns>
+				<column name="count(distinct(content_node))" alias="translation_count" />
+			</columns>
+			<conditions>
+				<condition operation="equal" column="tr1.translation_file_srl" default="tr2.translation_file_srl" />
+				<condition operation="equal" column="tr2.lang"  var="lang" pipe="and"/>
+				<condition operation="more" column="tr2.recommended_count"  var="recommended_count" pipe="and"/>
+			</conditions>           
+		</query>
+	</columns>
+	<conditions>
+		<condition operation="equal" column="tr1.translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+	</conditions>
+	<groups>
+		<group column="tr1.translation_file_srl" />
+	</groups>
+</query>

@@ -1,0 +1,25 @@
+<query id="getTranslatorRanking" action="select">
+	<tables>
+	   <table name="member"/>
+	</tables>
+	<columns>
+	   <column name="member.member_srl" />
+	   <column name="member.nick_name" />
+	   <query id="getMemberTranslationCount" alias="translation_count">
+			<tables>
+				<table name="translation_contents" alias="tr" />
+			</tables>
+			<columns>
+				<column name="count(*)" alias="translation_count" />
+			</columns>
+			<conditions>
+				<condition operation="equal" column="tr.member_srl" default="member.member_srl" />
+				<condition operation="equal" column="tr.module_srl"  var="module_srl" pipe="and"/>
+			</conditions>           
+        </query>
+	</columns>
+    <navigation>
+		<index var="translation_count" default="translation_count" order="desc" />
+		<list_count var="limit_count" default="5" />
+    </navigation>
+</query>
