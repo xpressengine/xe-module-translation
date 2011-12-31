@@ -1,0 +1,11 @@
+<query id="getSourceLangList" action="select">
+    <tables>
+        <table name="translation_contents" alias="transTable"/>
+    </tables>
+    <columns>
+        <column name="transTable.*" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="transTable.translation_content_srl" var="translation_content_srl"/>
+    </conditions>
+</query>

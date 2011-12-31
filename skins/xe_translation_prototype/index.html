@@ -1,0 +1,110 @@
+<include target="_header.html" />
+<load target="js/translation.js" />
+
+<h2 class="m_title">{$module_info->translation_title?$module_info->translation_title:'Translation Center'}</h2>
+
+<div cond="$logged_info->is_admin == 'Y'" class="newfile">
+	<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','scope','myProjects')}" class="sty_btn">My Projects List</a>&nbsp;&nbsp;
+	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile')}" class="sty_btn">Add a New File</a>
+</div>
+
+<table id="type_lang" class="info_table" cellpadding="0" cellspacing="0">
+	<caption>Language</caption>
+	<colgroup>
+		<col width="20%" />
+		<col />
+		<col width="23%" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="col1">Language</th>
+			<th class="col2">Percentage</th>
+			<th class="col3"><a href="{getUrl('','mid',$mid,'sort_lang_target','last_update','sort_lang_type',$sort_lang_type)}">Recent Update </a></th>
+		</tr>
+	</thead>
+	<tbody>    
+		<tr loop="$lang_list => $lang_key, $lang">
+			<td class="col1 lang_{$lang_key}"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','select_lang',$lang_key)}">{$lang['item']->value}</a></td>
+			<td class="col2 percentage">
+				<div cond="!$lang['item']->no_files" class="track">
+					<span cond="$lang['item']->perc_approved > 0" class="color_1">{$lang['item']->perc_approved}%</span>
+					<span cond="$lang['item']->perc_notApproved > 0" class="color_2">{$lang['item']->perc_notApproved}%</span>
+					<span cond="$lang['item']->perc_notTranslated > 0" class="color_3">{$lang['item']->perc_notTranslated}%</span>
+				</div><!-- //graph -->
+				<div cond="$lang['item']->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td class="col3 recent">{$lang['item']->last_update}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="type_project" class="info_table" cellpadding="0" cellspacing="0">
+	<caption>Project</caption>
+	<colgroup>
+		<col width="20%" />
+		<col width="57%" />
+		<col width="23%" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="col1">Project</th>
+			<th class="col2">Percentage</th>
+			<th class="col3"><a href="{getUrl('','mid',$mid,'sort_pro_target','last_update','sort_pro_type',$sort_pro_type)}">Recent Update</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$project_list => $project_key, $project">
+			<td class="col1"><a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl)}">{$project->project_name}</a></td>
+			<td class="col2">
+				<div cond="!$project->no_files" class="track">
+					<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
+					<span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span>
+					<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
+				</div>
+				<div cond="$project->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td class="col3 recent">{$project->last_update}</td>
+		</tr>
+		<tr><td id="more_projects" colspan="3"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">More Projects</a></td></tr>
+	</tbody>
+</table>
+
+<dl class="color_desc">
+	<dt><span class="color_1"></span></dt><dd>Translated</dd>
+	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+</dl>
+
+<h2 class="member">Contributor</h2>
+
+<table id="type_translate" class="info_table rank_table" cellpadding="0" cellspacing="0">
+	<caption>Translation</caption>
+	<colgroup>
+		<col width="40%" />
+		<col />
+	</colgroup>
+	<tbody>
+		<tr loop="$translator_list => $key, $translator">
+			<th class="col1">{$translator->nick_name}</th>
+			<td class="col2">{$translator->translation_count}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="type_audits" class="info_table rank_table" cellpadding="0" cellspacing="0">
+	<caption>Recommend</caption>
+	<colgroup>
+		<col width="40%" />
+		<col />
+	</colgroup>
+	<tbody>
+		<tr loop="$reviewer_list => $key, $reviewer">
+			<th class="col1">{$reviewer->nick_name}</th>
+			<td class="col2">{$reviewer->total_recommended_count}</td>
+		</tr>
+	</tbody>
+</table>

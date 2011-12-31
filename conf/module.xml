@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants />
+    <permissions>
+		<permission action="dispTranslationAdminTranslationInfo" target="manager" />
+		<permission action="procTranslationAdminInsertTranslation" target="manager" />
+    </permissions>
+    <actions>
+		<action name="dispTranslationAdminContent" type="view" standalone="true" admin_index="true" />
+		<action name="dispTranslationAdminTranslationInfo" type="view" standalone="true" />
+		<action name="dispTranslationAdminInsertTranslation" type="view" standalone="true" setup_index="true" />
+		<action name="dispTranslationAdminDeleteTranslation" type="view" standalone="true" />
+		<action name="dispTranslationIndex" type="view" index="true" />
+		<action name="dispTranslationRegProject" type="view" standalone="true" />
+		<action name="dispTranslationDeleteProject" type="view" standalone="true" />
+		<action name="dispTranslationProjectList" type="view" standalone="true" />
+		<action name="dispTranslationFileList" type="view" standalone="true" />
+		<action name="dispTranslationRegFile" type="view" standalone="true" />
+		<action name="dispTranslationFileContent" type="view" standalone="true" />
+		<action name="dispTransContent" type="view" standalone="true" />
+		<action name="dispTransProLangInfo" type="view" standalone="true" />
+		<action name="dispTransProLangInfo" type="view" standalone="true" />
+		<action name="downloadTranslationFile" type="view" standalone="true" />
+		<action name="dispTranslationDeleteFile" type="view" standalone="true" />
+
+		<action name="procTranslationAdminInsertTranslation" type="controller" standalone="true" ruleset="insertTranslation"/>
+		<action name="procTranslationAdminDeleteTranslation" type="controller" standalone="true" ruleset="deleteTranslation"/>
+		<action name="procTranslationInsertProject" type="controller" standalone="true" ruleset="insertProject"/>
+		<action name="procTranslationInsertFile" type="controller" standalone="true" ruleset="insertFile"/>
+		<action name="procVoteItem" type="controller" standalone="true"/>
+		<action name="procTranslationDeleteProject" type="controller" standalone="true"/>
+		<action name="delFile" type="controller" standalone="true"/>
+
+		<action name="procTransInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
+		<action name="procGetDicInfo" type="model" standalone="true"/>
+
+    </actions>
+</module>

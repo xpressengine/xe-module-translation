@@ -1,0 +1,19 @@
+<query id="getTargetLangList" action="select">
+    <tables>
+        <table name="translation_contents" alias="transTable"/>
+    </tables>
+    <columns>
+        <column name="transTable.*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="transTable.translation_file_srl" var="fileSrl"/>
+		<condition operation="equal" column="transTable.translation_project_srl" var="prjSrl" pipe="and"/>
+		<condition operation="equal" column="transTable.lang" default="zh-CN" var="targetLang" pipe="and"/>
+		<condition operation="in" column="transTable.content_node" var="contentNode" pipe="and"/>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="content_node" order="asc" />
+        <index var="sort_index" default="recommended_count" order="desc" />
+        <!--<index var="sort_index" default="reply.list_order" order="order_type" />-->
+    </navigation>
+</query>

@@ -1,0 +1,7 @@
+<table name="translation_dictionary">
+    <column name="translation_dictionary_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+	<column name="source_lang" type="varchar" size="128" notnull="notnull"/>
+	<column name="source_content" type="varchar" size="128" notnull="notnull"/>
+	<column name="target_lang" type="varchar" size="128" notnull="notnull"/>
+	<column name="target_content" type="varchar" size="128" notnull="notnull"/>
+</table>

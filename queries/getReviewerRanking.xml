@@ -1,0 +1,26 @@
+<query id="getReviewerRanking" action="select">
+	<tables>
+	   <table name="member"/>
+	</tables>
+	<columns>
+	   <column name="member.member_srl" />
+	   <column name="member.nick_name" />
+	   <query id="getMemberTranslationCount" alias="total_recommended_count">
+			<tables>
+				<table name="translation_contents" alias="tr" />
+			</tables>
+			<columns>
+				<column name="sum(tr.recommended_count)" alias="total_recommended_count" />
+			</columns>
+			<conditions>
+				<condition operation="equal" column="tr.member_srl" default="member.member_srl" />
+				<condition operation="equal" column="tr.module_srl"  var="module_srl" pipe="and"/>
+				<condition operation="more" column="tr.recommended_count"  var="recommended_count" pipe="and"/>
+			</conditions>           
+        </query>
+	</columns>
+    <navigation>
+		<index var="total_recommended_count" default="total_recommended_count" order="desc" />
+		<list_count var="limit_count" default="5" />
+    </navigation>
+</query>

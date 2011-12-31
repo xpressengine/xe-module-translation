@@ -1,0 +1,53 @@
+<include target="_header.html" />
+<load target="js/translation.js" />
+
+<h2 class="m_title">Project - {$project_info->project_name}</h2>
+<div class="project">
+	<a href="{getUrl('','mid', $mid,'act','dispTranslationProjectList','scope',$scope)}"><block cond="$logged_info->is_admin == 'Y' && $scope == 'myProjects'">My project list</block><block cond="!$logged_info->is_admin == 'Y' || $scope != 'myProjects'">All project list</block></a> &gt;&gt; 
+	<strong>project "{$project_info->project_name}"</strong>
+</div>
+
+<table id="project_list" class="info_table normal_table" cellpadding="0" cellspacing="0">
+	<caption class="blind">Project List</caption>
+	<colgroup>
+		<col width="10%" />
+		<col width="36%" />
+		<col width="25%" />
+		<col width="25%" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="col1">Language</th>
+			<th class="col2">Percentage</th>
+			<th class="col3">Summary</th>
+			<th class="col4"><a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$translation_project_srl,'member_srl',$member_srl,'sort_target','last_update','sort_type',$sort_type)}">Recent Update</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$p_lang_list => $lang_key, $val">
+			<td class="col1 lang_{$lang_key}">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl',$translation_project_srl, 'select_lang',$lang_key,'scope',$scope)}">{$val['item']->name}</a>
+			</td>
+			<td class="col2 percentage">
+				<div cond="!$val['item']->no_files" class="track">
+					<span cond="$val['item']->perc_approved > 0" class="color_1">{$val['item']->perc_approved}%</span>
+					<span cond="$val['item']->perc_notApproved > 0" class="color_2">{$val['item']->perc_notApproved}%</span>
+					<span cond="$val['item']->perc_notTranslated > 0" class="color_3">{$val['item']->perc_notTranslated}%</span>
+				</div><!-- //graph -->
+				<div cond="$val['item']->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td class="col3">Translated {$val['item']->trans_count}, Need to approve {$val['item']->no_approved_count}</td>
+			<td class="col4 recent">{$val['item']->last_update}<block cond="!$val['item']->last_update">No update</block></td>
+		</tr>
+	</tbody>
+</table>
+
+<dl class="color_desc">
+	<dt><span class="color_1"></span></dt><dd>Translated</dd>
+	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+</dl>
+
+

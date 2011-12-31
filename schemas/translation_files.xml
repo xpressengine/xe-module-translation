@@ -1,0 +1,11 @@
+<table name="translation_files">
+    <column name="translation_file_srl" type="number" size="11" notnull="notnull" auto_increment="auto_increment" primary_key="primary_key" />
+    <column name="translation_project_srl" type="number" size="11" notnull="notnull" index="idx_translation_project_srl"/>
+	<column name="module_srl" type="varchar" size="128" notnull="notnull" index="idx_module_srl"/>
+    <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl"/>
+    <column name="file_name" type="varchar" size="128" notnull="notnull"/>
+    <column name="file_type" type="varchar" size="16" notnull="notnull"/>
+    <column name="file_path" type="varchar" size="128" notnull="notnull"/>
+	<column name="target_file" type="varchar" size="128" notnull="notnull"/>
+    <column name="reg_date" type="date" notnull="notnull" />
+</table>

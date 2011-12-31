@@ -1,0 +1,18 @@
+<query id="getFileContentNodes" action="select">
+    <tables>
+        <table name="translation_contents" />
+    </tables>
+    <columns>
+        <column name="content_node" />
+    </columns>
+    <conditions>
+		<condition operation="equal" column="translation_file_srl" var="translation_file_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="is_original" var="is_original" filter="number" notnull="notnull" pipe="and"/>
+    </conditions>
+    <groups>
+        <group column="content_node" />
+    </groups>
+   <navigation>
+        <index var="sort_index" default="translation_content_srl" order="asc" />
+    </navigation>
+</query>

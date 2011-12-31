@@ -1,0 +1,131 @@
+<include target="_header.html" />
+<load target="js/translation.js" />
+<load target="js/script.js" />
+<load target="js/trans_manage.js" />
+
+<h2 class="m_title">Project "{$project_info->project_name}"</h2>
+
+<div class="project">
+	<a href="{getUrl('','mid', $mid,'act','dispTransProLangInfo','translation_project_srl',$translation_project_srl,'scope',$scope)}">{$project_info->project_name} </a> &gt;&gt;
+	<strong>{$project_info->project_name} file list</strong>
+</div>
+<div class="language_type p_speicial">
+	<div id="" class="lang_select">
+	  	<div class="selected off"><span class="ico lang_{$select_lang}"></span><span class="label">{$lang_supported_list[$select_lang]}</span><span class="arrow"></span></div>
+	  	<ul class="lang_list">
+			<li loop="$lang_supported_list => $lang_key, $langSu">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl', $translation_project_srl, 'member_srl', $member_srl, 'select_lang',$lang_key)}" class="lang_{$lang_key}">{$langSu}</a>
+			</li>
+	  	</ul>
+	</div>
+</div>
+
+<select  cond="$logged_info->member_srl == $project_info->member_srl && $logged_info->is_admin == 'Y' && $project_list" id="select_pro" class="proj_list" style="margin-bottom:20px">
+	<option loop="$project_list => $pro_key, $project" value="{$project->translation_project_srl}" selected="selected"|cond="$project->translation_project_srl==$translation_project_srl">{$project->project_name}</option>
+</select>
+
+<table id="project_summary" class="info_table normal_table" cellpadding="0" cellspacing="0">
+	<caption class="blind">Project "XE Core"</caption>
+	<thead>
+		<tr>
+			<th class="col1" scope="col" width="20%">Total Files</th>
+			<th class="col2" scope="col" width="30%">Percentage</th>
+			<th class="col3" scope="col" width="30%">Summary</th>
+			<th class="col4" scope="col" width="20%">Recent Update</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="col1">
+				<a href="{getUrl('','mid',$mid,'act','dispTransContent','translation_project_srl',$translation_project_srl,'source_lang',$module_info->default_lang,'target_lang',$select_lang)}">Total {$total_file_count} Files</a>
+			</td>
+			<td class="percentage" >
+				<div cond="!$project_info->no_files" class="track">
+					<span cond="$project_info->perc_approved > 0" class="color_1">{$project_info->perc_approved}%</span>
+					<span cond="$project_info->perc_notApproved > 0" class="color_2">{$project_info->perc_notApproved}%</span>
+					<span cond="$project_info->perc_notTranslated > 0" class="color_3">{$project_info->perc_notTranslated}%</span>
+				</div>
+				<div cond="$project_info->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td class="col3">Translated {$project_info->trans_count}, Need to approve {$project_info->no_approved_count}</td>
+			<td class="col4 rec_date">{$project_info->last_update}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="project_files" class="info_table normal_table longTxt" cellpadding="0" cellspacing="0">
+	<caption class="blind">Project "XE Core"</caption>
+	<thead>
+		<tr>
+			<th class="col1" scope="col" width="25%">File List</th>
+			<th class="col2" scope="col" width="30%">Percentage</th>
+			<th class="col3" scope="col" width="23%">Summary</th>
+			<th class="col4" scope="col" width="10%"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl', $translation_project_srl,'member_srl', $member_srl, 'select_lang',$select_lang,'sort_target','last_update','sort_type',$sortType)}">Recent Update</a></th>
+			<th class="col5" scope="col" >Manage</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$file_list => $file_key, $file">
+			<td class="col1">
+				<a href="{getUrl('','mid',$mid,'act','dispTransContent','translation_file_srl',$file->translation_file_srl,'translation_project_srl',$translation_project_srl,'source_lang',$module_info->default_lang,'target_lang',$select_lang)}">{$file->file_path}</a>
+			</td>
+			<td class="percentage">
+				<div cond="!$file->no_contents" class="track track_f">
+					<span cond="$file->perc_approved > 0" class="color_1">{$file->perc_approved}%</span>
+					<span cond="$file->perc_notApproved > 0" class="color_2">{$file->perc_notApproved}%</span>
+					<span cond="$file->perc_notTranslated > 0" class="color_3">{$file->perc_notTranslated}%</span>
+				</div>
+				<div cond="$file->no_contents" class="track">
+					<span >no contents</span>
+				</div>
+			</td>
+			<td class="col3">Translated {$file->trans_count}, Need to approve {$file->no_approved_count}</td>
+			<td class="col4">{$file->last_update}<block cond="!$file->last_update">No update</block></td>
+			<td class="col5">
+				<a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl)}">download</a>&nbsp;
+				<a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$file->translation_file_srl,'member_srl',$member_srl)}">update</a>&nbsp;
+				<a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="#proWindow" class="btn_f_delete" data="{$file->translation_file_srl}">delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="t_pagination" cond="$page_navigation">
+	<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong>
+		<!--@else-->
+			<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+</div>
+
+<dl class="color_desc">
+	<dt><span class="color_1"></span></dt><dd>Translated</dd>
+	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+</dl>
+
+<div cond="$logged_info->member_srl == $project_info->member_srl && $logged_info->is_admin == 'Y'" class="btn_area">
+	<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_project_srl', $translation_project_srl,'member_srl',$member_srl)}" class="sty_btn">Add New File</a>
+</div>
+
+<script type="text/javascript">
+	jQuery(function($){
+		$('select#select_pro').change(function() {
+			var new_url = "{getUrl('','mid',$mid,'act','dispTranslationFileList','select_lang',$select_lang, 'member_srl', $member_srl)}"+"&translation_project_srl="+$(this).val();
+			new_url = new_url.replace(/&amp;/g,'&');
+			window.location = new_url;
+		});
+
+		$('body').append('<div id="proWindow" class="proWindow"></div>');
+	});
+
+	window.mid = '{$mid}';
+	window.module_srl = '{$module_info->module_srl}';
+	window.scope = '{$scope}';
+</script>

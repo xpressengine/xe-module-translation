@@ -1,0 +1,102 @@
+<include target="_header.html" />
+<load target="js/translation.js" />
+<load target="js/script.js" />
+<load target="js/trans_manage.js" />
+
+<h2 cond="$logged_info->is_admin == 'Y' && $scope == 'myProjects'" class="m_title">My Project List</h2>
+<h2 cond="$logged_info->is_admin != 'Y' || $scope != 'myProjects'" class="m_title">All Project List</h2>
+<div class="project">
+	<a href="{getUrl('','mid', $mid)}">{$module_info->translation_title?$module_info->translation_title:$module_info->mid}</a> &gt;&gt;
+		<strong>
+			<block cond="$logged_info->is_admin == 'Y' && $scope == 'myProjects'">My project list</block><block cond="$logged_info->is_admin != 'Y' || $scope != 'myProjects'">All project list</block>
+		</strong>
+	</a>
+</div>
+<div class="language_type p_speicial">
+	<div id="" class="lang_select">
+	  	<div class="selected off"><span class="ico lang_{$select_lang}"></span><span class="label">{$lang_supported_list[$select_lang]}</span><span class="arrow"></span></div>
+	  	<ul class="lang_list">
+			<li loop="$lang_supported_list => $lang_key, $langSup">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl', $member_srl, 'select_lang',$lang_key)}" class="lang_{$lang_key}">{$langSup}</a>
+			</li>
+	  	</ul>
+	</div>
+</div>
+
+<table id="project_list" class="info_table" cellpadding="0" cellspacing="0">
+	<colgroup>
+		<col width="10%" />
+		<col width="30%"/>
+		<col width="22%" />
+		<col width="12%"/>
+		<col width="12%"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="col1">Project</th>
+			<th class="col2">Percentage</th>
+			<th cond="!$member_srl" class="col3">Summary</th>
+			<th class="col3">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl', $member_srl, 'select_lang',$select_lang,'sort_target','files_count','sort_type',$sortType)}">Number of Files</a>
+			</th>
+			<th class="col4">
+				<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','member_srl', $member_srl, 'select_lang',$select_lang,'sort_target','last_update','sort_type',$sortType)}">Recent Update</a>
+			</th>
+			<th cond="$logged_info && $logged_info->is_admin == 'Y'" class="col5">Manage</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr loop="$project_list => $project_key, $project">
+			<td class="col1">
+				<a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl,'scope', $scope)}">{$project->project_name}</a>
+			</td>
+			<td class="col2">
+				<div cond="!$project->no_files" class="track">
+					<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span>
+					<span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span>
+					<span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
+				</div>
+				<div cond="$project->no_files" class="track">
+					<span >no files</span>
+				</div>
+			</td>
+			<td cond="!$member_srl"  class="col3">Translated {$project->trans_count}, Need to approve {$project->no_approved_count}</td>
+			<td class="col3">{$project->file_count}</td>
+			<td class="col4 recent">{$project->last_update}<block cond="!$project->last_update">No update</block></td>
+			<td cond="$logged_info->is_admin == 'Y'" class="col5">
+				<a id="modify_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl" href="#proWindow" class="sty_btn btn_p_modify" data="{$project->translation_project_srl}">modify</a>
+				<a id="delete_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl"  href="#proWindow" class="sty_btn btn_p_delete" data="{$project->translation_project_srl}" >delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="t_pagination" cond="$page_navigation">
+	<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong>
+		<!--@else-->
+			<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+</div>
+
+<dl class="color_desc">
+	<dt><span class="color_1"></span></dt><dd>Translated</dd>
+	<dt><span class="color_2"></span></dt><dd>Not Approved</dd>
+	<dt><span class="color_3"></span></dt><dd>Not Translated</dd>
+</dl>
+
+<div cond="$logged_info->is_admin == 'Y'" class="btn_area">
+	<a href="#proWindow" id="pro_add" class="sty_btn gray">Add New Project</a>
+</div>
+
+<script >
+	window.mid = '{$mid}';
+	window.module_srl = '{$module_info->module_srl}';
+	window.scope = '{$scope}';
+</script>
+
+ 
