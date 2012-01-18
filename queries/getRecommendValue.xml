@@ -1,0 +1,33 @@
+<query id="getRecommendValue" action="select">
+	<tables>
+       <table name="translation_contents" alias="con"/>
+   </tables>
+   <columns>
+	   <column name="con.lang"/>	
+       <column name="con.content"/>
+	   <column name="con.is_original"/>
+	   <column name="con.is_new_lang"/>
+   </columns>
+   <conditions>
+		<condition operation="equal" column="translation_file_srl" var="translation_file_srl" filter="number" notnull="notnull" />
+		<condition operation="equal" column="content_node" var="content_node" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="lang" var="lang" notnull="notnull" pipe="and"/>
+		<query operation="equal" column="recommended_count" notnull="notnull" pipe="and" alias="max_recomment_count">
+		   <tables>
+				   <table name="translation_contents" alias="con2" />
+		   </tables>
+		   <columns>
+				   <column name="max(recommended_count)" alias="max_recomment_count" />
+		   </columns>
+		   <conditions>
+			   <condition operation="equal" column="con2.translation_file_srl" default="con.translation_file_srl" notnull="notnull" />
+			   <condition operation="equal" column="con2.content_node" var="con.content_node" notnull="notnull" pipe="and" />
+			   <condition operation="equal" column="con2.lang" var="con.lang" notnull="notnull" pipe="and" />
+		   </conditions>                                  
+       </query>
+   </conditions>
+   <navigation>
+        <index var="sort_index" default="translation_file_srl" order="asc" />
+        <list_count var="list_count" default="1" />
+    </navigation>
+</query>

@@ -1,0 +1,11 @@
+<query id="getProject" action="select">
+    <tables>
+        <table name="translation_projects" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+		<condition operation="in" column="translation_project_srl" var="translation_project_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>

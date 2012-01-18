@@ -1,0 +1,23 @@
+<span class="modalWindow"></span>
+<div id="proLayer" class="proLayer proTypeA">
+	<h2 cond="!$translation_project_srl">Add a New Project</h2>
+	<h2 cond="$translation_project_srl">Modify Porject</h2>
+	<button type="button" class="close" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X"><span>Close Login Layer</span></button>
+	<form action="./" method="post" id="fo_translation_insert_project" ruleset="insertProject">
+		<input type="hidden" name="act" value="procTranslationInsertProject" />
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="scope" value="{$scope}" />
+		<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+		<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+		<fieldset>
+			<legend>Translation Register Project Page</legend>
+			<dl>
+				<dt><label for="uid">Project Name</label></dt>
+				<dd><input type="text" name="project_name" value="{$project_info->project_name}"  class="inputText" /></dd>
+			</dl>
+			<span class="proButton"><input name="" type="submit" value="{$lang->cmd_registration}" /></span>
+		</fieldset>
+	</form>
+</div>
+
+

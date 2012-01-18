@@ -1,0 +1,17 @@
+<span class="modalWindow"></span>
+<div id="proLayer" class="proLayer proTypeA">
+	<h2>{$lang->del_file}</h2>
+	<a href="###" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X" class="close">Close Login Layer</a>
+	<form action="./" method="post" id="fo_translation_delete_project" ruleset="deleteFile">
+	<fieldset>
+	<legend></legend>
+	<input type="hidden" name="act" value="delFile" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="member_srl" value="{$member_srl}" />
+	<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+	<p>{$lang->about_del_file} {$file_info->file_path}?</p>
+	<p class="btn_area"><input name="" type="submit" value="{$lang->cmd_delete}" class="btn_submit" /></p>
+	</fieldset>
+	</form>
+
+</div>

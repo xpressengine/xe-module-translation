@@ -1,0 +1,118 @@
+<load target="js/jquery.textarearesizer.compressed.js" />
+<load target="js/script.js" />
+<load target="js/addContent.js" />
+<include target="_header.html" />
+
+<h2 class="m_title">Translation File Content Page</h2>
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+<div class="project">
+	<a href="{getUrl('','mid', $mid, 'act','dispTranslationFileList','translation_project_srl',$translation_project_srl,'select_lang',$target_lang,'member_srl',$member_srl)}">Project "{$projInfo->project_name}"</a>
+	<block cond="$fileInfo->file_path">
+	&gt; {$fileInfo->file_path}
+	</block>
+	<block cond="!$fileInfo->file_path">
+	&gt; All files
+	</block>
+</div>
+<form action="./" method="post" id="fo_translation_insert_content" ruleset="insertContent" class="fo_translation_insert_content">
+<div class="language_type">
+	<!-- <select id="default_lang" name="source_lang" class="lang_{$source_lang}" onchange="">
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$target_lang" selected="true"|cond="$source_lang == $key" class="lang_{$key}">{$val}</option>
+	</select> -->
+	<div id="default_lang" class="lang_select">
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$key == $source_lang">
+	  		<span class="ico lang_{$key}"></span>
+	  		<span class="label">{$val}</span>
+	  		<span class="arrow"></span>
+	  	</div>
+	  	<ul class="lang_list">
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$target_lang" value="{$key}">
+	  			<a href="{$listUrl.'&target_lang='.$target_lang.'&source_lang='.$key}" class="lang_{$key}" >{$val}</a>
+	  		</li>
+	  	</ul>
+	</div>
+	<span class="tt">To</span>
+	<!-- <select id="target_lang" name="target_lang" class="lang_{$target_lang}" onchange="window.location = '{$listUrl}' + '&target_lang=' + this.value">
+		<option loop="$lang_supported_list => $key, $val" value="{$key}" cond="$key!=$source_lang" selected="true"|cond="$target_lang == $key" class="lang_{$key}">{$val}</option>
+	</select> -->
+	<div id="target_lang" class="lang_select">
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$target_lang == $key">
+
+	  		<span class="ico lang_{$key}"></span>
+	  		<span class="label">{$val}</span>
+	  		<span class="arrow"></span>
+	  	</div>
+	  	<ul class="lang_list">
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$source_lang" value="{$key}">
+	  			<a href="{$listUrl.'&source_lang='.$source_lang.'&target_lang='.$key}" class="lang_{$key}" >{$val}</a>
+	  		</li>
+	  	</ul>
+	</div>
+</div>
+<input type="hidden" name="target_lang" value="{$target_lang}" />
+<input type="hidden" name="source_lang" value="{$source_lang}" />
+<input type="hidden" name="act" value="procTransInsertContent" />
+<input type="hidden" name="mid" value="{$mid}" />
+<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+<div id="t_list">
+	<div class="list_type">
+		<a href="{$listUrl.'&listType=translation_count'}" class="selected"|cond="$listType=='translation_count'">Sorting by Translation</a>
+		<a href="{$listUrl.'&listType=recommend_count'}" class="selected"|cond="$listType=='recommend_count'">Sorting by Review</a>
+	</div>
+	<div class="perPage">
+		<select onchange="window.location = '{$listUrl}' + '&listCount=' + this.value">
+			<option value="5" selected="true"|cond="$listCount == 5">5</option>
+			<option value="10" selected="true"|cond="$listCount == 10">10</option>
+		</select> Items Per Page
+	</div>
+	<div loop="$sourceList => $key, $val" class="t_item">
+		<div class="item">
+			<span class="phrase us">{$val->content}</span>
+			<span class="translation" >
+				<block cond="$val->targetListTop">
+					{$val->targetListTop->content}
+				</block>
+			</span>
+		</div>
+		<div class="edit">
+			<div class="position">position:<span>{$val->fileInfo->file_path}:{$val->content_node}</span></div>
+			<p class="phrase us">{$val->content}</p>
+			<div class="translation">
+				<ul>
+					<li class="vote"  cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
+						{$val2->content}<span class="recomCount">({$val2->recommended_count})</span><span class="btn_vote" data="{$val2->translation_content_srl}">vote</span>
+					</li>
+				</ul>
+				<label for="new_t">Add your own translation</label>
+				<textarea cols="50" rows="1" class="resizable" name="content[{$val->translation_content_srl}]"></textarea>
+			</div>
+			<div class="dic_content_{$val->translation_content_srl}">
+			</div>
+			<div class="btns">
+				<button class="btn_prev">Prev</button><button class="btn_next">Next</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="t_pagination" cond="$page_navigation">
+	<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong>
+		<!--@else-->
+			<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+</div>
+
+<div class="save_translations"><input type="submit" value="Save Translation" class="sty_btn"/></div>
+</form>
+
+<script >
+	window.targetLang = '{$target_lang}';
+</script>

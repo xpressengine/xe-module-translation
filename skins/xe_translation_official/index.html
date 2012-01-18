@@ -1,0 +1,120 @@
+<include target="_header.html" />
+<load target="js/translation.js" />
+<div class="translation">
+	<h2 class="m_title">{$module_info->translation_title?$module_info->translation_title:'Translation Center'}</h2>
+	<div cond="$logged_info->is_admin == 'Y'" class="newfile">
+		<a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','scope','myProjects')}" class="sty_btn">{$lang->my_project_list}</a>
+		<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile')}" class="sty_btn">{$lang->add_new_file}</a>
+	</div>
+	<div class="lang_type info_tbl">
+		<h3>{$lang->language}</h3>
+		<table cellpadding="0" cellspacing="0">
+		<caption class="hide">{$lang->language}</caption>
+		<colgroup>
+		<col width="110" />
+		<col />
+		<col width="102" />
+		</colgroup>
+		<thead>
+		<tr>
+		<th scope="col">{$lang->language}</th>
+		<th scope="col">{$lang->percentage}</th>
+		<th scope="col" class="lst"><a href="{getUrl('','mid',$mid,'sort_lang_target','last_update','sort_lang_type',$sort_lang_type)}">{$lang->recent_update}</a></th>
+		</tr>
+		</thead>
+		<tbody>    
+		<tr loop="$lang_list => $lang_key, $lang_value">
+		<td class="first"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList','select_lang',$lang_key)}" class="lang_{$lang_key}">{$lang_value['item']->value}</a></td>
+		<td class="percentage">
+			<div cond="!$lang_value['item']->no_files" class="track">
+				<span cond="$lang_value['item']->perc_approved > 0" class="color_1">{$lang_value['item']->perc_approved}%</span><span cond="$lang_value['item']->perc_notApproved > 0" class="color_2">{$lang_value['item']->perc_notApproved}%</span><span cond="$lang_value['item']->perc_notTranslated > 0" class="color_3">{$lang_value['item']->perc_notTranslated}%</span>
+			</div>
+			<div cond="$lang_value['item']->no_files" class="track">
+				<span >no files</span>
+			</div>
+		</td>
+		<td>{$lang_value['item']->last_update}</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="project_type info_tbl">
+		<h3>{$lang->project}</h3>
+		<table cellpadding="0" cellspacing="0">
+		<caption class="hide">{$lang->project}</caption>
+		<colgroup>
+		<col width="100" />
+		<col />
+		<col width="112" />
+		</colgroup>
+		<thead>
+		<tr>
+		<th scope="col">{$lang->project}</th>
+		<th scope="col">{$lang->percentage}</th>
+		<th scope="col" class="lst"><a href="{getUrl('','mid',$mid,'sort_pro_target','last_update','sort_pro_type',$sort_pro_type)}">{$lang->recent_update}</a></th>
+		</tr>
+		</thead>
+		<tfoot>
+		<tr><td class="more_projects" colspan="3"><a href="{getUrl('','mid',$mid,'act','dispTranslationProjectList')}">{$lang->more_projects}</a></td></tr>
+		</tfoot>
+		<tbody>
+		<tr loop="$project_list => $project_key, $project">
+		<td class="first_cell"><a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl)}">{$project->project_name}</a></td>
+		<td>
+			<div cond="!$project->no_files" class="track">
+				<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span><span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span><span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
+			</div>
+			<div cond="$project->no_files" class="track">
+				<span >no files</span>
+			</div>
+		</td>
+		<td class="col3 recent">{$project->last_update}</td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="color_dsc">
+		<dl>
+		<dt><span class="color_1"></span></dt><dd>{$lang->translated}</dd>
+		<dt><span class="color_2"></span></dt><dd>{$lang->no_approved}</dd>
+		<dt><span class="color_3"></span></dt><dd>{$lang->no_translated}</dd>
+		</dl>
+	</div>
+	<h2 class="m_title">{$lang->contributor}</h2>
+	<div class="info_tbl translator">
+		<table cellpadding="0" cellspacing="0">
+		<caption class="hide">{$lang->contributor}</caption>
+		<colgroup>
+		<col width="50%" />
+		<col witdh="50%" />
+		</colgroup>
+		<thead>
+		<th colspan="2" scope="col">{$lang->translation_count}</th>
+		</thead>
+		<tbody>
+		<tr loop="$translator_list => $key, $translator">       
+		<td class="user_name">{$translator->nick_name}</td>
+		<td class="num">{$translator->translation_count}</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="info_tbl recommand">
+		<table cellpadding="0" cellspacing="0">
+		<caption class="hide">{$lang->contributor}</caption>
+		<colgroup>
+		<col width="50%" />
+		<col width="50%" />
+		</colgroup>
+		<thead>
+		<th colspan="2" scope="col" class="lst">{$lang->recommend_count}</th>
+		</thead>
+		<tbody>
+		<tr loop="$reviewer_list => $key, $reviewer">
+			<td class="user_name">{$reviewer->nick_name}</td>
+			<td class="num">{$reviewer->total_recommended_count}</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+</div>

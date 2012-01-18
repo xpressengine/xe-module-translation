@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">번역 센터</title>
+    <title xml:lang="en">Translation Center</title>
+	<title xml:lang="zh-CN">翻译中心</title>
+    <description xml:lang="ko">XE 번역센터를 생성/관리하는 모듈입니다.</description>
+    <description xml:lang="en">Provide Translation Center module to XE users, contains administrator functions such as create, delete, manage Translation Center etc.</description>
+	<description xml:lang="zh-CN">给用户提供翻译中心功能，将包含翻译中心的生成/删除及管理等管理员功能。</description>
+    <version>1.5.0</version>
+    <date>2011-10-31</date>
+    <category>service</category>
+
+    <author email_address="developers@xpressengine.com" link="http://www.xpressengine.com/">
+        <name xml:lang="ko">NHN</name>
+        <name xml:lang="en">NHN</name>
+		<name xml:lang="zh-CN">NHN</name>
+    </author>
+</module>

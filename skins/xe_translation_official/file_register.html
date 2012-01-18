@@ -1,0 +1,59 @@
+<include target="_header.html" />
+<load target="css/style.css"/>
+<load target="js/trans_manage.js" />
+<div class="translation">
+	<h2 class="m_title">{$lang->add_new_file}</h2>
+	
+	<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+		<p>{$XE_VALIDATOR_MESSAGE}</p>
+	</div>
+		<form action="./" method="post" id="fo_translation_insert_file" ruleset="insertFile" enctype="multipart/form-data">
+			<input type="hidden" name="act" value="procTranslationInsertFile" />
+			<input type="hidden" name="mid" value="{$mid}" />
+			<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+			<input type="hidden" name="translation_file_srl" value="{$translation_file_srl}" />
+		
+			<div id="file_register_content" class="file_register">
+				<ol class="program">
+				<li>
+					<h3>1. {$lang->select_project}</h3>
+					<div class="item_cont">
+						<select name="translation_project_srl" class="proj_list2">
+							<option loop="$project_list => $key,$val" value="{$val->translation_project_srl}" selected="selected"|cond="$project_info->translation_project_srl==$val->translation_project_srl">{$val->project_name}</option>
+						</select>
+						<a id="pro_add" href="#proWindow" class="mk">{$lang->add_new_project}</a>
+					</div>
+				</li>
+				<li>
+					<h3>2. {$lang->file_path}</h3>
+					<div class="item_cont">
+						<input type="text" name="file_path" value="{$file_info->file_path}" class="input_txt" />
+						<p class="eg">{$lang->about_file_path}, e.g: ./modules/textyle/lang/lang.xml</p>
+					</div>
+				</li>
+		
+				<li class="lst_li">
+					<h3>3. {$lang->file_upload}</h3>
+					<div class="item_cont">
+						<input type="radio" id="rd" name="upload_option" class="radio" value="upload_f" checked/><label for="rd">{$lang->upload_file}</label><br />
+						<input type="file" name="uploaded_file" />
+						<a cond="$file_info->translation_file_srl" href="{$file_info->target_file}" target="_blank">{$file_info->file_name}</a>
+						<br />
+						<input type="radio" id="rd2" name="upload_option" class="radio" value="url_f"/><label for="rd2">{$lang->add_file_url}</label><br />
+						<input type="text" name="file_url" value="http://" class="input_txt" />
+					</div>
+				</li>
+				</ol>
+				</div>
+				<div class="btn_area lft">
+					<input type="submit" class="btn_submit" value="{$lang->cmd_registration}" accesskey="s" />
+					<a href="" class="btn_cancel" onclick="history.back(); return false;">{$lang->cancel}</a>
+				</div>	
+			
+		</form>
+</div>
+<script >
+	window.mid = '{$mid}';
+	window.module_srl = '{$module_info->module_srl}';
+	window.scope = '{$scope}';
+</script>

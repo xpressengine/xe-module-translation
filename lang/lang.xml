@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<lang>
+	<item name="translation">
+		<value xml:lang="ko"><![CDATA[번역센터]]></value>
+		<value xml:lang="en"><![CDATA[Translation]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译中心]]></value>
+	</item>
+	<item name="translation_management">
+		<value xml:lang="ko"><![CDATA[번역 센터 관리]]></value>
+		<value xml:lang="en"><![CDATA[Translation Center Management]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译中心管理]]></value>
+	</item>
+	<item name="about_translation">
+		<value xml:lang="ko"><![CDATA[사용자가 번역센터 모듈을 생성, 관리할수 있습니다.]]></value>
+		<value xml:lang="en"><![CDATA[This module is for creating and managing Translation Center pages.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译中心模块使用户能够搭建，管理翻译中心系统.]]></value>
+	</item>
+	<item name="cmd_translation_list">
+		<value xml:lang="ko"><![CDATA[번역센터 리스트]]></value>
+		<value xml:lang="en"><![CDATA[Translation Center List]]></value>
+		<value xml:lang="zh-CN"><![CDATA[模块列表]]></value>
+	</item>
+	<item name="cmd_create_translation">
+		<value xml:lang="ko"><![CDATA[새 모듈 만들기]]></value>
+		<value xml:lang="en"><![CDATA[Create a new Translation Center]]></value>
+		<value xml:lang="zh-CN"><![CDATA[建立新模块]]></value>
+	</item>
+	<item name="cmd_view_info">
+		<value xml:lang="ko"><![CDATA[번역센터 정보]]></value>
+		<value xml:lang="en"><![CDATA[Translation Center Info]]></value>
+		<value xml:lang="zh-CN"><![CDATA[模块信息]]></value>
+	</item>
+	<item name="default_lang">
+		<value xml:lang="ko"><![CDATA[기본 언어]]></value>
+		<value xml:lang="en"><![CDATA[Default Language]]></value>
+		<value xml:lang="zh-CN"><![CDATA[默认语言]]></value>
+	</item>
+	<item name="about_translation_default_lang">
+		<value xml:lang="ko"><![CDATA[번역센터의 기본 언어를 선택합니다.]]></value>
+		<value xml:lang="en"><![CDATA[Select translation center default language.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[选择默认语言]]></value>
+	</item>
+	<item name="instert_translation">
+		<value xml:lang="ko"><![CDATA[성공적으로 완료하였습니다.]]></value>
+		<value xml:lang="en"><![CDATA[successful]]></value>
+		<value xml:lang="zh-CN"><![CDATA[成功]]></value>
+	</item>
+	<item name="translation_title">
+		<value xml:lang="ko"><![CDATA[번역센터 타이틀]]></value>
+		<value xml:lang="en"><![CDATA[Tranlsation Center Title]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译中心标题]]></value>
+	</item>
+	<item name="about_translation_title">
+		<value xml:lang="ko"><![CDATA[번역센터 타이틀은 번역센터 첫페이지에 보여집니다.]]></value>
+		<value xml:lang="en"><![CDATA[Input the translation center title which will be displayed on the module homepage.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译中心标题将会显示在翻译中心首页上]]></value>
+	</item>
+	<item name="about_list_count">
+		<value xml:lang="ko"><![CDATA[매 페이지에 보여질 프로젝트 갯수를 설정할수 있습니다. 기본값은 20입니다.]]></value>
+		<value xml:lang="en"><![CDATA[You can limit the number of projects (files) to show on one page. The default is 20.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[每页显示的项目（文件）数，默认为20.]]></value>
+	</item>
+	<item name="total_project_count">
+		<value xml:lang="ko"><![CDATA[프로젝트 갯수]]></value>
+		<value xml:lang="en"><![CDATA[Project Count]]></value>
+		<value xml:lang="zh-CN"><![CDATA[项目数量]]></value>
+	</item>
+	<item name="my_project_list">
+		<value xml:lang="ko"><![CDATA[나의 프로젝트 목록]]></value>
+		<value xml:lang="en"><![CDATA[My Projects List]]></value>
+		<value xml:lang="zh-CN"><![CDATA[我的项目列表]]></value>
+	</item>
+	<item name="add_new_file">
+		<value xml:lang="ko"><![CDATA[새 파일 등록]]></value>
+		<value xml:lang="en"><![CDATA[Add a New File]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加新文件]]></value>
+	</item>
+	<item name="language">
+		<value xml:lang="ko"><![CDATA[언어]]></value>
+		<value xml:lang="en"><![CDATA[Language]]></value>
+		<value xml:lang="zh-CN"><![CDATA[语言]]></value>
+	</item>
+	<item name="percentage">
+		<value xml:lang="ko"><![CDATA[완성율]]></value>
+		<value xml:lang="en"><![CDATA[Percentage]]></value>
+		<value xml:lang="zh-CN"><![CDATA[百分比]]></value>
+	</item>
+	<item name="recent_update">
+		<value xml:lang="ko"><![CDATA[최근 업데이트]]></value>
+		<value xml:lang="en"><![CDATA[Recent Update]]></value>
+		<value xml:lang="zh-CN"><![CDATA[最近更新]]></value>
+	</item>
+	<item name="project">
+		<value xml:lang="ko"><![CDATA[프로젝트]]></value>
+		<value xml:lang="en"><![CDATA[Project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[项目]]></value>
+	</item>
+	<item name="more_projects">
+		<value xml:lang="ko"><![CDATA[다른 프로젝트]]></value>
+		<value xml:lang="en"><![CDATA[More Projects]]></value>
+		<value xml:lang="zh-CN"><![CDATA[更多项目]]></value>
+	</item>
+	<item name="translated">
+		<value xml:lang="ko"><![CDATA[번역완료]]></value>
+		<value xml:lang="en"><![CDATA[Translated]]></value>
+		<value xml:lang="zh-CN"><![CDATA[已翻译]]></value>
+	</item>
+	<item name="no_approved">
+		<value xml:lang="ko"><![CDATA[미검토]]></value>
+		<value xml:lang="en"><![CDATA[Not Approved]]></value>
+		<value xml:lang="zh-CN"><![CDATA[未审查]]></value>
+	</item>
+	<item name="no_translated">
+		<value xml:lang="ko"><![CDATA[미번역]]></value>
+		<value xml:lang="en"><![CDATA[Not Translated]]></value>
+		<value xml:lang="zh-CN"><![CDATA[未翻译]]></value>
+	</item>
+	<item name="contributor">
+		<value xml:lang="ko"><![CDATA[기여자]]></value>
+		<value xml:lang="en"><![CDATA[Contributor]]></value>
+		<value xml:lang="zh-CN"><![CDATA[贡献者]]></value>
+	</item>
+	<item name="translation_count">
+		<value xml:lang="ko"><![CDATA[번역]]></value>
+		<value xml:lang="en"><![CDATA[Translation Count]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译数量]]></value>
+	</item>
+	<item name="recommend_count">
+		<value xml:lang="ko"><![CDATA[추천]]></value>
+		<value xml:lang="en"><![CDATA[Recommended Count]]></value>
+		<value xml:lang="zh-CN"><![CDATA[推荐数量]]></value>
+	</item>
+	<item name="all_project_list">
+		<value xml:lang="ko"><![CDATA[모든 프로젝트 리스트]]></value>
+		<value xml:lang="en"><![CDATA[All Projects List]]></value>
+		<value xml:lang="zh-CN"><![CDATA[所有项目列表]]></value>
+	</item>
+	<item name="summary">
+		<value xml:lang="ko"><![CDATA[개요]]></value>
+		<value xml:lang="en"><![CDATA[Summary]]></value>
+		<value xml:lang="zh-CN"><![CDATA[概要]]></value>
+	</item>
+	<item name="file_numbers">
+		<value xml:lang="ko"><![CDATA[파일수]]></value>
+		<value xml:lang="en"><![CDATA[Number of Files]]></value>
+		<value xml:lang="zh-CN"><![CDATA[文件数量]]></value>
+	</item>
+	<item name="manage">
+		<value xml:lang="ko"><![CDATA[관리]]></value>
+		<value xml:lang="en"><![CDATA[Manage]]></value>
+		<value xml:lang="zh-CN"><![CDATA[管理]]></value>
+	</item>
+	<item name="add_new_project">
+		<value xml:lang="ko"><![CDATA[새 프로젝트 추가]]></value>
+		<value xml:lang="en"><![CDATA[Add New Project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加新的项目]]></value>
+	</item>
+	<item name="file_list">
+		<value xml:lang="ko"><![CDATA[파일 리스트]]></value>
+		<value xml:lang="en"><![CDATA[File List]]></value>
+		<value xml:lang="zh-CN"><![CDATA[文件列表]]></value>
+	</item>
+	<item name="total_file">
+		<value xml:lang="ko"><![CDATA[모든 파일]]></value>
+		<value xml:lang="en"><![CDATA[Total Files]]></value>
+		<value xml:lang="zh-CN"><![CDATA[所有文件]]></value>
+	</item>
+	<item name="need_approve">
+		<value xml:lang="ko"><![CDATA[심사 대기중]]></value>
+		<value xml:lang="en"><![CDATA[Need to Approve]]></value>
+		<value xml:lang="zh-CN"><![CDATA[需要审查]]></value>
+	</item>
+	<item name="translation_file_content">
+		<value xml:lang="ko"><![CDATA[파일 내용 번역]]></value>
+		<value xml:lang="en"><![CDATA[File Content Translation]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译文件内容]]></value>
+	</item>
+	<item name="all_files">
+		<value xml:lang="ko"><![CDATA[모든 파일]]></value>
+		<value xml:lang="en"><![CDATA[All Files]]></value>
+		<value xml:lang="zh-CN"><![CDATA[所有文件]]></value>
+	</item>
+	<item name="sort_by_trans">
+		<value xml:lang="ko"><![CDATA[번역필요 순]]></value>
+		<value xml:lang="en"><![CDATA[Sorting by Translation]]></value>
+		<value xml:lang="zh-CN"><![CDATA[按翻译排序]]></value>
+	</item>
+	<item name="sort_by_review">
+		<value xml:lang="ko"><![CDATA[검토필요 순]]></value>
+		<value xml:lang="en"><![CDATA[Sorting by Review]]></value>
+		<value xml:lang="zh-CN"><![CDATA[按审查排序]]></value>
+	</item>
+	<item name="item_per_page">
+		<value xml:lang="ko"><![CDATA[한 페이지당]]></value>
+		<value xml:lang="en"><![CDATA[Items per page]]></value>
+		<value xml:lang="zh-CN"><![CDATA[每页显示数]]></value>
+	</item>
+	<item name="vote">
+		<value xml:lang="ko"><![CDATA[추천]]></value>
+		<value xml:lang="en"><![CDATA[Vote]]></value>
+		<value xml:lang="zh-CN"><![CDATA[投票]]></value>
+	</item>
+	<item name="add_own_translation">
+		<value xml:lang="ko"><![CDATA[다른 번역 제안하기]]></value>
+		<value xml:lang="en"><![CDATA[Add your own translation]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加你的翻译]]></value>
+	</item>
+	<item name="position">
+		<value xml:lang="ko"><![CDATA[위치]]></value>
+		<value xml:lang="en"><![CDATA[Position]]></value>
+		<value xml:lang="zh-CN"><![CDATA[位置]]></value>
+	</item>
+	<item name="prev">
+		<value xml:lang="ko"><![CDATA[이전으로]]></value>
+		<value xml:lang="en"><![CDATA[Prev]]></value>
+		<value xml:lang="zh-CN"><![CDATA[上一步]]></value>
+	</item>
+	<item name="next">
+		<value xml:lang="ko"><![CDATA[다음으로]]></value>
+		<value xml:lang="en"><![CDATA[Next]]></value>
+		<value xml:lang="zh-CN"><![CDATA[下一步]]></value>
+	</item>
+	<item name="save_trans">
+		<value xml:lang="ko"><![CDATA[번역한 내용을 저장]]></value>
+		<value xml:lang="en"><![CDATA[Save Translation]]></value>
+		<value xml:lang="zh-CN"><![CDATA[保存翻译]]></value>
+	</item>
+	<item name="select_project">
+		<value xml:lang="ko"><![CDATA[프로젝트를 선택하여 주세요]]></value>
+		<value xml:lang="en"><![CDATA[Select a project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[项目选择]]></value>
+	</item>
+	<item name="file_path">
+		<value xml:lang="ko"><![CDATA[파일 경로]]></value>
+		<value xml:lang="en"><![CDATA[File Path]]></value>
+		<value xml:lang="zh-CN"><![CDATA[文件路径]]></value>
+	</item>
+	<item name="about_file_path">
+		<value xml:lang="ko"><![CDATA[파일 경로를 입력하여 주세요.]]></value>
+		<value xml:lang="en"><![CDATA[Please input the file path]]></value>
+		<value xml:lang="zh-CN"><![CDATA[请输入文件路径]]></value>
+	</item>
+	<item name="file_upload">
+		<value xml:lang="ko"><![CDATA[파일 업로드]]></value>
+		<value xml:lang="en"><![CDATA[File Upload]]></value>
+		<value xml:lang="zh-CN"><![CDATA[文件上传]]></value>
+	</item>
+	<item name="upload_file">
+		<value xml:lang="ko"><![CDATA[upload file]]></value>
+		<value xml:lang="en"><![CDATA[upload file]]></value>
+		<value xml:lang="zh-CN"><![CDATA[上传文件]]></value>
+	</item>
+	<item name="add_file_url">
+		<value xml:lang="ko"><![CDATA[파일 URL을 입력하여 주세요.]]></value>
+		<value xml:lang="en"><![CDATA[add file URL]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加文件URL]]></value>
+	</item>
+	<item name="cancel">
+		<value xml:lang="ko"><![CDATA[취소]]></value>
+		<value xml:lang="en"><![CDATA[Cancel]]></value>
+		<value xml:lang="zh-CN"><![CDATA[取消]]></value>
+	</item>
+	<item name="cmd_registration">
+		<value xml:lang="ko"><![CDATA[등록]]></value>
+		<value xml:lang="en"><![CDATA[Submit]]></value>
+		<value xml:lang="zh-CN"><![CDATA[提交]]></value>
+	</item>
+	<item name="modify_project">
+		<value xml:lang="ko"><![CDATA[프로젝트 수정]]></value>
+		<value xml:lang="en"><![CDATA[Modify Project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[修改项目]]></value>
+	</item>
+	<item name="pro_name">
+		<value xml:lang="ko"><![CDATA[프로젝트 이름]]></value>
+		<value xml:lang="en"><![CDATA[Project Name]]></value>
+		<value xml:lang="zh-CN"><![CDATA[项目名称]]></value>
+	</item>
+	<item name="to_add_file_page">
+		<value xml:lang="ko"><![CDATA[프로젝트를 등록하신 후, 파일 업로드 페이지로 이동합니다.]]></value>
+		<value xml:lang="en"><![CDATA[After project created, go to add file page.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[提交项目后，转到添加文件页面]]></value>
+	</item>
+	<item name="del_project">
+		<value xml:lang="ko"><![CDATA[프로젝트 삭제]]></value>
+		<value xml:lang="en"><![CDATA[Delete Project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[删除项目]]></value>
+	</item>
+	<item name="about_del_project">
+		<value xml:lang="ko"><![CDATA[프로젝트를 삭제하시겠습니까?]]></value>
+		<value xml:lang="en"><![CDATA[Are you sure to delete the project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[你确定要删除项目]]></value>
+	</item>
+	<item name="del_file">
+		<value xml:lang="ko"><![CDATA[파일 삭제]]></value>
+		<value xml:lang="en"><![CDATA[Delete File]]></value>
+		<value xml:lang="zh-CN"><![CDATA[删除文件]]></value>
+	</item>
+	<item name="about_del_file">
+		<value xml:lang="ko"><![CDATA[파일을 삭제하시겠습니까?]]></value>
+		<value xml:lang="en"><![CDATA[Are you sure to delete the project]]></value>
+		<value xml:lang="zh-CN"><![CDATA[你确定要删除文件]]></value>
+	</item>
+	<item name="download">
+		<value xml:lang="ko"><![CDATA[다운로드]]></value>
+		<value xml:lang="en"><![CDATA[download]]></value>
+		<value xml:lang="zh-CN"><![CDATA[下载]]></value>
+	</item>
+	<item name="update">
+		<value xml:lang="ko"><![CDATA[업데이트]]></value>
+		<value xml:lang="en"><![CDATA[update]]></value>
+		<value xml:lang="zh-CN"><![CDATA[更新]]></value>
+	</item>
+	<item name="delete">
+		<value xml:lang="ko"><![CDATA[삭제]]></value>
+		<value xml:lang="en"><![CDATA[delete]]></value>
+		<value xml:lang="zh-CN"><![CDATA[删除]]></value>
+	</item>
+</lang>
