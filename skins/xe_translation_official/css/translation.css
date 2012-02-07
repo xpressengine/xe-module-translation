@@ -193,3 +193,7 @@ div.grippie {position:absolute;bottom:2px;left:1px;z-index:10;cursor:s-resize;wi
 #project_files .track{width:196px}
 #project_files .first_cell{padding-left:12px} 
 #project_files .last{fong-size:10px}
+
+.vote_recom{margin-top:11px;padding-left:19px;background-color:#FFBB66; background:-moz-linear-gradient(right center,#FFFFBB,#FFBB66); background:-webkit-linear-gradient(right,#FFFFBB 20%,#FFBB66 100%); background:-o-linear-gradient(top,#ececec 50%,#c7c7c7 100%); filter:progid:DXImageTransform.Microsoft.gradient( startColorstr=#ececec, endColorstr=#c7c7c7,GradientType=0 ); font-size:14px}
+.vote_recom .recomCount{margin-left:15px;color:#dd9990; font-family:Arial, Helvetica, sans-serif}
+.vote_recom .btn_vote{display:none;margin-left:20px;padding:0 5px;height:14px;line-height:14px;border:1px solid #ececec;border-radius:5px;font-size:12px;cursor:pointer}

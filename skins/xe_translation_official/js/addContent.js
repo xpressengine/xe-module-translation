@@ -76,6 +76,9 @@ jQuery(function($){
 				var reg = /(\D*)(\d+)(\D*)/;
 				refreshStr = recomCountHtml.replace(reg, '$1' + refreshNum + '$3');
 				recomCountObj.html(refreshStr);
+				$(btEl).parent('li').attr('style', 'background:-moz-linear-gradient(right center,#FFFFBB,#FFBB66); background:-webkit-linear-gradient(right,#FFFFBB 20%,#FFBB66 100%); background:-o-linear-gradient(top,#ececec 50%,#c7c7c7 100%); filter:progid:DXImageTransform.Microsoft.gradient( startColorstr=#ececec, endColorstr=#c7c7c7,GradientType=0 ); ');
+				$(btEl).parent('li').attr('title', 'Your recommendation');
+				$(btEl).parents('ul').find('.btn_vote').remove();
 		    };
 		    exec_xml('translation','procVoteItem', params, callBack);
 		}

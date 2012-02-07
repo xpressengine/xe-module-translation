@@ -368,6 +368,15 @@ class translationController extends translation {
 		if(empty($output->data)){
 			return;
 		}
+		$logged_info = Context::get('logged_info');
+		if(!$logged_info) return;
+
+		$recommended_member = explode(':', $output->data->recommended_member);
+		array_push($recommended_member,$logged_info->member_srl);
+		$recommended_member =  implode(':',$recommended_member);
+
+
+		$args->recommended_member = $recommended_member;
 		$args->recommended_count = $output->data[0]->recommended_count + 1;
 		$output = executeQueryArray('translation.updateVoteItem',$args);
 		return $output;

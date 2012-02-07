@@ -525,12 +525,14 @@
 
         	//get translation_content_srl
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
+			
 
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
 
         		$obj->content =$this->_removeSpecialTag( $obj->content);
+				$obj->login_recommend = false;
         		if(!empty($targetList->data)){
 	        		foreach($targetList->data as $key2 => &$obj2){
 						if( $obj2->content) {
@@ -539,10 +541,21 @@
 
 						if($obj->content_node == $obj2->content_node &&
 							$obj->translation_file_srl == $obj2->translation_file_srl){
+
+							// check whether the target content has been recommended by login user
+							$obj2->login_recommend = false;
+							$recommended_member = explode(':', $obj2->recommended_member);
+							$logged_info = Context::get('logged_info');
+							if(in_array($logged_info->member_srl, $recommended_member)){
+								$obj->login_recommend = true;
+								$obj2->login_recommend = true;
+							}
+
 							$obj->targetList[] = $obj2;
 							if($obj2->is_original){
 								$obj->targetListTop = $obj2;
 							}
+							
 						}
 	        		}
 	        	}

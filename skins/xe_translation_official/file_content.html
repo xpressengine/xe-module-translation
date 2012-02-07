@@ -82,8 +82,8 @@
 				</div>
 				<div class="translate">
 					<ul>
-					<li class="vote"  cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2">
-						{$val2->content}<span cond="count($val->targetList)>1" class="recomCount">({$val2->recommended_count})</span><span cond="count($val->targetList)>1" class="btn_vote" data="{$val2->translation_content_srl}">{$lang->vote}</span>
+					<li cond="count($val->targetList)>0" loop="$val->targetList=>$key2,$val2" class="vote"|cond="!$val2->login_recommend" class="vote_recom"|cond="$val2->login_recommend">
+						{$val2->content}<span cond="count($val->targetList)>1" class="recomCount">({$val2->recommended_count})</span><span cond="count($val->targetList)>1 && !$val->login_recommend" class="btn_vote" data="{$val2->translation_content_srl}">{$lang->vote}</span>
 					</li>
 					</ul>
 					<label>{$lang->add_own_translation}</label>
