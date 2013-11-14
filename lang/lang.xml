@@ -315,4 +315,79 @@
 		<value xml:lang="en"><![CDATA[delete]]></value>
 		<value xml:lang="zh-CN"><![CDATA[删除]]></value>
 	</item>
+	<item name="view_dictionary">
+		<value xml:lang="ko"><![CDATA[View Dictionary]]></value>
+		<value xml:lang="en"><![CDATA[View Dictionary]]></value>
+		<value xml:lang="zh-CN"><![CDATA[查看词库]]></value>
+	</item>
+	<item name="translation_dictionary">
+		<value xml:lang="ko"><![CDATA[Transaltion Dictionary]]></value>
+		<value xml:lang="en"><![CDATA[Transaltion Dictionary]]></value>
+		<value xml:lang="zh-CN"><![CDATA[翻译词库]]></value>
+	</item>
+	<item name="save">
+		<value xml:lang="ko"><![CDATA[Save]]></value>
+		<value xml:lang="en"><![CDATA[Save]]></value>
+		<value xml:lang="zh-CN"><![CDATA[保存]]></value>
+	</item>
+	<item name="add_dic_content">
+		<value xml:lang="ko"><![CDATA[Add Content]]></value>
+		<value xml:lang="en"><![CDATA[Add Content]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加内容]]></value>
+	</item>
+	<item name="add_new_dic_content">
+		<value xml:lang="ko"><![CDATA[Add Dictionary Content]]></value>
+		<value xml:lang="en"><![CDATA[Add Dictionary Content]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加词库内容]]></value>
+	</item>
+	<item name="source_lang">
+		<value xml:lang="ko"><![CDATA[Source Language]]></value>
+		<value xml:lang="en"><![CDATA[Source Language]]></value>
+		<value xml:lang="zh-CN"><![CDATA[来源语言]]></value>
+	</item>
+	<item name="target_lang">
+		<value xml:lang="ko"><![CDATA[Target Language]]></value>
+		<value xml:lang="en"><![CDATA[Target Language]]></value>
+		<value xml:lang="zh-CN"><![CDATA[目标语言]]></value>
+	</item>
+	<item name="update_content">
+		<value xml:lang="ko"><![CDATA[Update Dictionary Content]]></value>
+		<value xml:lang="en"><![CDATA[Update Dictionary Content]]></value>
+		<value xml:lang="zh-CN"><![CDATA[更新词库内容]]></value>
+	</item>
+	<item name="del_dic">
+		<value xml:lang="ko"><![CDATA[Delete Dictionary Contents]]></value>
+		<value xml:lang="en"><![CDATA[Delete Dictionary Contents]]></value>
+		<value xml:lang="zh-CN"><![CDATA[删除词典内容]]></value>
+	</item>
+	<item name="about_del_dic">
+		<value xml:lang="ko"><![CDATA[Are you sure to delete this content from dictionary?]]></value>
+		<value xml:lang="en"><![CDATA[Are you sure to delete this content from dictionary?]]></value>
+		<value xml:lang="zh-CN"><![CDATA[你确定删除这个内容吗？]]></value>
+	</item>
+	<item name="file_type">
+		<value xml:lang="ko"><![CDATA[Select File Type]]></value>
+		<value xml:lang="en"><![CDATA[Select File Type]]></value>
+		<value xml:lang="zh-CN"><![CDATA[选择文件类型]]></value>
+	</item>
+	<item name="add_new_zip">
+		<value xml:lang="ko"><![CDATA[Add Zip File]]></value>
+		<value xml:lang="en"><![CDATA[Add Zip File]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加Zip文件]]></value>
+	</item>
+	<item name="add_new_zip_file">
+		<value xml:lang="ko"><![CDATA[Add a New Zip File]]></value>
+		<value xml:lang="en"><![CDATA[Add a New Zip File]]></value>
+		<value xml:lang="zh-CN"><![CDATA[添加Zip文件]]></value>
+	</item>
+	<item name="input_project_name">
+		<value xml:lang="ko"><![CDATA[Input Project Name]]></value>
+		<value xml:lang="en"><![CDATA[Input Project Name]]></value>
+		<value xml:lang="zh-CN"><![CDATA[输入项目名称]]></value>
+	</item>
+	<item name="about_zip_project">
+		<value xml:lang="ko"><![CDATA[A Zip file will be created as a new project.]]></value>
+		<value xml:lang="en"><![CDATA[A Zip file will be created as a new project.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[一个Zip文件将被看做一个新的项目来生成。]]></value>
+	</item>
 </lang>

@@ -3,5 +3,6 @@
     <column name="module_srl" type="varchar" size="128" notnull="notnull" index="idx_module_srl"/>
     <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl"/>
     <column name="project_name" type="varchar" size="128" notnull="notnull" />
+	<column name="project_type" type="varchar" size="128" notnull="notnull" />
     <column name="reg_date" type="date" notnull="notnull" />
 </table>

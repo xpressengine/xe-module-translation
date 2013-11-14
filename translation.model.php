@@ -52,7 +52,7 @@
 			}else{
 				$output = executeQueryArray('translation.getProjectList',$args);
 			}
-			
+
 			if(!$output->data) return null;
 			else return $output;
 		}
@@ -94,20 +94,6 @@
 
 			$args->translation_project_srl = $translation_project_srl;
 			$output = executeQuery('translation.getProject',$args);
-
-			if(!$output->data) return null;
-			else return $output->data;
-		}
-
-		/**
-		 * @brief get project info by project name
-		 **/
-		function getProjectByName($project_name){
-			if(!$project_name) return;
-
-			$args->project_name = $project_name;
-			$output = executeQuery('translation.getProjectByName',$args);
-
 
 			if(!$output->data) return null;
 			else return $output->data;
@@ -278,21 +264,24 @@
 			$lang_supported_list = Context::loadLangSupported();
 
 			$valueArr = array();
-			foreach($content_nodes as $key => $val){
-				$obj->content_node = $val->content_node;
-				$obj->translation_file_srl = $translation_file_srl;
 
-				foreach($lang_supported_list as $lang_key => $lang_val){
-					$obj->lang = $lang_key;
-					$value = $this->getRecommendValue($obj);
+			if(is_array($content_nodes)){
+				foreach($content_nodes as $key => $val){
+					$obj->content_node = $val->content_node;
+					$obj->translation_file_srl = $translation_file_srl;
 
-					if($value){
-						$vArr['content_node'] = $obj->content_node;
-						$vArr['lang'] = $obj->lang;
-						$vArr['content'] = $value->content;
-						$vArr['is_new_lang'] = $value->is_new_lang;
+					foreach($lang_supported_list as $lang_key => $lang_val){
+						$obj->lang = $lang_key;
+						$value = $this->getRecommendValue($obj);
 
-						array_push($valueArr, $vArr);
+						if($value){
+							$vArr['content_node'] = $obj->content_node;
+							$vArr['lang'] = $obj->lang;
+							$vArr['content'] = $value->content;
+							$vArr['is_new_lang'] = $value->is_new_lang;
+
+							array_push($valueArr, $vArr);
+						}
 					}
 				}
 			}
@@ -573,7 +562,7 @@
 			array_multisort($sort_col, $arr);
 		}
 
-		function writeXml($contents, $file_name){
+		function writeFile($contents, $file_name){
 
 			if(!file_exists($file_name)){
 				$fp = fopen($file_name,"wb");
@@ -679,6 +668,21 @@
 			return $output;
 		}
 
+		function getCsvContent($args){
+		    $output = $this->getContent($args);
+		    $args->lang = $args->source_lang;
+		    $output1 = $this->getContent($args);
+		    if($output1->data){
+		        $output->data = array_merge($output1->data, $output->data);
+		    }
+		    return $output;
+		}
+
+		function getContent($args){
+			$output = executeQueryArray('translation.getContent',$args);
+			return $output;
+		}
+
 		function getProjInfoBySrl($projSrlArr = array()){
 		    if(!is_array($projSrlArr)){
                 return null;
@@ -686,6 +690,113 @@
 		    $args->translation_project_srl = $projSrlArr;
 		    $output = executeQuery('translation.getProjInfo',$args);
 		    return $output;
+		}
+
+		function getDicContent($sourceLang = "en", $targetLang = "zh-CN",$listCount = 10, $page = 1, $pageCount = 10, $s_keyword = ""){
+			$args->source_lang = $sourceLang;
+			$args->target_lang = $targetLang;
+			$args->regular = 1;
+
+			$args->page = $page;
+			$args->listCount = $listCount;
+            $args->page_count = $pageCount;
+			$args->s_keyword = $s_keyword;
+
+			$output = executeQueryArray('translation.getDicContent',$args);
+			if(!$output->toBool()) {return $output;}
+
+			return $output;
+		}
+
+		function getDicBySource($sourceLang, $sourceContent, $targetLang){
+			if(!$sourceLang||!$sourceContent||!$targetLang) return;
+			$args->source_lang = $sourceLang;
+			$args->source_content = $sourceContent;
+            $args->target_lang = $targetLang;
+			$args->regular = 1;
+
+			$output = executeQueryArray('translation.getDicBySource',$args);
+			if(!$output->toBool()) {return $output;}
+
+			return $output->data;
+		}
+
+		function getDicBySrl($translation_dictionary_srl){
+			if(!$translation_dictionary_srl) return;
+			$args->translation_dictionary_srl = $translation_dictionary_srl;
+			$args->regular = 1;
+
+			$output = executeQuery('translation.getDicBySrl',$args);
+			if(!$output->toBool()) {return $output;}
+
+			return $output->data;
+		}
+
+		// create a Zip file for a directory
+		function createZip($source_dir, $destination_zip)
+		{
+			if (!extension_loaded('zip') || !file_exists($source_dir)) {
+				return false;
+			}
+
+			$zip = new ZipArchive();
+			if (!$zip->open($destination_zip, ZIPARCHIVE::CREATE)) {
+				return false;
+			}
+
+			$source_dir = str_replace('\\', '/', realpath($source_dir));
+
+			if (is_dir($source_dir) === true)
+			{
+				$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source_dir), RecursiveIteratorIterator::SELF_FIRST);
+
+				foreach ($files as $file)
+				{
+					$file = str_replace('\\', '/', realpath($file));
+
+					if (is_dir($file) === true)
+					{
+						$zip->addEmptyDir(str_replace($source_dir . '/', '', $file . '/'));
+					}
+					else if (is_file($file) === true)
+					{
+						$zip->addFromString(str_replace($source_dir . '/', '', $file), file_get_contents($file));
+					}
+				}
+			}
+			else if (is_file($source_dir) === true)
+			{
+				$zip->addFromString(basename($source_dir), file_get_contents($source_dir));
+			}
+
+			return $zip->close();
+		}
+
+		function downloadZipFile($filepath, $filename){
+			if(file_exists($filepath)){
+				if ($fd = fopen ($filepath, "r")) {
+					$fsize = filesize($filepath);
+					$path_parts = pathinfo($filepath);
+
+					header("Content-type: application/zip");
+			        header("Content-Disposition: attachment; filename=\"$filename\"");
+			        header("Expires: 0");
+			        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			        header("Cache-Control: no-store, no-cache, must-revalidate");
+					header("Cache-Control: public");
+			        header("Pragma: public");
+			        header("Content-Length: ".$fsize);
+
+					ob_end_clean();
+					while(!feof($fd)) {
+						$buffer = fread($fd, (1*(1024*1024)));
+						echo $buffer;
+						flush();
+						ob_flush();
+					}
+				}
+				fclose ($fd);
+			}
 		}
 
 	}

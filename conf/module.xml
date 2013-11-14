@@ -22,6 +22,9 @@
 		<action name="dispTransProLangInfo" type="view" standalone="true" />
 		<action name="downloadTranslationFile" type="view" standalone="true" />
 		<action name="dispTranslationDeleteFile" type="view" standalone="true" />
+		<action name="dispTranslationDictionary" type="view" standalone="true" />
+		<action name="dispTransAddDicContent" type="view" standalone="true" />
+		<action name="dispTranslationDeleteDic" type="view" standalone="true" />
 
 		<action name="procTranslationAdminInsertTranslation" type="controller" standalone="true" ruleset="insertTranslation"/>
 		<action name="procTranslationAdminDeleteTranslation" type="controller" standalone="true" ruleset="deleteTranslation"/>
@@ -31,8 +34,15 @@
 		<action name="procTranslationDeleteProject" type="controller" standalone="true"/>
 		<action name="delFile" type="controller" standalone="true"/>
 
+		<action name="procTranslationInsertDicContent" type="controller" standalone="true"/>
+		<action name="procTranslationSaveDicContent" type="controller" standalone="true"/>
+		<action name="procTranslationDeleteDicContent" type="controller" standalone="true"/>
+
 		<action name="procTransInsertContent" type="controller" standalone="true" ruleset="insertContent"/>
 		<action name="procGetDicInfo" type="model" standalone="true"/>
+
+		<action name="procTranslationInsertZipFile" type="controller" standalone="true" ruleset="insertZipFile"/>
+		<action name="downloadTranslationZipFile" type="view" standalone="true" />
 
     </actions>
 </module>

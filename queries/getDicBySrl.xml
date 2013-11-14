@@ -1,0 +1,12 @@
+<query id="getDicBySrl" action="select">
+    <tables>
+        <table name="translation_dictionary" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+		<condition operation="equal" column="translation_dictionary_srl" var="translation_dictionary_srl" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="regular" var="regular" notnull="notnull" pipe="and"/>
+    </conditions>
+</query>

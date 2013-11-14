@@ -78,5 +78,43 @@ jQuery(function($){
 			exec_xml('translation','dispTranslationDeleteFile', params, callBack,new Array('error','message','page'));
 		}
 	});
+
+	// Add a new Dic content
+	$('a#dic_add').click(function(){
+		_root.source_lang = source_lang;
+		_root.target_lang = target_lang;
+
+		var params = [];
+		params['source_lang'] = source_lang;
+		params['target_lang'] = target_lang;
+		params['translation_title'] = translation_title;
+		params['mid'] = mid;
+		
+		var callBack = function(ret_obj){
+			var htmlStr = ret_obj['page'];
+			$('#proWindow').html(htmlStr);
+			$('#proWindow').css('display','block');
+		};
+		exec_xml('translation','dispTransAddDicContent', params, callBack,new Array('error','message','page'));
+	});
+
+	//delete File
+	deleteBts = $('a.btn_dic_delete');
+	deleteBts.each(function(index, deBtn){
+		deBtn.onclick = function(eventObj){
+			var btObj = $(deBtn);
+			var params = [];
+
+			params['translation_dictionary_srl'] = btObj.attr('data');
+			params['module_srl'] = module_srl;
+			params['mid'] = mid;
+			var callBack = function(ret_obj){
+				var htmlStr = ret_obj['page'];
+				$('#proWindow').html(htmlStr);
+				$('#proWindow').css('display','block');
+			};
+			exec_xml('translation','dispTranslationDeleteDic', params, callBack,new Array('error','message','page'));
+		}
+	});
 	
 });

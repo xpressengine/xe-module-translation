@@ -1,0 +1,19 @@
+<span class="modalWindow"></span>
+<div id="proLayer" class="proLayer proTypeA">
+	<h2>{$lang->del_dic}</h2>
+	<a href="###" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X" class="close">Close Login Layer</a>
+	<form action="./" method="post" id="fo_translation_delete_dic" ruleset="deleteDic">
+	<fieldset>
+	<legend></legend>
+	<input type="hidden" name="act" value="procTranslationDeleteDicContent" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="member_srl" value="{$member_srl}" />
+	<input type="hidden" name="translation_dictionary_srl" value="{$translation_dictionary_srl}" />
+	<p>{$lang->about_del_dic}</p>
+	<b>{$dic_info->source_lang} :</b> <span>{$dic_info->source_content}</span>&nbsp;&nbsp;
+	<b>{$dic_info->target_lang} :</b> <span>{$dic_info->target_content}</span>
+	<p class="btn_area"><input name="" type="submit" value="{$lang->cmd_delete}" class="btn_submit" /></p>
+	</fieldset>
+	</form>
+
+</div>

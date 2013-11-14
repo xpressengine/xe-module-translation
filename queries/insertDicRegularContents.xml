@@ -1,0 +1,13 @@
+<query id="insertDicRegularContents" action="insert">
+    <tables>
+        <table name="translation_dictionary" />
+    </tables>
+    <columns>
+		<column name="translation_dictionary_srl" var="translation_dictionary_srl" filter="number" notnull="notnull" />
+		<column name="source_lang" var="source_lang"  default="en"/>
+		<column name="source_content" var="source_content"  notnull="notnull"/>
+		<column name="target_lang" var="target_lang"  notnull="notnull"/>
+		<column name="target_content" var="target_content"  notnull="notnull"/>
+		<column name="regular" var="regular"  notnull="notnull"/>
+    </columns>
+</query>

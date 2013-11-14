@@ -10,7 +10,9 @@
 	<div class="lang_select right">
 		<div class="selected off"><span class="ico lang_{$select_lang}">{$lang_supported_list[$select_lang]}</span></div>
 		<ul class="lang_list">
-		<li loop="$lang_supported_list => $lang_key, $langSup"><a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl', $translation_project_srl, 'member_srl', $member_srl, 'select_lang',$lang_key)}" class="lang_{$lang_key}">{$langSup}</a></li>
+		    <li loop="$lang_supported_list => $lang_key, $langSup">
+		        <a href="{getUrl('','mid',$mid,'act','dispTranslationFileList','translation_project_srl', $translation_project_srl, 'member_srl', $member_srl, 'select_lang',$lang_key)}" class="lang_{$lang_key}">{$langSup}</a>
+		    </li>
 		</ul>
 	</div>
 	<select  cond="$logged_info->member_srl == $project_info->member_srl && $logged_info->is_admin == 'Y' && $project_list" id="select_pro" class="proj_list">
@@ -52,11 +54,11 @@
 		<table id="project_files" cellpadding="0" cellspacing="0">
 		<caption class="blind">Project "XE Core"</caption>
 		<colgroup>
-		<col width="22%" />
+		<col width="25%" />
 		<col width="24%" />
 		<col width="20%" />
 		<col width="10%" />
-		<col />
+		<col width="15%"/>
 		</colgroup>
 		<thead>
 		<tr>
@@ -78,7 +80,12 @@
 		</td>
 		<td>{$lang->translated} {$file->trans_count}, {$lang->need_approve} {$file->no_approved_count}</td>
 		<td>{$file->last_update}<block cond="!$file->last_update">No update</block></td>
-		<td class="last"><a href="{getUrl('','mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl)}" title="download" class="btn_dld">{$lang->download}</a><a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$file->translation_file_srl,'member_srl',$member_srl)}"  title="update" class="btn_upd">{$lang->update}</a><a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="#proWindow"  title="delete" class="btn_f_delete" data="{$file->translation_file_srl}">{$lang->delete}</a></td>
+		<td class="last">
+		    <a href="{getUrl('','source_lang',$source_lang,'target_lang',$select_lang,'mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl)}" title="download" class="btn_dld"></a>
+		    <a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_file_srl',$file->translation_file_srl,'member_srl',$member_srl)}"  title="update" class="btn_upd"></a>
+		    <a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl" href="#proWindow"  title="delete" class="btn_f_delete" data="{$file->translation_file_srl}"></a>
+			<a cond="$logged_info->is_admin == 'Y' && $logged_info->member_srl == $file->member_srl && $file->file_type == 'properties'" href="{getUrl('','source_lang',$source_lang,'target_lang',$select_lang,'mid',$mid,'act','downloadTranslationFile','translation_file_srl',$file->translation_file_srl,'unicode','true')}" title="Unicode download" class="btn_dld uni"></a>
+			</td>
 		</tr>
 		</tbody>
 		</table>
@@ -94,7 +101,7 @@
 		<!--@end-->
 		<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}<span class="icon2"></span></a>
 	</div>
-	
+
 	<div class="color_dsc">
 		<dl>
 		<dt><span class="color_1"></span></dt><dd>{$lang->translated}</dd>
@@ -102,7 +109,7 @@
 		<dt><span class="color_3"></span></dt><dd>{$lang->no_translated}</dd>
 		</dl>
 	</div>
-	
+
 	<div cond="$logged_info->member_srl == $project_info->member_srl && $logged_info->is_admin == 'Y'" class="btn_area">
 		<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','translation_project_srl', $translation_project_srl,'member_srl',$member_srl)}" class="sty_btn">{$lang->add_new_file}</a>
 	</div>

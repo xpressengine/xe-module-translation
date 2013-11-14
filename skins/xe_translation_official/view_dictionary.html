@@ -1,0 +1,150 @@
+<load target="js/jquery.textarearesizer.compressed.js" />
+<load target="js/script.js" />
+<load target="js/trans_manage.js" />
+<load target="js/dicContent.js" />
+<include target="_header.html" />
+<div class="translation">
+<h2 class="m_title">{$lang->translation_dictionary}</h2>
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<div class="project_name">
+	<a href="{getUrl('','mid', $mid)}">{$module_info->translation_title?$module_info->translation_title:$translation_title}</a> &gt;&gt;
+	&gt;&gt;<strong> {$lang->translation_dictionary}</strong>
+</div>
+<form action="./" method="post" id="fo_translation_insert_content" class="fo_translation_insert_content">
+<div class="language_type">
+	<div id="default_lang" class="lang_select">
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$key == $source_lang">
+	  		<span class="ico lang_{$key}">{$val}</span>
+	  	</div>
+	  	<ul class="lang_list">
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$target_lang" value="{$key}">
+	  			<a href="{getUrl('','mid',$mid,'act','dispTranslationDictionary', 'source_lang',$key, 'target_lang', $target_lang)}" class="lang_{$key}" >{$val}</a>
+	  		</li>
+	  	</ul>
+	</div>
+	<span class="tt">To</span>
+	<div id="target_lang" class="lang_select">
+	  	<div class="selected off" loop="$lang_supported_list => $key, $val" cond="$target_lang == $key">
+	  		<span class="ico lang_{$key}">{$val}</span>
+	  	</div>
+	  	<ul class="lang_list">
+	  		<li loop="$lang_supported_list => $key, $val" cond="$key!=$source_lang" value="{$key}">
+	  			<a href="{getUrl('','mid',$mid,'act','dispTranslationDictionary', 'source_lang',$source_lang, 'target_lang', $key)}" class="lang_{$key}" >{$val}</a>
+	  		</li>
+	  	</ul>
+	</div>
+</div>
+<input type="hidden" name="target_lang" value="{$target_lang}" />
+<input type="hidden" name="source_lang" value="{$source_lang}" />
+<input type="hidden" name="page" value="{$page}" />
+<input type="hidden" name="act" value="procTranslationSaveDicContent" />
+<input type="hidden" name="mid" value="{$mid}" />
+
+<div id="t_list" class="t_list_dic">
+	<div class="perPage">
+		<select onchange="window.location = '{getUrl('','mid',$mid,'act','dispTranslationDictionary', 'source_lang',$source_lang, 'target_lang', $target_lang)}' + '&listCount=' + this.value">
+			<option value="10" selected="true"|cond="$listCount == 10">10</option>
+			<option value="20" selected="true"|cond="$listCount == 20">20</option>
+			<option value="30" selected="true"|cond="$listCount == 30">30</option>
+		</select> {$lang->item_per_page}
+	</div>
+</div>
+<div class="search_dic">
+	<input id="dic_search_text" type="text" class="inputTypeText dic_srh_text" value="{$search_keyword}" name="search_keyword">
+	<a class="button " onClick="window.location = '{getUrl('','mid',$mid,'act','dispTranslationDictionary', 'source_lang',$source_lang, 'target_lang', $target_lang, 'listCount', $listCount)}' + '&search_keyword=' + document.getElementById('dic_search_text').value"href="#"><span>Search</span></a>
+</div>
+
+<div loop="$dictionary_list => $key, $val" class="t_item">
+	<div class="item">
+		<div class="phrase us phrase_dic_source">{$val->source_content}</div>
+		<div class="translate" >
+				{$val->target_content}
+		</div>
+		<a href="###" class="btn_show"><img src="images/arrow_show.gif" width="13" height="13" alt="show" /></a>
+	</div>
+	<div class="edit_dic" style="display:none">
+		<div class="edit_content">
+			<div class="phrase us phrase_dic">
+				<p>{$val->source_content}</p>
+				<textarea class="resizable src_area" name="source_content[{$val->translation_dictionary_srl}]">{$val->source_content}</textarea>
+				<div class="dic_content_{$val->translation_content_srl}"></div>
+			</div>
+			<div class="translate_dic">
+				<label>{$lang->update_content}</label>
+				<textarea class="resizable" name="content[{$val->translation_dictionary_srl}]">{$val->target_content}</textarea>
+			</div>
+			<div class="delete_dic_img">
+				<a href="#proWindow" class="btn_dic_delete" data="{$val->translation_dictionary_srl}">
+					<img src="./images/buttonCloseX.gif" />
+				</a>
+			</div>
+		</div>
+		<div class="btm_area_dic">
+			<div class="btns">
+				<button class="btn_prev">{$lang->prev}</button><button class="btn_next">{$lang->next}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div cond="empty($dictionary_list)" class="t_item">
+   There is no related contents in dictionary.
+</div>
+
+<div cond="$logged_info->is_admin == 'Y'" class="save_translations save_dic">
+	<a href="#proWindow" id="dic_add" class="sty_btn_dic">{$lang->add_dic_content}</a> 
+	<input cond="!empty($dictionary_list)" type="submit" value="{$lang->save}" class="sty_btn" onClick="ChangeState();"/>
+</div>
+
+<div class="t_pagination file_cont" cond="$page_navigation">
+		<a href="{getUrl('page','')}" class="prevEnd"><span class="icon"></span>{$lang->first_page}</a>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+			<!--@if($page == $page_no)-->
+				<strong>{$page_no}</strong>
+			<!--@else-->
+				<a href="{getUrl('page',$page_no)}">{$page_no}</a>
+			<!--@end-->
+		<!--@end-->
+		<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}<span class="icon2"></span></a>
+	</div>
+</form>
+</div>
+
+<script language="javascript">
+	window.targetLang = '{$target_lang}';
+	var empty = '{$dictionaryList}';
+	if(empty == ""){
+		jQuery(function($){
+			$('div.translation').css('min-height','150px');
+		});
+	}
+
+	/*jQuery(function($){
+		 $('a').click(function(){
+			unsaved = false;
+			$('textarea').each(function(){ 
+				if($(this).val() != ''){
+					unsaved =  true;
+				}
+			});
+			if(unsaved == true){
+				if(confirm('You have unsaved changes. Are you sure want to quit?')){
+					return true;
+				}else{
+					return false;
+				}
+			}
+
+		 })
+	});*/
+
+	window.mid = '{$mid}';
+	window.module_srl = '{$module_info->module_srl}';
+	window.scope = '{$scope}';
+	window.source_lang = '{$source_lang}';
+	window.target_lang = '{$target_lang}';
+	window.translation_title = '{$module_info->translation_title}';
+</script>

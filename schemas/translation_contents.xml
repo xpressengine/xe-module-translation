@@ -8,7 +8,6 @@
     <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl"/>
     <column name="content" type="varchar" size="512" notnull="notnull"/>
     <column name="recommended_count" type="number" size="9" notnull="notnull" default="0"/>
-	<column name="recommended_member" type="varchar"/>
 	<column name="is_original" type="number" size="2" notnull="notnull" default="0"/>
 	<column name="is_new_lang" type="number" size="2" notnull="notnull" default="0"/>
 	<column name="reg_date" type="date" notnull="notnull" />

@@ -4,7 +4,6 @@
     </tables>
     <columns>
         <column name="recommended_count" var="recommended_count" default="0" />
-		<column name="recommended_member" var="recommended_member" default="" />
     </columns>
     <conditions>
         <condition operation="equal" column="translation_content_srl" var="translation_content_srl" filter="number" notnull="notnull" />

@@ -194,6 +194,26 @@ div.grippie {position:absolute;bottom:2px;left:1px;z-index:10;cursor:s-resize;wi
 #project_files .first_cell{padding-left:12px} 
 #project_files .last{fong-size:10px}
 
-.vote_recom{margin-top:11px;padding-left:19px;background-color:#FFBB66; background:-moz-linear-gradient(right center,#FFFFBB,#FFBB66); background:-webkit-linear-gradient(right,#FFFFBB 20%,#FFBB66 100%); background:-o-linear-gradient(top,#ececec 50%,#c7c7c7 100%); filter:progid:DXImageTransform.Microsoft.gradient( startColorstr=#ececec, endColorstr=#c7c7c7,GradientType=0 ); font-size:14px}
-.vote_recom .recomCount{margin-left:15px;color:#dd9990; font-family:Arial, Helvetica, sans-serif}
-.vote_recom .btn_vote{display:none;margin-left:20px;padding:0 5px;height:14px;line-height:14px;border:1px solid #ececec;border-radius:5px;font-size:12px;cursor:pointer}
+.view_dictionary .sty_btn, .sty_btn_dic{display:inline-block;margin-left:15px;padding:0 10px;height:30px;line-height:30px;font-size:14px;border:1px solid #797979;border-radius:5px;text-shadow:1px 1px 1px #000;font-weight:bold;color:#efefef;background:-webkit-linear-gradient(top, #bababa 40%,#737373 70%); background:-moz-linear-gradient(top,#bababa 40%,#737373 70%);background:-o-linear-gradient(top,#bababa 40%,#737373 70%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#767676',endColorstr='#cccccc',GradientType=0);background:-ms-linear-gradient(top, #767676 0%,#808080 40%,#ccc 70%);box-shadow:1px 1px 3px #808080;cursor:pointer;_width:}
+.view_dictionary .newfile { margin: 20px 0 0 2px; text-align: right; }
+.sty_btn_dic:nth-child(1):after {content:'...'}
+
+
+#dicLayer {width:400px}
+#dic_scr_content {width:370px; margin-top: 8px;}
+#dic_tar_content {width:370px; margin-top: 8px;}
+.edit_dic{overflow:hidden;position:relative;margin:8px 0;padding:15px 0 0;border:1px solid #c7c7c7;border-radius:5px; background: url("../images/buttonCloseX.gif") no-repeat scroll center center transparent;}
+.btm_area_dic{overflow:hidden;margin-top:10px;padding:12px 10px;}
+.translate_dic label{display:inline-block;margin:5px 0 0;color:#4f4e4e;font-size:12px}
+.translate_dic{float:left;padding-left:20px;width:45%;font-family:Arial, Helvetica, sans-serif;font-size:12px}
+.item .translate_dic{background:url(../images/bg_th.gif) repeat-y 0 0;}
+.phrase_dic p{margin:5px 0;font-size:14px}
+.save_dic{bottom:-50px;}
+.t_list_dic {width:300px !important;}
+.search_dic {float:right; position: relative; margin:13px 0 0; }
+.dic_srh_text {margin-top:1px; height:19px; width: 200px; border-color: #CCCCCC;}
+.phrase_dic_source {padding: 0 42px 0 20px;}
+.src_area {margin-top: 5px;}
+.btn_dic_delete {margin-left: 60px;}
+
+.uni {background:url(../images/unicode.jpg) no-repeat 0 0;}

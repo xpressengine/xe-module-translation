@@ -1,0 +1,12 @@
+<query id="updateDicContent" action="update">
+    <tables>
+        <table name="translation_dictionary" />
+    </tables>
+    <columns>
+		<column name="source_content" var="source_content" notnull="notnull" />
+        <column name="target_content" var="target_content" notnull="notnull" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="translation_dictionary_srl" var="translation_dictionary_srl" filter="number" notnull="notnull" />
+    </conditions>
+</query>

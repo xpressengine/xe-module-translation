@@ -1,0 +1,14 @@
+<query id="getDicBySource" action="select">
+    <tables>
+        <table name="translation_dictionary" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+		<condition operation="equal" column="source_lang" var="source_lang" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="target_lang" var="target_lang" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="source_content" var="source_content" notnull="notnull" pipe="and"/>
+		<condition operation="equal" column="regular" var="regular" notnull="notnull" pipe="and"/>
+    </conditions>
+</query>

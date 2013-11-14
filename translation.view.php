@@ -4,7 +4,10 @@
      * @author NHN (developers@xpressengine.com)
      * @brief  translation module View class
      **/
-
+	require_once('TFileHandle.class.php');
+	require_once('Unzip.class.php');
+	require_once('Fileparse.class.php');
+	require_once('Csvcontext.class.php');
     class translationView extends translation {
         /**
          * @brief initialize translation view class.
@@ -295,6 +298,8 @@
 					$project_list[$project_key]->trans_count = $pTransCount;
 					$project_list[$project_key]->no_approved_count = $pNoAppCount;
 					$project_list[$project_key]->member_srl = $project->member_srl;
+					$project_list[$project_key]->project_type = $project->project_type;
+
 					if($pTransTotalCount){
 						$project_list[$project_key]->perc_approved = number_format($pAppCount/$pTransTotalCount * 100,1);
 						$project_list[$project_key]->perc_notApproved = number_format($pNoAppCount/$pTransTotalCount * 100,1);
@@ -379,7 +384,6 @@
 
 			Context::set('page_navigation', $fileList->page_navigation);
 			$fileList = $fileList->data;
-
 			$file_list = array();
 			if($fileList){
 				foreach($fileList as $file_key => $file){
@@ -392,6 +396,7 @@
 
 					$file_list[$file_key]->translation_file_srl = $file->translation_file_srl;
 					$file_list[$file_key]->file_path = $file->file_path;
+					$file_list[$file_key]->file_type = $file->file_type;
 					$file_list[$file_key]->trans_count = $fTransCount;
 					$file_list[$file_key]->no_approved_count = $fNoAppCount;
 					$file_list[$file_key]->member_srl = $file->member_srl;
@@ -424,6 +429,10 @@
 			Context::set('select_lang',$select_lang);
 			Context::set('total_file_count',$total_file_count);
 			Context::set('project_list',$project_list);
+
+			//not for the project list,for the download use
+			$source_lang = Context::get('source_lang')?Context::get('source_lang'):'';
+			Context::set('source_lang',$source_lang);
 
 			// set template_file to be file_list.html
 			$this->setTemplateFile('file_list');
@@ -525,14 +534,12 @@
 
         	//get translation_content_srl
 			$targetList = $oTransModel->getTargetList($contentNode, $targetLang, $fileSrl, $projSrl);
-			
 
         	//combine the target info,file info into the source
         	foreach($sourceList->data as $key => &$obj){
         		$obj->targetList = array();
 
         		$obj->content =$this->_removeSpecialTag( $obj->content);
-				$obj->login_recommend = false;
         		if(!empty($targetList->data)){
 	        		foreach($targetList->data as $key2 => &$obj2){
 						if( $obj2->content) {
@@ -541,21 +548,10 @@
 
 						if($obj->content_node == $obj2->content_node &&
 							$obj->translation_file_srl == $obj2->translation_file_srl){
-
-							// check whether the target content has been recommended by login user
-							$obj2->login_recommend = false;
-							$recommended_member = explode(':', $obj2->recommended_member);
-							$logged_info = Context::get('logged_info');
-							if(in_array($logged_info->member_srl, $recommended_member)){
-								$obj->login_recommend = true;
-								$obj2->login_recommend = true;
-							}
-
 							$obj->targetList[] = $obj2;
 							if($obj2->is_original){
 								$obj->targetListTop = $obj2;
 							}
-							
 						}
 	        		}
 	        	}
@@ -667,7 +663,7 @@
 			Context::set('translation_file_srl', $translation_file_srl);
 			Context::set('module_srl', $module_srl);
 			Context::set('mid', $mid);
-			
+
 			$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
             if(!is_dir($template_path)||!$this->module_info->skin) {
                 $this->module_info->skin = 'xe_translation_official';
@@ -680,21 +676,200 @@
 			$this->add('page', $result->get('page'));
 		}
 
+		private function _objToArr($obj){
+			$data = array();
+			foreach($obj as $key => $value){
+				foreach($value as $key2 => $value2){
+					$data[$key][$key2] = $value2;
+				}
+			}
+			return $data;
+		}
+
+		private function _getFileContent($fileType = 'xml'){
+			$request = Context::getRequestVars();
+
+
+			//lang select
+			if(empty($request->target_lang)){
+				$request->lang = 'zh-CN';
+			}else{
+			    $request->lang = $request->target_lang;
+			}
+
+			if($fileType == 'csv'){
+			    $oTransModel =  &getModel('translation');
+			    $obj = $request;
+			    if($request->source_lang){
+			        $obj->source_lang = $request->source_lang;
+			    }
+			    else{
+					$file_info = $oTransModel->getFile($obj->translation_file_srl);
+					$csvObj = new Csvcontext($file_info->target_file);
+			        $obj->source_lang = $csvObj->getSourceLang();
+			    }
+			    $output = $oTransModel->getCsvContent($obj);
+			}else{
+    			$oTransModel =  &getModel('translation');
+    			$output = $oTransModel->getContent($request);
+    		}
+
+			$data = array();
+			if($output->data){
+				$data = $this->_objToArr($output->data);
+			}
+
+			$rt = array();
+			foreach($data as $key => $row){
+				$contentNode = $row['content_node'];
+				if($fileType == 'csv'){
+				    if($rt[$row['lang']][$contentNode]){
+                        continue;
+				    }
+				    $rt[$row['lang']][$contentNode] = $row;
+                    continue;
+				}
+
+				if($rt[$contentNode]){
+					continue;
+				}
+				$rt[$contentNode] = $row;
+			}
+			return $rt;
+		}
+
+		private function _toUnicode($info, $code = 'UTF-8')
+		{
+		    $info = mb_convert_encoding($info, "HTML-ENTITIES", $code);
+		    $info = preg_replace_callback('/&#([0-9]+);/',
+		    								create_function(
+		    									'$matches',
+		    									'return "\u".strtoupper(dechex($matches[1]));'
+		    								),
+		    								$info);
+		    return $info;
+		}
+		private function _writeUnicode($pFileName){
+			$fileContent = file_get_contents($pFileName);
+			$fileContent = $this->_toUnicode($fileContent);
+			file_put_contents($pFileName, $fileContent);
+		}
+
 		function downloadTranslationFile(){
+			set_time_limit(0);
+
 			$translation_file_srl = Context::get('translation_file_srl');
 			$oTranslationModel =  &getModel('translation');
 			$file_info = $oTranslationModel->getFile($translation_file_srl);
 
-			if($translation_file_srl){
-				$filepath = $file_info->target_file;
-				$test = $oTranslationModel->getFileAllContents($translation_file_srl);
-			}
+			$fileRelPName = $file_info->target_file;
+			$pFileName = _XE_PATH_.$fileRelPName;
+			$ext = TFileHandle::getfileExt($pFileName);
 
 			$dir_path = './files/cache/translation/'.$this->module_info->module_srl.'/'.$file_info->translation_project_srl;
-			$file_path = $dir_path.'/'.md5(crypt(rand(1000000,900000), rand(0,100))).'.xml';
-			$oTranslationModel->writeXml($test,$file_path);
+			$file_path = $dir_path.'/'.md5(crypt(rand(1000000,900000), rand(0,100))).'.'.$ext;
+
+			if(strtolower($ext) == 'csv'){
+			    $data = $this->_getFileContent($ext);
+			    $csvObj = new Csvcontext($pFileName);
+			    $request = Context::getRequestVars();
+			    $csvObj->getCSVFile($file_path,
+			                        (array)($data[$csvObj->getSourceLang()]),
+			                        (array)($data[$request->target_lang])
+			                        );
+			}
+			//parse property file
+			elseif(in_array($ext, Fileparse::getParseFileType())){
+				$data = $this->_getFileContent();
+				$fileObj = new Fileparse($pFileName);
+				$fileObj->writeFile($data, $file_path);
+				$unicode = Context::get('unicode');
+				if($unicode == 'true') $this->_writeUnicode($file_path);
+			}
+			else{
+				if($translation_file_srl){
+					$filepath = $file_info->target_file;
+					$test = $oTranslationModel->getFileAllContents($translation_file_srl);
+				}
+				$oTranslationModel->writeFile($test,$file_path);
+			}
 			$oTranslationModel->downloadFile($file_path,$file_info->file_name);
 			exit;
+		}
+
+		function downloadTranslationZipFile(){
+			set_time_limit(0);
+
+			$translation_project_srl = Context::get('translation_project_srl');
+			$project_name = Context::get('project_name');
+			$oTranslationModel =  &getModel('translation');
+
+			$file_count = $oTranslationModel->getProFileTotalCount($translation_project_srl);
+			$args->translation_project_srl = $translation_project_srl;
+			$args->module_srl = $this->module_info->module_srl;
+
+			$file_list = $oTranslationModel->getProFile($args, $file_count->totle_file_count);
+
+			$fileList = $file_list->data;
+
+			if($fileList){
+				$dir_path = './files/cache/translation/'.$this->module_info->module_srl.'/'.$translation_project_srl.'/zip/'.md5(crypt(rand(1000000,900000), rand(0,100)));
+				FileHandler::removeDir($dir_path);
+				FileHandler::makeDir($dir_path);
+
+				foreach($fileList as $file_key => $file){
+					$fileRelPName = $file->target_file;
+					$pFileName = _XE_PATH_.$fileRelPName;
+					$ext = TFileHandle::getfileExt($pFileName);
+
+					$file_dir = substr($file->file_path, 0, strrpos($file->file_path,'/'));
+					$file_dir = $dir_path.'/'.$file_dir;
+
+					FileHandler::makeDir($file_dir);
+
+					$file_path = $file_dir.'/'.$file->file_name;
+
+					if(strtolower($ext) == 'csv'){
+						$data = $this->_getFileContent($ext);
+						$csvObj = new Csvcontext($pFileName);
+						$request = Context::getRequestVars();
+						$csvObj->getCSVFile($file_path,
+											(array)($data[$csvObj->getSourceLang()]),
+											(array)($data[$request->target_lang])
+											);
+					}
+					//parse property file
+					elseif(in_array($ext, Fileparse::getParseFileType())){
+						$data = $this->_getFileContent();
+						$fileObj = new Fileparse($pFileName);
+						$fileObj->writeFile($data, $file_path);
+						$unicode = Context::get('unicode');
+						if($unicode == 'true') $this->_writeUnicode($file_path);
+					}
+					else{
+						if($file->translation_file_srl){
+							$filepath = $file->target_file;
+							$test = $oTranslationModel->getFileAllContents($file->translation_file_srl);
+						}
+						$oTranslationModel->writeFile($test,$file_path);
+					}
+					
+				}
+
+				$zip_name = $project_name.'.zip';
+				$zip_path = $dir_path.'/'.$zip_name;
+				$zip_file = $oTranslationModel->createZip($dir_path, $zip_path);
+				$oTranslationModel->downloadZipFile($zip_path,$zip_name);
+				exit;
+			}
+
+
+
+
+
+
+
+			//$file_info = $oTranslationModel->getFile($translation_file_srl);
 		}
 
 
@@ -709,5 +884,99 @@
 			foreach ($arr as $sub) $sort_col[] = $sub[$key];
 			array_multisort($sort_col,SORT_DESC, $arr);
 		}
+
+        /**
+         * @brief display dictionary page
+         **/
+		function dispTranslationDictionary(){
+			$oTransModel =  &getModel('translation');
+
+			$source_lang = Context::get('source_lang')?Context::get('source_lang'):'en';
+			$target_lang = Context::get('target_lang')?Context::get('target_lang'):'zh-CN';
+
+        	Context::set('source_lang',$source_lang);
+        	Context::set('target_lang',$target_lang);
+
+        	$listCount = Context::get('listCount') ? Context::get('listCount') : $this->listCount;
+        	Context::set('listCount',$listCount);
+
+			$page = Context::get('page');
+			$pageCount = $this->pageCount;
+            if(!$page) Context::set('page', $page=1);
+
+			$search_keyword = Context::get('search_keyword')?Context::get('search_keyword'):"";
+
+			$dictionaryList = $oTransModel->getDicContent($source_lang, $target_lang, $listCount, $page,$pageCount,$search_keyword);
+			Context::set('dictionary_list',$dictionaryList->data);
+			Context::set('page_navigation', $dictionaryList->page_navigation);
+
+        	// get supported language list
+			$lang_supported_list = Context::loadLangSupported();
+			Context::set('lang_supported_list',$lang_supported_list);
+
+            $this->setTemplateFile('view_dictionary');
+
+		}
+
+
+        /**
+         * @brief display translation add dictionary content page
+         **/
+        function dispTransAddDicContent() {
+
+
+			$lang_supported_list = Context::loadLangSupported();
+			Context::set('lang_supported_list',$lang_supported_list);
+
+			$source_lang = Context::get('source_lang')?Context::get('source_lang'):'en';
+			$target_lang = Context::get('target_lang')?Context::get('target_lang'):'zh-CN';
+			$translation_title = Context::get('translation_title')?Context::get('translation_title'):'';
+			$mid = Context::get('mid');
+        	Context::set('source_lang',$source_lang);
+        	Context::set('target_lang',$target_lang);
+			Context::set('translation_title',$translation_title);
+			Context::set('mid',$mid);
+
+			$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
+            if(!is_dir($template_path)||!$this->module_info->skin) {
+                $this->module_info->skin = 'xe_translation_official';
+                $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
+            }
+
+			$oTemplateHandler = &TemplateHandler::getInstance();
+            $result = new Object();
+            $result->add('page', $oTemplateHandler->compile($template_path, 'add_dic_content.html'));
+			$this->add('page', $result->get('page'));
+        }
+
+        /**
+         * @brief display delete dic page
+         **/
+		function dispTranslationDeleteDic(){
+
+			$translation_dictionary_srl = Context::get('translation_dictionary_srl');
+			$module_srl = Context::get('module_srl');
+			$mid = Context::get('mid');
+
+			$oTransModel = &getModel('translation');
+			$dic_info = $oTransModel->getDicBySrl($translation_dictionary_srl);
+
+			Context::set('dic_info', $dic_info);
+			Context::set('translation_dictionary_srl', $translation_dictionary_srl);
+			Context::set('module_srl', $module_srl);
+			Context::set('mid', $mid);
+
+			$template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
+            if(!is_dir($template_path)||!$this->module_info->skin) {
+                $this->module_info->skin = 'xe_translation_official';
+                $template_path = sprintf("%sskins/%s/",$this->module_path, $this->module_info->skin);
+            }
+
+			$oTemplateHandler = &TemplateHandler::getInstance();
+            $result = new Object();
+            $result->add('page', $oTemplateHandler->compile($template_path, 'delete_dic.html'));
+			$this->add('page', $result->get('page'));
+		}
+
 
     }

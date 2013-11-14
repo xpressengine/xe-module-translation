@@ -1,7 +1,7 @@
 <?php
 class XMLContext {
 
-	public $_xmlContext;
+	public $_xmlContext = array();
 	public $_phraseXml;
 	public $_fileType;
 	public $_xml;
@@ -154,9 +154,9 @@ class XMLContext {
 				}
 			}
 		}
-	
+
 		array_push($data, $this->_storageNode($xmlObj, $xpath, $isLangLine));
-		
+
 		foreach($xmlObj as $nodeName => $subNode){
 			$data = array_merge($data, $this->_parseFile($subNode, $nodeName));
 		}
@@ -275,7 +275,7 @@ class XMLContext {
 	//remove '(nameValue)' in xpath
 	private function _getXpath($xpath){
 		/*preg_match_all('/(\(.*\))/',$xpath,$match);
-		
+
 		if(empty($match)){
 			return $xpath;
 		}
@@ -302,9 +302,9 @@ class XMLContext {
 		$output = "<?xml version='1.0' encoding='UTF-8'?>\n";
 		foreach($context as $key => $parseArr){
 			$curXpath = $this->_getXpath($parseArr['xpath']);
-			
+
 			$arr = explode('/', $curXpath);
-			
+
 			$nodeName = array_pop($arr);
 
 			/*var_Dump($stackNodes);
@@ -315,7 +315,7 @@ class XMLContext {
 				$nN = array_pop($stackNodes);
 				$output .= $this->_endTag($nN);
 			}
-			
+
 
 			if(!isset($parseArr['isLangLine'])){
 				if($this->_hasSubNode($parseArr['value'])){
@@ -379,7 +379,7 @@ class XMLContext {
 	*/
 	private function _getFileType($filePath){
 		$fName = $this->_getFileName($filePath);
-		
+
 		if(strtolower($fName) == 'skin.xml'){
 			return self::FILE_TYPE_SKIN;
 		}

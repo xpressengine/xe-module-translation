@@ -45,7 +45,7 @@
 	</thead>
 	<tbody>
 	<tr loop="$project_list => $project_key, $project">
-	<td class="first_cell"><a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl,'scope', $scope)}">{$project->project_name}</a></td>
+	<td class="first_cell"><a href="{getUrl('','mid',$mid,'act','dispTransProLangInfo','translation_project_srl',$project->translation_project_srl,'scope', $scope)}">{$project->project_name} <block cond="$project->project_type == 'zip'"><span style="color:red"> - ZIP</span></block></a></td>
 	<td>
 		<div cond="!$project->no_files" class="track">
 			<span cond="$project->perc_approved > 0" class="color_1">{$project->perc_approved}%</span><span cond="$project->perc_notApproved > 0" class="color_2">{$project->perc_notApproved}%</span><span cond="$project->perc_notTranslated > 0" class="color_3">{$project->perc_notTranslated}%</span>
@@ -55,13 +55,18 @@
 	<td cond="!$member_srl"  class="summary">{$lang->translated} {$project->trans_count}, {$lang->need_approve} {$project->no_approved_count}</td>
 	<td>{$project->file_count}</td>
 	<td>{$project->last_update}<block cond="!$project->last_update">No update</block></td>
-	<td cond="$logged_info->is_admin == 'Y'"><a id="modify_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl" href="#proWindow" class="btn btn_p_modify" data="{$project->translation_project_srl}">modify</a><a id="delete_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl"  href="#proWindow" class="btn btn_p_delete" data="{$project->translation_project_srl}" >delete</a></td>
+	<td cond="$logged_info->is_admin == 'Y'">
+		<a id="modify_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl" href="#proWindow" class="btn btn_p_modify" data="{$project->translation_project_srl}" style="margin-right:5px;">modify</a>
+		<a id="delete_p_{$project_key}" cond="$project->member_srl == $logged_info->member_srl"  href="#proWindow" class="btn btn_p_delete" data="{$project->translation_project_srl}" style="margin-left: 4px;">delete</a>
+		<block cond="$project->project_type == 'zip'"><a id="download_zip" cond="$project->member_srl == $logged_info->member_srl" href="{getUrl('','target_lang',$select_lang,'mid',$mid,'act','downloadTranslationZipFile','translation_project_srl',$project->translation_project_srl,'project_name', $project->project_name)}" class="btn btn_p_download_z" data="{$project->translation_project_srl}" style="margin: 5px 0;">Download Zip File</a></block>
+	</td>
 	</tr>
 	</tbody>
 	</table>
 	</div>
-	
+
 	<div cond="$logged_info->is_admin == 'Y'" class="btn_add">
+		<a href="{getUrl('','mid',$mid,'act','dispTranslationRegFile','project_type','zip')}" id="zip_add" class="sty_btn">{$lang->add_new_zip}</a>
 		<a href="#proWindow" id="pro_add" class="sty_btn">{$lang->add_new_project}</a>
 	</div>
 	

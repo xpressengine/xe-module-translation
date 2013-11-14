@@ -4,4 +4,5 @@
 	<column name="source_content" type="varchar" size="128" notnull="notnull"/>
 	<column name="target_lang" type="varchar" size="128" notnull="notnull"/>
 	<column name="target_content" type="varchar" size="128" notnull="notnull"/>
+	<column name="regular"  type="number" size="2" notnull="notnull" default="0"/>
 </table>

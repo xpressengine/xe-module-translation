@@ -1,0 +1,44 @@
+<include target="_header.html" />
+<script type="text/javascript" src="js/script.js" />
+
+<span class="modalWindow"></span>
+<div id="dicLayer" class="proLayer proTypeA">
+
+	<h2 cond="!$translation_project_srl">{$lang->add_new_dic_content}</h2>
+	<h2 cond="$translation_project_srl">{$lang->modify_project}</h2>
+	<a href="###" onclick="document.getElementById('proWindow').style.display='none'" accesskey="X" class="close">Close Login Layer</a>	
+	<form action="./" method="post" id="fo_translation_insert_project">
+	<fieldset>
+	<legend class="blind">Translation Register Project Page</legend>
+	<input type="hidden" name="act" value="procTranslationInsertDicContent" />
+	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="scope" value="{$scope}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="translation_title" value="{$translation_title}" />
+	<input type="hidden" name="translation_project_srl" value="{$translation_project_srl}" />
+
+	<div class="dic_content">
+		<label for="uid" class="lbl" style="color:#444444;">{$lang->source_lang}</label>
+		<select name="source_lang">
+			<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="selected"|cond="$key==$source_lang">{$val}</option>
+		</select>
+		<p><input type="text" id="dic_scr_content" name="source_content" value="{$project_info->project_name}" class="inputText" /></p>
+	</div>
+
+	<div class="dic_content" style="margin-top:10px">
+		<label for="uid" class="lbl" style="color:#444444;">{$lang->target_lang}</label>
+		<select name="target_lang">
+			<option loop="$lang_supported_list => $key, $val" value="{$key}" selected="selected"|cond="$key==$target_lang">{$val}</option>
+		</select>
+		<p><input type="text" id="dic_tar_content" name="target_content" value="{$project_info->project_name}" class="inputText" /></p>
+	</div>
+
+	<p class="btn_area"><input name="" type="submit" value="{$lang->cmd_registration}" class="btn_submit" /></p>
+	</fieldset>
+	</form>
+</div>
+
+
+
+
+
